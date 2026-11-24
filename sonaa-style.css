@@ -1,0 +1,41 @@
+/* SONAA VERIFY - الهوية الموحدة */
+:root{
+  --red:#C8102E; --red-dark:#A50D25; --red-light:#FEF2F2;
+  --dark:#1F2937; --gray:#6B7280; --bg:#F4F6F9;
+  --gold:#C9A227; --green:#059669;
+  --r-card:18px; --r-btn:12px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 8px 25px rgba(0,0,0,.08);
+  --shadow-red:0 8px 20px rgba(200,16,46,.25);
+}
+*{box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--dark);margin:0}
+.logo-img{width:100%;height:auto;object-fit:contain;display:block;mix-blend-mode:multiply}
+
+.sonaa-btn{background:var(--red);color:#fff;padding:10px 18px;border-radius:var(--r-btn);font-weight:800;font-size:13px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.2s;box-shadow:var(--shadow-red)}
+.sonaa-btn:hover{background:var(--red-dark);transform:translateY(-1px)}
+.sonaa-btn-green{background:var(--green);color:#fff;padding:10px 18px;border-radius:var(--r-btn);font-weight:800;font-size:13px;border:none;cursor:pointer}
+.sonaa-btn-gray{background:#F3F4F6;color:var(--dark);padding:10px 16px;border-radius:var(--r-btn);font-weight:700;font-size:12px;border:1px solid #E5E7EB;cursor:pointer}
+
+.sonaa-card{background:#fff;border:1px solid #F1F1F1;border-radius:var(--r-card);padding:16px;box-shadow:var(--shadow-sm)}
+.sonaa-card-title{font-size:12px;color:var(--gray);font-weight:700}
+.sonaa-card-number{font-size:26px;font-weight:900;margin-top:4px}
+.sonaa-login-card{background:#fff;max-width:440px;width:100%;border-radius:20px;padding:32px;box-shadow:var(--shadow-md);border:1px solid #F1F1F1}
+
+.sonaa-input{width:100%;border:1.5px solid #E5E7EB;border-radius:12px;padding:12px 14px;font-size:14px;font-family:'Cairo';outline:none;background:#fff}
+.sonaa-input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,46,.1)}
+.sonaa-label{display:block;font-size:12px;font-weight:800;margin-bottom:5px}
+
+.badge-valid{background:#D1FAE5;color:#065F46;font-size:11px;font-weight:900;padding:5px 11px;border-radius:999px;display:inline-block}
+.badge-revoked{background:#FEE2E2;color:#991B1B;font-size:11px;font-weight:900;padding:5px 11px;border-radius:999px;display:inline-block}
+
+/* QR CERTIFICATE - الشهادة هي QR */
+.qr-cert-card{width:340px;max-width:100%;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-md);border:1px solid #EDEDED;text-align:center}
+.qr-cert-top{background:var(--red);color:#fff;padding:18px 16px 24px}
+.qr-cert-top .logo-area{width:170px;margin:0 auto 10px;background:#fff;border-radius:10px;padding:6px 10px}
+.qr-cert-name{font-size:17px;font-weight:900;line-height:1.4;margin-top:6px}
+.qr-cert-course{font-size:12px;opacity:.85;font-weight:700}
+.qr-cert-qr{background:#fff;width:210px;height:210px;margin:-18px auto 0;border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);border:4px solid #fff;position:relative;z-index:2}
+.qr-cert-code{font-family:monospace;font-size:11px;color:var(--gray);letter-spacing:1px;margin:10px 0 4px;direction:ltr}
+.qr-cert-footer{display:flex;justify-content:space-between;padding:12px 16px;border-top:1px dashed #E5E7EB;font-size:11px;font-weight:800;color:var(--gray)}
+.mfa-box{border:2px solid var(--gold);border-radius:16px;padding:14px;background:#FFFBEB}
