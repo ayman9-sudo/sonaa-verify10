@@ -10,6 +10,8 @@
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 body{font-family:'Cairo',sans-serif;background:#F4F6F9;color:#1F2937}
 .brand-red{background:#C8102E}.brand-red:hover{background:#A50D25}
@@ -52,12 +54,95 @@ body{font-family:'Cairo',sans-serif;background:#F4F6F9;color:#1F2937}
       <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"><div class="text-xs text-gray-400 font-bold">شهادات ملغاة</div><div id="stat-revoked" class="text-2xl font-black text-red-600 mt-1">0</div></div>
       <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"><div class="text-xs text-gray-400 font-bold">المحدد حالياً</div><div id="stat-selected" class="text-2xl font-black text-blue-600 mt-1">0</div></div>
     </div>
+    <div id="certificate-modal" class="hidden fixed inset-0 bg-black/70 z-[100] overflow-y-auto p-3">
+  <div class="max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl">
+    <div class="flex justify-between items-center p-4 border-b">
+      <h3 class="font-black text-gray-800">معاينة الشهادة التجريبية</h3>
+      <button onclick="closeCertificate()" class="text-red-600 font-black text-2xl">×</button>
+    </div>
+
+    <div class="p-3 sm:p-6 overflow-x-auto">
+      <div id="certificate-paper" dir="rtl" style="
+        width:1000px; min-height:700px; margin:auto; position:relative;
+        background:#fff; padding:35px; color:#222;
+        font-family:Cairo,sans-serif; border:12px double #C8102E;
+        box-sizing:border-box;
+      ">
+        <div style="border:2px solid #C8102E;min-height:610px;padding:25px;text-align:center;position:relative">
+          
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <img src="logo.png" style="width:110px;height:90px;object-fit:contain">
+            <div style="text-align:center">
+              <h2 style="font-size:24px;font-weight:900;color:#C8102E">جمعية الهلال الأحمر السوداني</h2>
+              <p style="font-size:15px;font-weight:bold">SUDANESE RED CRESCENT SOCIETY</p>
+            </div>
+            <div style="width:110px"></div>
+          </div>
+
+          <div style="width:150px;height:4px;background:#C8102E;margin:25px auto"></div>
+
+          <h1 style="font-size:55px;font-weight:900;color:#C8102E;margin:15px 0">شهادة</h1>
+          <h2 style="font-size:27px;font-weight:800;margin-bottom:25px">شهادة إتمام برنامج تدريبي</h2>
+
+          <p style="font-size:21px;margin:15px 0">تشهد جمعية الهلال الأحمر السوداني بأن</p>
+
+          <h2 id="cert-preview-name" style="
+            font-size:35px;font-weight:900;color:#C8102E;
+            margin:20px 0;padding:10px;border-bottom:2px solid #ddd;
+          ">اسم المتدرب</h2>
+
+          <p style="font-size:21px;margin:15px 0">قد أتم بنجاح البرنامج التدريبي</p>
+
+          <h2 id="cert-preview-course" style="font-size:27px;font-weight:900;margin:15px 0">اسم البرنامج</h2>
+
+          <div style="display:flex;justify-content:center;gap:65px;margin:30px 0;font-size:17px">
+            <div>من: <strong id="cert-preview-from">---</strong></div>
+            <div>إلى: <strong id="cert-preview-to">---</strong></div>
+            <div>عدد الساعات: <strong id="cert-preview-hours">---</strong></div>
+          </div>
+
+          <p id="cert-preview-branch" style="font-size:18px;font-weight:bold;margin:15px 0">الفرع</p>
+
+          <div style="display:flex;justify-content:space-between;align-items:end;margin-top:45px;padding:0 35px">
+            <div style="text-align:center;width:220px">
+              <div id="certificate-qr" style="display:flex;justify-content:center;margin-bottom:8px"></div>
+              <p id="cert-preview-code" style="font-size:12px;font-weight:bold;direction:ltr"></p>
+              <p style="font-size:12px;color:#666">امسح الرمز للتحقق</p>
+            </div>
+
+            <div style="width:300px;text-align:center">
+              <p style="font-size:19px;font-weight:900">الأمين العام</p>
+              <div style="height:75px"></div>
+              <div style="border-top:1px solid #333;padding-top:8px;font-size:13px">
+                التوقيع والختم
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;bottom:12px;left:25px;right:25px;border-top:1px solid #ddd;padding-top:8px;font-size:11px;color:#777">
+            نظام التحقق الرقمي SONAA VERIFY | Designed and Powered by Sonaa Tech
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 border-t flex flex-wrap gap-2 justify-center">
+      <button onclick="downloadCertificatePDF()" class="brand-red text-white font-bold px-6 py-3 rounded-xl">
+        📥 تحميل الشهادة PDF
+      </button>
+      <button onclick="closeCertificate()" class="bg-gray-100 text-gray-700 font-bold px-6 py-3 rounded-xl">
+        إغلاق
+      </button>
+    </div>
+  </div>
+</div>
     <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-wrap items-center justify-between gap-3">
       <div class="flex flex-wrap items-center gap-2">
         <button onclick="openAddModal()" class="brand-red text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm transition">➕ إضافة شهادة فردية</button>
         <label class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm transition cursor-pointer">📊 استيراد Excel (+500)<input type="file" id="excel-upload" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleExcelUpload(event)"></label>
         <button onclick="downloadExcelTemplate()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold px-3 py-2.5 rounded-xl transition">📥 تحميل نموذج Excel</button>
         <button onclick="downloadAllQRZip()" class="bg-gray-900 hover:bg-black text-white text-xs font-bold px-3 py-2.5 rounded-xl transition">📦 تحميل QR الكل ZIP</button>
+        <button onclick="openCertificate('${c.cert_code}')" class="bg-red-700 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg">📜 الشهادة</button>
       </div>
       <div class="w-full sm:w-72"><input type="text" id="search-input" oninput="filterTable()" placeholder="🔍 بحث بالاسم، الرقم، الدورة..." class="w-full border border-gray-200 bg-gray-50 rounded-xl px-3.5 py-2 text-xs font-bold focus:outline-none focus:bg-white focus:border-[#C8102E]"></div>
     </div>
@@ -142,6 +227,82 @@ async function handleLogin(e){
     errBox.classList.remove('hidden');
     return;
   }
+  let currentCertificate = null;
+
+function openCertificate(code) {
+  const c = allCertificates.find(x => x.cert_code === code);
+  if (!c) return;
+
+  currentCertificate = c;
+
+  document.getElementById('cert-preview-name').textContent = c.full_name || '';
+  document.getElementById('cert-preview-course').textContent = c.course_name || '';
+  document.getElementById('cert-preview-from').textContent = c.date_from || '---';
+  document.getElementById('cert-preview-to').textContent = c.date_to || '---';
+  document.getElementById('cert-preview-hours').textContent = c.hours ? c.hours + ' ساعة' : '---';
+  document.getElementById('cert-preview-branch').textContent = c.branch || '';
+  document.getElementById('cert-preview-code').textContent = c.cert_code || '';
+
+  const qrBox = document.getElementById('certificate-qr');
+  qrBox.innerHTML = '';
+
+  const verifyUrl = `${getVerifyBaseUrl()}?c=${encodeURIComponent(c.cert_code)}`;
+
+  new QRCode(qrBox, {
+    text: verifyUrl,
+    width: 100,
+    height: 100,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  document.getElementById('certificate-modal').classList.remove('hidden');
+}
+
+function closeCertificate() {
+  document.getElementById('certificate-modal').classList.add('hidden');
+}
+
+async function downloadCertificatePDF() {
+  if (!currentCertificate) return;
+
+  const button = document.querySelector('#certificate-modal button[onclick="downloadCertificatePDF()"]');
+  button.disabled = true;
+  button.textContent = 'جاري تجهيز الشهادة...';
+
+  try {
+    await document.fonts.ready;
+
+    const paper = document.getElementById('certificate-paper');
+
+    const canvas = await html2canvas(paper, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    });
+
+    const image = canvas.toDataURL('image/jpeg', 0.98);
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+      format: 'a4'
+    });
+
+    pdf.addImage(image, 'JPEG', 0, 0, 297, 210);
+
+    pdf.save(`SONAA-Certificate-${currentCertificate.cert_code}.pdf`);
+
+  } catch (error) {
+    alert('تعذر إنشاء الشهادة: ' + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = '📥 تحميل الشهادة PDF';
+  }
+}
   checkSession();
 }
 async function handleLogout(){await supabaseClient.auth.signOut();checkSession();}
