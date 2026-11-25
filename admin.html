@@ -219,6 +219,10 @@ function showLogin() {
 
 async function loadUserProfile() {
   try {
+    if (!currentUser) {
+      throw new Error("لم يتم العثور على المستخدم.");
+    }
+
     const { data: profile, error } = await supabaseClient
       .from("admin_users")
       .select("org_id, role, is_active")
@@ -227,49 +231,41 @@ async function loadUserProfile() {
 
     if (error) throw error;
 
-    if (!profile || !profile.is_active || !profile.org_id) {
-      await supabaseClient.auth.signOut();
-      showLogin();
-      setMessage("login-error", "الحساب غير مخوّل لإدارة مؤسسة.");
-      return;
+    if (!profile) {
+      throw new Error("لا يوجد سجل صلاحيات لهذا الحساب.");
     }
 
-    if (!["org_admin", "super_admin"].includes(profile.role)) {
-      await supabaseClient.auth.signOut();
-      showLogin();
-      setMessage("login-error", "صلاحيات الحساب غير كافية.");
-      return;
+    if (profile.is_active !== true) {
+      throw new Error("حساب الإدارة غير مفعّل.");
     }
-
-    // هذه اللوحة مخصصة لمسؤولي المؤسسات.
-    // لوحة Super Admin ستكون مستقلة عن هذه اللوحة.
 
     if (profile.role !== "org_admin") {
-      await supabaseClient.auth.signOut();
-      showLogin();
-      setMessage("login-error", "استخدم لوحة إدارة SONAA TECH.");
-      return;
+      throw new Error("دور الحساب ليس org_admin.");
     }
 
-    currentOrgId = profile.org_id;
+    if (!profile.org_id) {
+      throw new Error("الحساب غير مربوط بمؤسسة.");
+    }
 
     const { data: org, error: orgError } = await supabaseClient
       .from("organizations")
       .select("id, slug, name_ar, name_en, logo_url, primary_color, status")
-      .eq("id", currentOrgId)
+      .eq("id", profile.org_id)
       .maybeSingle();
 
     if (orgError) throw orgError;
 
-    if (!org || org.status !== "active") {
-      await supabaseClient.auth.signOut();
-      showLogin();
-      setMessage("login-error", "المؤسسة غير نشطة حالياً.");
-      return;
+    if (!org) {
+      throw new Error("المؤسسة المرتبطة بالحساب غير موجودة.");
     }
 
-    currentOrg = org;
+    if (org.status !== "active") {
+      throw new Error("المؤسسة غير مفعّلة.");
+    }
+
+    currentOrgId = org.id;
     currentOrgSlug = org.slug;
+    currentOrg = org;
 
     applyOrganizationBranding();
 
@@ -279,12 +275,14 @@ async function loadUserProfile() {
     await fetchCertificates();
 
   } catch (error) {
-    console.error(error);
-    showLogin();
-    setMessage("login-error", "تعذر تحميل بيانات المؤسسة: " + error.message);
+    console.error("Profile error:", error);
+
+    $("dashboard-screen").classList.add("hidden");
+    $("login-screen").classList.remove("hidden");
+
+    setMessage("login-error", error.message);
   }
 }
-
 function applyOrganizationBranding() {
   $("dash-org-name").textContent = currentOrg.name_ar || currentOrg.slug;
   $("org-badge-header").textContent = currentOrg.slug.toUpperCase();
