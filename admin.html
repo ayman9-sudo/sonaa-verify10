@@ -44,10 +44,18 @@
         <button onclick="handleLogout()" class="sonaa-btn-gray text-red-600">خروج</button>
       </div>
     </div>
+    <!-- SUPER ADMIN SWITCHER - بيظهر للسوبر بس -->
+    <div id="super-admin-bar" class="hidden bg-[#1E1E1E] text-white px-4 py-2">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center gap-2 text-xs font-bold">
+        <span>👑 سوبر ادمن:</span>
+        <select id="org-switcher" onchange="switchOrg(this.value)" class="bg-white text-black rounded-lg px-3 py-1.5 text-xs font-bold"></select>
+        <span id="super-info" class="text-gray-300">بتشوف كل الجهات</span>
+        <button onclick="openOrgsModal()" class="bg-[#C8102E] px-3 py-1.5 rounded-lg">+ إضافة جهة جديدة</button>
+      </div>
+    </div>
   </header>
 
   <main class="max-w-7xl w-full mx-auto px-4 py-6 space-y-5 flex-1">
-    <!-- إحصائيات -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
       <div class="sonaa-card"><div class="sonaa-card-title">إجمالي الشهادات</div><div id="stat-total" class="sonaa-card-number">0</div></div>
       <div class="sonaa-card"><div class="sonaa-card-title">شهادات سارية</div><div id="stat-valid" class="sonaa-card-number text-green-600">0</div></div>
@@ -55,18 +63,17 @@
       <div class="sonaa-card"><div class="sonaa-card-title">المحدد حالياً</div><div id="stat-selected" class="sonaa-card-number text-blue-600">0</div></div>
     </div>
 
-    <!-- أزرار التحكم - رجعت الاكسل هنا -->
     <div class="sonaa-card flex flex-wrap items-center justify-between gap-3">
       <div class="flex flex-wrap items-center gap-2">
         <button onclick="openAddModal()" class="sonaa-btn">➕ إضافة شهادة فردية</button>
         <label class="sonaa-btn-green cursor-pointer">📊 استيراد Excel (+500)<input type="file" id="excel-upload" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleExcelUpload(event)"></label>
         <button onclick="downloadExcelTemplate()" class="sonaa-btn-gray">📥 نموذج Excel</button>
         <button onclick="downloadAllQRZip()" class="sonaa-btn-black">📦 تحميل QR الكل ZIP</button>
+        <button onclick="openTemplateModal()" class="sonaa-btn-gray">🎨 قوالب الاستديو</button>
       </div>
       <div class="w-full sm:w-72"><input id="search-input" oninput="filterTable()" placeholder="🔍 بحث بالاسم، الرقم، الدورة..." class="sonaa-input !py-2 text-xs"></div>
     </div>
 
-    <!-- شريط الإجراءات الجماعية -->
     <div id="bulk-actions-bar" class="hidden bg-blue-50 border border-blue-200 p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3">
       <div class="text-sm font-black text-blue-900">تم تحديد <span id="bulk-count" class="bg-blue-600 text-white px-2 py-0.5 rounded-full mx-1">0</span> شهادة</div>
       <div class="flex flex-wrap gap-2">
@@ -77,7 +84,6 @@
       </div>
     </div>
 
-    <!-- الجدول -->
     <div class="sonaa-card !p-0 overflow-hidden">
       <div class="overflow-x-auto"><table class="w-full text-right">
         <thead><tr class="bg-gray-50 border-b text-xs font-black text-gray-600">
@@ -95,7 +101,6 @@
   </main>
 </div>
 
-<!-- مودال إضافة / تعديل - مقفول في البداية - ما فاتح طوالي -->
 <div id="cert-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
   <div class="bg-white max-w-lg w-full rounded-2xl shadow-xl overflow-hidden max-h-[90vh] overflow-y-auto">
     <div class="bg-[#C8102E] text-white px-6 py-4 flex justify-between items-center"><h3 id="modal-title" class="font-black">إضافة شهادة جديدة</h3><button onclick="closeCertModal()" class="text-2xl">×</button></div>
@@ -113,7 +118,31 @@
   </div>
 </div>
 
-<!-- مودال QR -->
+<!-- مودال إضافة جهة -->
+<div id="org-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-md w-full rounded-2xl p-6">
+    <h3 class="font-black mb-4">إضافة جهة جديدة - مدرسة / منظمة</h3>
+    <div class="space-y-3">
+      <div><label class="sonaa-label">Slug - انجليزي بدون مسافات *</label><input id="new-org-slug" dir="ltr" class="sonaa-input" placeholder="nile-school"></div>
+      <div><label class="sonaa-label">اسم الجهة بالعربي *</label><input id="new-org-name" class="sonaa-input" placeholder="مدرسة النيل الخاصة"></div>
+      <div><label class="sonaa-label">الاسم بالانجليزي</label><input id="new-org-en" dir="ltr" class="sonaa-input"></div>
+      <div><label class="sonaa-label">لون الجهة</label><input id="new-org-color" type="color" value="#C8102E" class="sonaa-input !p-1 h-10"></div>
+      <div><label class="sonaa-label">رابط الشعار</label><input id="new-org-logo" dir="ltr" class="sonaa-input" placeholder="https://..."></div>
+    </div>
+    <div class="flex gap-2 mt-5"><button onclick="saveNewOrg()" class="sonaa-btn flex-1 justify-center">حفظ الجهة</button><button onclick="document.getElementById('org-modal').classList.add('hidden')" class="sonaa-btn-gray flex-1">إلغاء</button></div>
+  </div>
+</div>
+
+<!-- مودال قوالب -->
+<div id="template-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-md w-full rounded-2xl p-6">
+    <h3 class="font-black mb-2">قوالب الجهة الحالية: <span id="tpl-org-name"></span></h3>
+    <p class="text-xs text-gray-500 mb-4">القوالب محفوظة في جدول certificate_templates - مربوطة بالـ org_id</p>
+    <div id="templates-list" class="space-y-2"></div>
+    <button onclick="document.getElementById('template-modal').classList.add('hidden')" class="sonaa-btn-gray w-full mt-4">إغلاق</button>
+  </div>
+</div>
+
 <div id="qr-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
   <div class="bg-white max-w-sm w-full rounded-2xl p-6 text-center">
     <div class="qr-cert-card" id="qr-print-card">
@@ -127,893 +156,160 @@
   </div>
 </div>
 
-<!-- مودال رفع الاكسل -->
 <div id="upload-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-sm w-full rounded-2xl p-6 text-center"><h3 class="font-black">جاري رفع الشهادات...</h3><div class="w-full bg-gray-200 rounded-full h-3 mt-4 overflow-hidden"><div id="upload-progress-bar" class="h-full bg-[#C8102E] transition-all" style="width:0%"></div></div><p id="upload-status-text" class="text-xs text-gray-500 mt-3 font-bold">جاري الرفع...</p></div></div>
 
 <script>
 const SUPABASE_URL = "https://zepmmkynvabxgsgzskgi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EJvJnFCoPCFxkK-VAmwY_Q_6c4PTyE-";
-
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-let allCertificates = [];
-let filteredCertificates = [];
-let selectedCodes = new Set();
-
-let currentPage = 1;
-const rowsPerPage = 50;
-
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let allCertificates = [], filteredCertificates = [], selectedCodes = new Set();
+let currentPage = 1; const rowsPerPage = 50;
 let currentQRCodeString = "";
-let currentOrgId = null;
-let currentOrgSlug = null;
-let currentOrg = null;
-let currentUser = null;
-
+let currentOrgId = null; let currentOrgSlug = null; let currentOrg = null; let currentUser = null;
+let isSuperAdmin = false; let allOrgs = [];
 const $ = id => document.getElementById(id);
+function escapeHTML(v){ return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch])); }
+function generateCertCode(){ const y=new Date().getFullYear(); const r=crypto.randomUUID().replace(/-/g,"").slice(0,8).toUpperCase(); const p=(currentOrgSlug||"SONAA").toUpperCase().replace(/[^A-Z0-9]/g,""); return `${p}-${y}-${r}`; }
+function getVerifyBaseUrl(){ return new URL("verify.html", location.href).href; }
+function getVerifyUrl(code){ const u=new URL(getVerifyBaseUrl()); u.searchParams.set("org",currentOrgSlug); u.searchParams.set("c",code); return u.href; }
+function setMessage(id,m){ const el=$(id); if(el){ el.textContent=m; el.classList.remove("hidden"); } }
+async function checkSession(){ const {data,error}=await supabaseClient.auth.getSession(); if(error||!data.session){ showLogin(); return; } currentUser=data.session.user; await loadUserProfile(); }
+function showLogin(){ $("login-screen").classList.remove("hidden"); $("dashboard-screen").classList.add("hidden"); }
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, ch => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[ch]);
-}
-
-function generateCertCode() {
-  const year = new Date().getFullYear();
-  const random = crypto.randomUUID().replace(/-/g, "").slice(0, 8).toUpperCase();
-  const prefix = (currentOrgSlug || "SONAA").toUpperCase().replace(/[^A-Z0-9]/g, "");
-  return `${prefix}-${year}-${random}`;
-}
-
-function getVerifyBaseUrl() {
-  return new URL("verify.html", location.href).href;
-}
-
-function getVerifyUrl(code) {
-  const url = new URL(getVerifyBaseUrl());
-  url.searchParams.set("org", currentOrgSlug);
-  url.searchParams.set("c", code);
-  return url.href;
-}
-
-function setMessage(id, message) {
-  const el = $(id);
-  if (el) {
-    el.textContent = message;
-    el.classList.remove("hidden");
-  }
-}
-
-// =====================================
-// SESSION
-// =====================================
-
-async function checkSession() {
-  const { data, error } = await supabaseClient.auth.getSession();
-
-  if (error) {
-    showLogin();
-    return;
-  }
-
-  if (!data.session) {
-    showLogin();
-    return;
-  }
-
-  currentUser = data.session.user;
-
-  await loadUserProfile();
-}
-
-function showLogin() {
-  $("login-screen").classList.remove("hidden");
-  $("dashboard-screen").classList.add("hidden");
-}
-
-async function loadUserProfile() {
-  try {
-    if (!currentUser) {
-      throw new Error("لم يتم العثور على المستخدم.");
+// ===== FIXED: يقبل super_admin و org_admin و admin - ويربط بـ slug مش id =====
+async function loadUserProfile(){
+  try{
+    if(!currentUser) throw new Error("لم يتم العثور على المستخدم.");
+    const {data:profile, error}=await supabaseClient.from("admin_users").select("org_id, role, is_active, is_super_admin").eq("user_id",currentUser.id).maybeSingle();
+    if(error) throw error;
+    if(!profile) throw new Error("لا يوجد سجل صلاحيات لهذا الحساب.");
+    if(profile.is_active!==true) throw new Error("حساب الإدارة غير مفعّل.");
+    const allowed=["super_admin","org_admin","admin"];
+    if(!allowed.includes(profile.role) && !profile.is_super_admin) throw new Error("دور غير مخول: "+profile.role);
+    isSuperAdmin = !!profile.is_super_admin || profile.role==="super_admin";
+    // جلب كل الجهات لو سوبر ادمن
+    if(isSuperAdmin){
+      const {data:orgs}=await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, status").order("created_at",{ascending:true});
+      allOrgs=orgs||[];
     }
-
-    const { data: profile, error } = await supabaseClient
-      .from("admin_users")
-      .select("org_id, role, is_active")
-      .eq("user_id", currentUser.id)
-      .maybeSingle();
-
-    if (error) throw error;
-
-    if (!profile) {
-      throw new Error("لا يوجد سجل صلاحيات لهذا الحساب.");
-    }
-
-    if (profile.is_active !== true) {
-      throw new Error("حساب الإدارة غير مفعّل.");
-    }
-
-    if (profile.role !== "org_admin") {
-      throw new Error("دور الحساب ليس org_admin.");
-    }
-
-    if (!profile.org_id) {
-      throw new Error("الحساب غير مربوط بمؤسسة.");
-    }
-
-    const { data: org, error: orgError } = await supabaseClient
-      .from("organizations")
-      .select("id, slug, name_ar, name_en, logo_url, primary_color, status")
-      .eq("id", profile.org_id)
-      .maybeSingle();
-
-    if (orgError) throw orgError;
-
-    if (!org) {
-      throw new Error("المؤسسة المرتبطة بالحساب غير موجودة.");
-    }
-
-    if (org.status !== "active") {
-      throw new Error("المؤسسة غير مفعّلة.");
-    }
-
-    currentOrgId = org.id;
-    currentOrgSlug = org.slug;
-    currentOrg = org;
-
+    // org_id عندك text = slug مثل 'srcs'
+    let orgSlugToLoad = profile.org_id;
+    if(!orgSlugToLoad && allOrgs.length) orgSlugToLoad=allOrgs[0].slug;
+    if(!orgSlugToLoad) throw new Error("الحساب غير مربوط بمؤسسة.");
+    const {data:org, error:orgError}=await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, status").eq("slug",orgSlugToLoad).maybeSingle();
+    if(orgError) throw orgError;
+    if(!org) throw new Error("المؤسسة غير موجودة - slug="+orgSlugToLoad);
+    if(org.status && org.status!=="active") throw new Error("المؤسسة غير مفعّلة.");
+    currentOrgId=org.id; currentOrgSlug=org.slug; currentOrg=org;
     applyOrganizationBranding();
-
-    $("login-screen").classList.add("hidden");
-    $("dashboard-screen").classList.remove("hidden");
-
-    await fetchCertificates();
-
-  } catch (error) {
-    console.error("Profile error:", error);
-
-    $("dashboard-screen").classList.add("hidden");
-    $("login-screen").classList.remove("hidden");
-
-    setMessage("login-error", error.message);
-  }
-}
-function applyOrganizationBranding() {
-  $("dash-org-name").textContent = currentOrg.name_ar || currentOrg.slug;
-  $("org-badge-header").textContent = currentOrg.slug.toUpperCase();
-
-  const logo = currentOrg.logo_url;
-
-  document.querySelectorAll(".logo-img").forEach(img => {
-    if (logo) {
-      img.src = logo;
-      img.classList.remove("hidden");
+    $("login-screen").classList.add("hidden"); $("dashboard-screen").classList.remove("hidden");
+    if(isSuperAdmin){
+      $("super-admin-bar").classList.remove("hidden");
+      const sel=$("org-switcher"); sel.innerHTML=allOrgs.map(o=>`<option value="${o.slug}" ${o.slug===currentOrgSlug?"selected":""}>${escapeHTML(o.name_ar)} (${o.slug})</option>`).join("");
+      $("org-badge-header").textContent="SUPER ADMIN - "+currentOrgSlug.toUpperCase();
     }
-  });
-
-  const color = /^#[0-9A-Fa-f]{6}$/.test(currentOrg.primary_color || "")
-    ? currentOrg.primary_color
-    : "#C8102E";
-
-  document.documentElement.style.setProperty("--org-color", color);
+    await fetchCertificates();
+  }catch(e){ console.error(e); $("dashboard-screen").classList.add("hidden"); $("login-screen").classList.remove("hidden"); setMessage("login-error",e.message); }
 }
-
-// =====================================
-// LOGIN / LOGOUT
-// =====================================
-
-async function handleLogin(event) {
-  event.preventDefault();
-
-  const email = $("login-email").value.trim();
-  const password = $("login-password").value;
-  const btn = $("login-btn");
-  const errorBox = $("login-error");
-
-  errorBox.classList.add("hidden");
-  btn.disabled = true;
-  btn.textContent = "جاري التحقق...";
-
-  try {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) throw error;
-
-    currentUser = data.user;
-    await loadUserProfile();
-
-  } catch (error) {
-    console.error(error);
-    await supabaseClient.auth.signOut();
-    setMessage("login-error", "فشل تسجيل الدخول أو الحساب غير مخوّل.");
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "تسجيل الدخول للوحة الإدارة";
-  }
+async function switchOrg(slug){
+  const {data:org}=await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, status").eq("slug",slug).maybeSingle();
+  if(!org) return; currentOrgId=org.id; currentOrgSlug=org.slug; currentOrg=org; applyOrganizationBranding(); $("org-badge-header").textContent="SUPER ADMIN - "+slug.toUpperCase(); await fetchCertificates();
 }
-
-async function handleLogout() {
-  await supabaseClient.auth.signOut();
-  location.reload();
+function applyOrganizationBranding(){
+  $("dash-org-name").textContent=currentOrg.name_ar||currentOrg.slug;
+  if(!isSuperAdmin) $("org-badge-header").textContent=currentOrg.slug.toUpperCase();
+  const logo=currentOrg.logo_url; document.querySelectorAll(".logo-img").forEach(img=>{ if(logo){ img.src=logo; img.classList.remove("hidden"); } });
+  const color=/^#[0-9A-Fa-f]{6}$/.test(currentOrg.primary_color||"")?currentOrg.primary_color:"#C8102E"; document.documentElement.style.setProperty("--org-color",color);
 }
-
-// =====================================
-// CERTIFICATES
-// =====================================
-
-async function fetchCertificates() {
-  if (!currentOrgId) return;
-
-  const tbody = $("certificates-tbody");
-  tbody.innerHTML = `
-    <tr>
-      <td colspan="8" class="p-8 text-center">جاري التحميل...</td>
-    </tr>`;
-
-  try {
-    const { data, error } = await supabaseClient
-      .from("certificates")
-      .select("*")
-      .eq("org_id", currentOrgId)
-      .order("created_at", { ascending: false })
-      .limit(5000);
-
-    if (error) throw error;
-
-    allCertificates = data || [];
-    selectedCodes.clear();
-
-    updateStats();
-    filterTable();
-
-  } catch (error) {
-    console.error(error);
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="8" class="p-8 text-center text-red-600">
-          ${escapeHTML(error.message)}
-        </td>
-      </tr>`;
-  }
+async function handleLogin(event){
+  event.preventDefault(); const email=$("login-email").value.trim(); const password=$("login-password").value; const btn=$("login-btn"); const eb=$("login-error"); eb.classList.add("hidden"); btn.disabled=true; btn.textContent="جاري التحقق...";
+  try{ const {data,error}=await supabaseClient.auth.signInWithPassword({email,password}); if(error) throw error; currentUser=data.user; await loadUserProfile(); }catch(e){ console.error(e); await supabaseClient.auth.signOut(); setMessage("login-error","فشل تسجيل الدخول أو الحساب غير مخوّل."); }finally{ btn.disabled=false; btn.textContent="تسجيل الدخول للوحة الإدارة"; }
 }
-
-function updateStats() {
-  const total = allCertificates.length;
-  const revoked = allCertificates.filter(c => c.status === "revoked").length;
-
-  $("stat-total").textContent = total;
-  $("stat-valid").textContent = total - revoked;
-  $("stat-revoked").textContent = revoked;
-
-  updateSelectionUI();
+async function handleLogout(){ await supabaseClient.auth.signOut(); location.reload(); }
+async function fetchCertificates(){
+  if(!currentOrgSlug) return; const tbody=$("certificates-tbody"); tbody.innerHTML=`<tr><td colspan="8" class="p-8 text-center">جاري التحميل...</td></tr>`;
+  try{
+    const {data,error}=await supabaseClient.from("certificates").select("*").eq("org_id",currentOrgSlug).order("created_at",{ascending:false}).limit(5000);
+    if(error) throw error; allCertificates=data||[]; selectedCodes.clear(); updateStats(); filterTable();
+  }catch(e){ console.error(e); tbody.innerHTML=`<tr><td colspan="8" class="p-8 text-center text-red-600">${escapeHTML(e.message)}</td></tr>`; }
 }
-
-// =====================================
-// SEARCH / PAGINATION
-// =====================================
-
-function filterTable() {
-  const q = $("search-input").value.toLowerCase().trim();
-
-  filteredCertificates = !q
-    ? [...allCertificates]
-    : allCertificates.filter(c =>
-        [c.full_name, c.full_name_en, c.cert_code, c.course_name, c.branch]
-          .some(v => String(v || "").toLowerCase().includes(q))
-      );
-
-  currentPage = 1;
-  renderTable();
+function updateStats(){ const t=allCertificates.length; const r=allCertificates.filter(c=>c.status==="revoked").length; $("stat-total").textContent=t; $("stat-valid").textContent=t-r; $("stat-revoked").textContent=r; updateSelectionUI(); }
+function filterTable(){ const q=$("search-input").value.toLowerCase().trim(); filteredCertificates=!q?[...allCertificates]:allCertificates.filter(c=>[c.full_name,c.full_name_en,c.cert_code,c.course_name,c.branch].some(v=>String(v||"").toLowerCase().includes(q))); currentPage=1; renderTable(); }
+function changePage(d){ currentPage+=d; renderTable(); }
+function renderTable(){
+  const tbody=$("certificates-tbody"); const total=filteredCertificates.length; const totalPages=Math.max(1,Math.ceil(total/rowsPerPage)); currentPage=Math.min(Math.max(1,currentPage),totalPages);
+  const start=(currentPage-1)*rowsPerPage; const pageData=filteredCertificates.slice(start,start+rowsPerPage);
+  $("pagination-info").textContent=`عرض ${total?start+1:0} إلى ${Math.min(start+rowsPerPage,total)} من ${total}`; $("prev-page-btn").disabled=currentPage===1; $("next-page-btn").disabled=currentPage===totalPages;
+  if(!pageData.length){ tbody.innerHTML=`<tr><td colspan="8" class="p-8 text-center text-gray-400">لا توجد شهادات</td></tr>`; $("select-all-checkbox").checked=false; return; }
+  tbody.innerHTML=pageData.map(c=>{ const code=escapeHTML(c.cert_code); const name=escapeHTML(c.full_name); const isR=c.status==="revoked"; const checked=selectedCodes.has(c.cert_code)?"checked":""; return `<tr class="hover:bg-gray-50"><td class="p-3.5 text-center"><input type="checkbox" ${checked} onchange="toggleRowSelect('${code}',this.checked)" class="w-4 h-4"></td><td class="p-3.5 font-mono text-[11px]" dir="ltr">${code}</td><td class="p-3.5"><div class="font-black">${name}</div><div class="text-[11px] text-gray-400" dir="ltr">${escapeHTML(c.full_name_en)}</div></td><td class="p-3.5">${escapeHTML(c.course_name||"--")}</td><td class="p-3.5">${escapeHTML(c.branch||"--")}</td><td class="p-3.5 text-[11px]">${escapeHTML(c.date_from||"--")} → ${escapeHTML(c.date_to||"--")}<br><span class="text-gray-400">${escapeHTML(c.hours||"")} ساعة</span></td><td class="p-3.5 text-center">${isR?'<span class="badge-revoked">🚫 ملغاة</span>':'<span class="badge-valid">✓ سارية</span>'}</td><td class="p-3.5"><div class="flex justify-center gap-1 flex-wrap"><button onclick="openQRModal('${code}')" class="sonaa-btn-black !py-1.5 !px-2 text-[11px]">QR</button><button onclick="shareWhatsApp('${code}')" class="sonaa-btn-green !py-1.5 !px-2 text-[11px]">واتساب</button><button onclick="openEditModal('${code}')" class="sonaa-btn-gray !py-1.5 !px-2 text-[11px]">تعديل</button><button onclick="toggleSingleStatus('${code}','${isR?"valid":"revoked"}')" class="sonaa-btn-gray !py-1.5 !px-2 text-[11px]">${isR?"تفعيل":"إلغاء"}</button></div></td></tr>`; }).join("");
+  $("select-all-checkbox").checked=pageData.length>0 && pageData.every(c=>selectedCodes.has(c.cert_code));
 }
-
-function changePage(direction) {
-  currentPage += direction;
-  renderTable();
-}
-
-function renderTable() {
-  const tbody = $("certificates-tbody");
-
-  const total = filteredCertificates.length;
-  const totalPages = Math.max(1, Math.ceil(total / rowsPerPage));
-
-  currentPage = Math.min(Math.max(1, currentPage), totalPages);
-
-  const start = (currentPage - 1) * rowsPerPage;
-  const pageData = filteredCertificates.slice(start, start + rowsPerPage);
-
-  $("pagination-info").textContent =
-    `عرض ${total ? start + 1 : 0} إلى ${Math.min(start + rowsPerPage, total)} من ${total}`;
-
-  $("prev-page-btn").disabled = currentPage === 1;
-  $("next-page-btn").disabled = currentPage === totalPages;
-
-  if (!pageData.length) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="8" class="p-8 text-center text-gray-400">
-          لا توجد شهادات
-        </td>
-      </tr>`;
-    $("select-all-checkbox").checked = false;
-    return;
-  }
-
-  tbody.innerHTML = pageData.map(c => {
-    const code = escapeHTML(c.cert_code);
-    const name = escapeHTML(c.full_name);
-    const isRevoked = c.status === "revoked";
-    const checked = selectedCodes.has(c.cert_code) ? "checked" : "";
-
-    return `
-      <tr class="hover:bg-gray-50">
-        <td class="p-3.5 text-center">
-          <input type="checkbox" ${checked}
-            onchange="toggleRowSelect('${code}',this.checked)"
-            class="w-4 h-4">
-        </td>
-
-        <td class="p-3.5 font-mono text-[11px]" dir="ltr">${code}</td>
-
-        <td class="p-3.5">
-          <div class="font-black">${name}</div>
-          <div class="text-[11px] text-gray-400" dir="ltr">
-            ${escapeHTML(c.full_name_en)}
-          </div>
-        </td>
-
-        <td class="p-3.5">${escapeHTML(c.course_name || "--")}</td>
-        <td class="p-3.5">${escapeHTML(c.branch || "--")}</td>
-
-        <td class="p-3.5 text-[11px]">
-          ${escapeHTML(c.date_from || "--")} → ${escapeHTML(c.date_to || "--")}
-          <br>
-          <span class="text-gray-400">${escapeHTML(c.hours || "")} ساعة</span>
-        </td>
-
-        <td class="p-3.5 text-center">
-          ${isRevoked
-            ? '<span class="badge-revoked">🚫 ملغاة</span>'
-            : '<span class="badge-valid">✓ سارية</span>'}
-        </td>
-
-        <td class="p-3.5">
-          <div class="flex justify-center gap-1 flex-wrap">
-            <button onclick="openQRModal('${code}')"
-              class="sonaa-btn-black !py-1.5 !px-2 text-[11px]">QR</button>
-
-            <button onclick="shareWhatsApp('${code}')"
-              class="sonaa-btn-green !py-1.5 !px-2 text-[11px]">واتساب</button>
-
-            <button onclick="openEditModal('${code}')"
-              class="sonaa-btn-gray !py-1.5 !px-2 text-[11px]">تعديل</button>
-
-            <button onclick="toggleSingleStatus('${code}','${isRevoked ? "valid" : "revoked"}')"
-              class="sonaa-btn-gray !py-1.5 !px-2 text-[11px]">
-              ${isRevoked ? "تفعيل" : "إلغاء"}
-            </button>
-          </div>
-        </td>
-      </tr>`;
-  }).join("");
-
-  $("select-all-checkbox").checked =
-    pageData.length > 0 && pageData.every(c => selectedCodes.has(c.cert_code));
-}
-
-// =====================================
-// SELECTION
-// =====================================
-
-function toggleRowSelect(code, checked) {
-  if (checked) selectedCodes.add(code);
-  else selectedCodes.delete(code);
-
-  updateSelectionUI();
-}
-
-function toggleSelectAll(checkbox) {
-  const start = (currentPage - 1) * rowsPerPage;
-  const pageData = filteredCertificates.slice(start, start + rowsPerPage);
-
-  pageData.forEach(c => {
-    if (checkbox.checked) selectedCodes.add(c.cert_code);
-    else selectedCodes.delete(c.cert_code);
-  });
-
-  updateSelectionUI();
-  renderTable();
-}
-
-function updateSelectionUI() {
-  const count = selectedCodes.size;
-
-  $("stat-selected").textContent = count;
-  $("bulk-count").textContent = count;
-
-  $("bulk-actions-bar").classList.toggle("hidden", count === 0);
-}
-
-// =====================================
-// CERTIFICATE FORM
-// =====================================
-
-function openAddModal() {
-  $("modal-title").textContent = "إضافة شهادة جديدة";
-  $("edit-cert-id").value = "";
-
-  ["f-name", "f-name-en", "f-course", "f-branch",
-   "f-from", "f-to", "f-hours"].forEach(id => $(id).value = "");
-
-  $("f-code").value = generateCertCode();
-  $("cert-modal").classList.remove("hidden");
-}
-
-function openEditModal(code) {
-  const c = allCertificates.find(x => x.cert_code === code);
-  if (!c) return;
-
-  $("modal-title").textContent = "تعديل شهادة";
-  $("edit-cert-id").value = c.cert_code;
-
-  $("f-name").value = c.full_name || "";
-  $("f-name-en").value = c.full_name_en || "";
-  $("f-course").value = c.course_name || "";
-  $("f-branch").value = c.branch || "";
-  $("f-from").value = c.date_from || "";
-  $("f-to").value = c.date_to || "";
-  $("f-hours").value = c.hours ?? "";
-  $("f-code").value = c.cert_code;
-
-  // لا تسمح بتغيير الرقم المرجعي عند التعديل
-  $("f-code").readOnly = true;
-
-  $("cert-modal").classList.remove("hidden");
-}
-
-function closeCertModal() {
-  $("cert-modal").classList.add("hidden");
-  $("f-code").readOnly = false;
-}
-
-async function saveCertificate(event) {
-  event.preventDefault();
-
-  const oldCode = $("edit-cert-id").value;
-
-  const payload = {
-    full_name: $("f-name").value.trim(),
-    full_name_en: $("f-name-en").value.trim(),
-    course_name: $("f-course").value.trim(),
-    branch: $("f-branch").value.trim(),
-    date_from: $("f-from").value || null,
-    date_to: $("f-to").value || null,
-    hours: $("f-hours").value ? Number($("f-hours").value) : null
-  };
-
-  if (!payload.full_name || !payload.course_name) {
-    alert("أدخل الاسم والبرنامج التدريبي.");
-    return;
-  }
-
-  if (payload.hours !== null && (!Number.isFinite(payload.hours) || payload.hours < 0)) {
-    alert("عدد الساعات غير صحيح.");
-    return;
-  }
-
-  const btn = $("save-cert-btn");
-  btn.disabled = true;
-
-  try {
+function toggleRowSelect(code,checked){ if(checked) selectedCodes.add(code); else selectedCodes.delete(code); updateSelectionUI(); }
+function toggleSelectAll(cb){ const start=(currentPage-1)*rowsPerPage; const pageData=filteredCertificates.slice(start,start+rowsPerPage); pageData.forEach(c=>{ if(cb.checked) selectedCodes.add(c.cert_code); else selectedCodes.delete(c.cert_code); }); updateSelectionUI(); renderTable(); }
+function updateSelectionUI(){ const n=selectedCodes.size; $("stat-selected").textContent=n; $("bulk-count").textContent=n; $("bulk-actions-bar").classList.toggle("hidden",n===0); }
+function openAddModal(){ $("modal-title").textContent="إضافة شهادة جديدة"; $("edit-cert-id").value=""; ["f-name","f-name-en","f-course","f-branch","f-from","f-to","f-hours"].forEach(id=>$(id).value=""); $("f-code").value=generateCertCode(); $("cert-modal").classList.remove("hidden"); }
+function openEditModal(code){ const c=allCertificates.find(x=>x.cert_code===code); if(!c) return; $("modal-title").textContent="تعديل شهادة"; $("edit-cert-id").value=c.cert_code; $("f-name").value=c.full_name||""; $("f-name-en").value=c.full_name_en||""; $("f-course").value=c.course_name||""; $("f-branch").value=c.branch||""; $("f-from").value=c.date_from||""; $("f-to").value=c.date_to||""; $("f-hours").value=c.hours??""; $("f-code").value=c.cert_code; $("f-code").readOnly=true; $("cert-modal").classList.remove("hidden"); }
+function closeCertModal(){ $("cert-modal").classList.add("hidden"); $("f-code").readOnly=false; }
+async function saveCertificate(event){
+  event.preventDefault(); const oldCode=$("edit-cert-id").value;
+  const payload={ full_name:$("f-name").value.trim(), full_name_en:$("f-name-en").value.trim(), course_name:$("f-course").value.trim(), branch:$("f-branch").value.trim(), date_from:$("f-from").value||null, date_to:$("f-to").value||null, hours:$("f-hours").value?Number($("f-hours").value):null };
+  if(!payload.full_name||!payload.course_name){ alert("أدخل الاسم والبرنامج."); return; }
+  const btn=$("save-cert-btn"); btn.disabled=true;
+  try{
     let result;
-
-    if (oldCode) {
-      result = await supabaseClient
-        .from("certificates")
-        .update(payload)
-        .eq("org_id", currentOrgId)
-        .eq("cert_code", oldCode);
-    } else {
-      payload.cert_code = $("f-code").value.trim() || generateCertCode();
-      payload.org_id = currentOrgId;
-      payload.status = "valid";
-
-      result = await supabaseClient
-        .from("certificates")
-        .insert([payload]);
-    }
-
-    if (result.error) throw result.error;
-
-    closeCertModal();
-    await fetchCertificates();
-
-    alert("تم حفظ الشهادة بنجاح.");
-
-  } catch (error) {
-    console.error(error);
-    alert("تعذر الحفظ: " + error.message);
-  } finally {
-    btn.disabled = false;
-  }
+    if(oldCode){ result=await supabaseClient.from("certificates").update(payload).eq("org_id",currentOrgSlug).eq("cert_code",oldCode); }
+    else{ payload.cert_code=$("f-code").value.trim()||generateCertCode(); payload.org_id=currentOrgSlug; payload.status="valid"; result=await supabaseClient.from("certificates").insert([payload]); }
+    if(result.error) throw result.error; closeCertModal(); await fetchCertificates(); alert("تم حفظ الشهادة بنجاح.");
+  }catch(e){ console.error(e); alert("تعذر الحفظ: "+e.message); }finally{ btn.disabled=false; }
 }
-
-// =====================================
-// EXCEL
-// =====================================
-
-function downloadExcelTemplate() {
-  const sample = [{
-    "الاسم_بالعربي": "اسم المتدرب",
-    "الاسم_بالانجليزي": "STUDENT NAME",
-    "البرنامج_التدريبي": "الإسعافات الأولية",
-    "الفرع": "الفرع",
-    "تاريخ_البداية": "2026-01-10",
-    "تاريخ_النهاية": "2026-01-15",
-    "عدد_الساعات": 30,
-    "الرقم_المرجعي_اختياري": ""
-  }];
-
-  const ws = XLSX.utils.json_to_sheet(sample);
-  const wb = XLSX.utils.book_new();
-
-  XLSX.utils.book_append_sheet(wb, ws, "الشهادات");
-  XLSX.writeFile(wb, "SONAA_VERIFY_Excel_Template.xlsx");
+function downloadExcelTemplate(){ const sample=[{"الاسم_بالعربي":"اسم المتدرب","الاسم_بالانجليزي":"STUDENT NAME","البرنامج_التدريبي":"الإسعافات الأولية","الفرع":"الفرع","تاريخ_البداية":"2026-01-10","تاريخ_النهاية":"2026-01-15","عدد_الساعات":30,"الرقم_المرجعي_اختياري":""}]; const ws=XLSX.utils.json_to_sheet(sample); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"الشهادات"); XLSX.writeFile(wb,"SONAA_VERIFY_Excel_Template.xlsx"); }
+function excelDate(v){ if(!v) return null; if(typeof v==="number"){ const d=XLSX.SSF.parse_date_code(v); if(!d) return null; return [d.y,String(d.m).padStart(2,"0"),String(d.d).padStart(2,"0")].join("-"); } const s=String(v).trim(); if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s; return null; }
+async function handleExcelUpload(event){
+  const file=event.target.files[0]; if(!file) return;
+  try{
+    const reader=new FileReader(); const buffer=await new Promise((res,rej)=>{ reader.onload=()=>res(reader.result); reader.onerror=rej; reader.readAsArrayBuffer(file); });
+    const wb=XLSX.read(buffer,{type:"array"}); const ws=wb.Sheets[wb.SheetNames[0]]; const rows=XLSX.utils.sheet_to_json(ws);
+    if(!rows.length) throw new Error("ملف Excel فارغ.");
+    const records=rows.map(row=>({ cert_code:String(row["الرقم_المرجعي_اختياري"]||row["cert_code"]||"").trim()||generateCertCode(), org_id:currentOrgSlug, full_name:String(row["الاسم_بالعربي"]||row["الاسم"]||"").trim(), full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(), course_name:String(row["البرنامج_التدريبي"]||row["الدورة"]||"").trim(), branch:String(row["الفرع"]||"").trim(), date_from:excelDate(row["تاريخ_البداية"]), date_to:excelDate(row["تاريخ_النهاية"]), hours:row["عدد_الساعات"]!==undefined&&row["عدد_الساعات"]!==""?Number(row["عدد_الساعات"]):null, status:"valid" })).filter(r=>r.full_name&&r.course_name);
+    if(!records.length) throw new Error("لا توجد سجلات مكتملة.");
+    const codes=records.map(r=>r.cert_code); if(new Set(codes).size!==codes.length) throw new Error("رقم مرجعي مكرر داخل الملف.");
+    const existing=new Set(allCertificates.map(c=>c.cert_code)); if(codes.some(c=>existing.has(c))) throw new Error("رقم مستخدم مسبقاً.");
+    const modal=$("upload-modal"); const bar=$("upload-progress-bar"); const st=$("upload-status-text"); modal.classList.remove("hidden");
+    for(let i=0;i<records.length;i+=100){ const chunk=records.slice(i,i+100); st.textContent=`جاري رفع ${Math.min(i+100,records.length)} من ${records.length}`; const {error}=await supabaseClient.from("certificates").insert(chunk); if(error) throw error; bar.style.width=`${Math.round(Math.min(i+100,records.length)/records.length*100)}%`; }
+    modal.classList.add("hidden"); bar.style.width="0%"; event.target.value=""; await fetchCertificates(); alert(`تم استيراد ${records.length} شهادة بنجاح.`);
+  }catch(e){ console.error(e); $("upload-modal").classList.add("hidden"); alert("فشل الاستيراد: "+e.message); event.target.value=""; }
 }
-
-function excelDate(value) {
-  if (!value) return null;
-
-  if (typeof value === "number") {
-    const date = XLSX.SSF.parse_date_code(value);
-    if (!date) return null;
-    return [
-      date.y,
-      String(date.m).padStart(2, "0"),
-      String(date.d).padStart(2, "0")
-    ].join("-");
-  }
-
-  const s = String(value).trim();
-
-  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
-
-  return null;
+async function toggleSingleStatus(code,status){ if(!confirm(status==="revoked"?"هل تريد إلغاء الشهادة؟":"هل تريد إعادة تفعيلها؟")) return; const {error}=await supabaseClient.from("certificates").update({status}).eq("org_id",currentOrgSlug).eq("cert_code",code); if(error){ alert(error.message); return; } await fetchCertificates(); }
+async function bulkUpdateStatus(status){ const codes=[...selectedCodes]; if(!codes.length) return; if(!confirm(`تأكيد تحديث ${codes.length} شهادة؟`)) return; const {error}=await supabaseClient.from("certificates").update({status}).eq("org_id",currentOrgSlug).in("cert_code",codes); if(error){ alert(error.message); return; } selectedCodes.clear(); await fetchCertificates(); alert("تم التحديث."); }
+async function bulkDelete(){ const codes=[...selectedCodes]; if(!codes.length) return; if(!confirm(`حذف ${codes.length} نهائياً؟`)) return; const {error}=await supabaseClient.from("certificates").delete().eq("org_id",currentOrgSlug).in("cert_code",codes); if(error){ alert(error.message); return; } selectedCodes.clear(); await fetchCertificates(); }
+function bulkShareLinks(){ const links=[...selectedCodes].map(c=>getVerifyUrl(c)).join("\n"); navigator.clipboard.writeText(links).then(()=>alert("تم نسخ الروابط.")).catch(()=>alert("تعذر النسخ.")); }
+function openQRModal(code){ const cert=allCertificates.find(c=>c.cert_code===code); if(!cert) return; currentQRCodeString=code; $("qr-student-name").textContent=cert.full_name||""; $("qr-course-name").textContent=cert.course_name||""; $("qr-org-name").textContent=currentOrg.name_ar||""; $("qr-code-text").textContent=code; const box=$("qrcode-box"); box.innerHTML=""; new QRCode(box,{text:getVerifyUrl(code),width:180,height:180,correctLevel:QRCode.CorrectLevel.H}); $("qr-modal").classList.remove("hidden"); }
+function downloadQRImage(){ const img=document.querySelector("#qrcode-box img"); const cv=document.querySelector("#qrcode-box canvas"); const url=img?.src||cv?.toDataURL("image/png"); if(!url) return; const a=document.createElement("a"); a.href=url; a.download=`SONAA-QR-${currentQRCodeString}.png`; a.click(); }
+function shareQRWhatsApp(){ window.open(`https://wa.me/?text=${encodeURIComponent("رابط التحقق: "+getVerifyUrl(currentQRCodeString))}`,"_blank"); }
+function shareWhatsApp(code){ const cert=allCertificates.find(c=>c.cert_code===code); window.open(`https://wa.me/?text=${encodeURIComponent(`شهادة ${cert?.full_name||""}\nرابط التحقق: ${getVerifyUrl(code)}`)}`,"_blank"); }
+async function downloadAllQRZip(){
+  const list=selectedCodes.size?allCertificates.filter(c=>selectedCodes.has(c.cert_code)):allCertificates.slice(0,200); if(!list.length){ alert("لا توجد شهادات."); return; }
+  const zip=new JSZip();
+  for(let i=0;i<list.length;i++){ const cert=list[i]; const tmp=document.createElement("div"); new QRCode(tmp,{text:getVerifyUrl(cert.cert_code),width:200,height:200,correctLevel:QRCode.CorrectLevel.H}); await new Promise(r=>setTimeout(r,50)); const cv=tmp.querySelector("canvas"); const img=tmp.querySelector("img"); const du=cv?cv.toDataURL("image/png"):img?.src; if(!du) continue; const safe=String(cert.full_name||"cert").replace(/[\\/:*?"<>|]/g,"_").slice(0,50); zip.file(`QR-${safe}-${cert.cert_code}.png`,du.split(",")[1],{base64:true}); }
+  const blob=await zip.generateAsync({type:"blob"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download=`SONAA-VERIFY-${list.length}-QR.zip`; a.click(); setTimeout(()=>URL.revokeObjectURL(url),3000);
 }
-
-async function handleExcelUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  try {
-    const reader = new FileReader();
-
-    const buffer = await new Promise((resolve, reject) => {
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsArrayBuffer(file);
-    });
-
-    const wb = XLSX.read(buffer, { type: "array" });
-    const ws = wb.Sheets[wb.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(ws);
-
-    if (!rows.length) throw new Error("ملف Excel فارغ.");
-
-    const records = rows.map(row => ({
-      cert_code: String(
-        row["الرقم_المرجعي_اختياري"] || row["cert_code"] || ""
-      ).trim() || generateCertCode(),
-
-      org_id: currentOrgId,
-
-      full_name: String(
-        row["الاسم_بالعربي"] || row["الاسم"] || ""
-      ).trim(),
-
-      full_name_en: String(
-        row["الاسم_بالانجليزي"] || ""
-      ).trim(),
-
-      course_name: String(
-        row["البرنامج_التدريبي"] || row["الدورة"] || ""
-      ).trim(),
-
-      branch: String(row["الفرع"] || "").trim(),
-
-      date_from: excelDate(row["تاريخ_البداية"]),
-      date_to: excelDate(row["تاريخ_النهاية"]),
-
-      hours: row["عدد_الساعات"] !== undefined &&
-             row["عدد_الساعات"] !== ""
-        ? Number(row["عدد_الساعات"])
-        : null,
-
-      status: "valid"
-    })).filter(r => r.full_name && r.course_name);
-
-    if (!records.length) {
-      throw new Error("لا توجد سجلات مكتملة.");
-    }
-
-    const codes = records.map(r => r.cert_code);
-
-    if (new Set(codes).size !== codes.length) {
-      throw new Error("يوجد رقم مرجعي مكرر داخل ملف Excel.");
-    }
-
-    const existing = new Set(allCertificates.map(c => c.cert_code));
-
-    if (codes.some(code => existing.has(code))) {
-      throw new Error("يوجد رقم مرجعي مستخدم مسبقاً في المؤسسة.");
-    }
-
-    if (records.some(r =>
-      r.hours !== null && (!Number.isFinite(r.hours) || r.hours < 0)
-    )) {
-      throw new Error("توجد قيمة غير صحيحة في عدد الساعات.");
-    }
-
-    const modal = $("upload-modal");
-    const bar = $("upload-progress-bar");
-    const status = $("upload-status-text");
-
-    modal.classList.remove("hidden");
-
-    const chunkSize = 100;
-
-    for (let i = 0; i < records.length; i += chunkSize) {
-      const chunk = records.slice(i, i + chunkSize);
-
-      status.textContent =
-        `جاري رفع ${Math.min(i + chunkSize, records.length)} من ${records.length}`;
-
-      const { error } = await supabaseClient
-        .from("certificates")
-        .insert(chunk);
-
-      if (error) throw error;
-
-      bar.style.width =
-        `${Math.round(Math.min(i + chunkSize, records.length) / records.length * 100)}%`;
-    }
-
-    modal.classList.add("hidden");
-    bar.style.width = "0%";
-
-    event.target.value = "";
-
-    await fetchCertificates();
-
-    alert(`تم استيراد ${records.length} شهادة بنجاح.`);
-
-  } catch (error) {
-    console.error(error);
-    $("upload-modal").classList.add("hidden");
-    alert("فشل الاستيراد: " + error.message);
-    event.target.value = "";
-  }
+// ===== ORGS & TEMPLATES - جديد =====
+function openOrgsModal(){ $("org-modal").classList.remove("hidden"); }
+async function saveNewOrg(){
+  const slug=$("new-org-slug").value.trim().toLowerCase(); const nameAr=$("new-org-name").value.trim(); const nameEn=$("new-org-en").value.trim(); const color=$("new-org-color").value; const logo=$("new-org-logo").value.trim();
+  if(!slug||!nameAr){ alert("ادخل slug واسم الجهة"); return; }
+  const {error}=await supabaseClient.from("organizations").insert([{slug, name_ar:nameAr, name_en:nameEn, primary_color:color, logo_url:logo||null, status:"active"}]);
+  if(error){ alert(error.message); return; }
+  // قالب افتراضي للجهة الجديدة
+  await supabaseClient.from("certificate_templates").insert([{name:"قالب "+nameAr, certificate_type:"electronic", file_type:"image", org_id:slug, fields:{}, is_active:true}]);
+  $("org-modal").classList.add("hidden"); alert("تم إضافة الجهة "+nameAr); location.reload();
 }
-
-// =====================================
-// STATUS MANAGEMENT
-// =====================================
-
-async function toggleSingleStatus(code, status) {
-  if (!confirm(status === "revoked" ? "هل تريد إلغاء الشهادة؟" : "هل تريد إعادة تفعيلها؟")) {
-    return;
-  }
-
-  const { error } = await supabaseClient
-    .from("certificates")
-    .update({ status })
-    .eq("org_id", currentOrgId)
-    .eq("cert_code", code);
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  await fetchCertificates();
+async function openTemplateModal(){
+  $("tpl-org-name").textContent=currentOrg.name_ar+" ("+currentOrgSlug+")";
+  const {data}=await supabaseClient.from("certificate_templates").select("*").eq("org_id",currentOrgSlug);
+  $("templates-list").innerHTML=(data||[]).map(t=>`<div class="border rounded-xl p-3 text-sm font-bold flex justify-between"><span>${escapeHTML(t.name)}</span><span class="text-xs text-green-600">${t.is_active?"نشط":"غير نشط"}</span></div>`).join("")||"<p class='text-sm text-gray-500'>لا توجد قوالب - اعمل واحد من الاستديو</p>";
+  $("template-modal").classList.remove("hidden");
 }
-
-async function bulkUpdateStatus(status) {
-  const codes = [...selectedCodes];
-  if (!codes.length) return;
-
-  if (!confirm(`تأكيد تحديث حالة ${codes.length} شهادة؟`)) return;
-
-  const { error } = await supabaseClient
-    .from("certificates")
-    .update({ status })
-    .eq("org_id", currentOrgId)
-    .in("cert_code", codes);
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  selectedCodes.clear();
-  await fetchCertificates();
-
-  alert("تم تحديث الشهادات.");
-}
-
-async function bulkDelete() {
-  const codes = [...selectedCodes];
-  if (!codes.length) return;
-
-  if (!confirm(`تحذير: حذف ${codes.length} شهادة نهائياً؟`)) return;
-
-  const { error } = await supabaseClient
-    .from("certificates")
-    .delete()
-    .eq("org_id", currentOrgId)
-    .in("cert_code", codes);
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  selectedCodes.clear();
-  await fetchCertificates();
-}
-
-function bulkShareLinks() {
-  const links = [...selectedCodes]
-    .map(code => getVerifyUrl(code))
-    .join("\n");
-
-  navigator.clipboard.writeText(links)
-    .then(() => alert("تم نسخ روابط التحقق."))
-    .catch(() => alert("تعذر النسخ. استخدم متصفحاً يسمح بالنسخ."));
-}
-
-// =====================================
-// QR CODE
-// =====================================
-
-function openQRModal(code) {
-  const cert = allCertificates.find(c => c.cert_code === code);
-  if (!cert) return;
-
-  currentQRCodeString = code;
-
-  $("qr-student-name").textContent = cert.full_name || "";
-  $("qr-course-name").textContent = cert.course_name || "";
-  $("qr-org-name").textContent = currentOrg.name_ar || "";
-  $("qr-code-text").textContent = code;
-
-  const box = $("qrcode-box");
-  box.innerHTML = "";
-
-  new QRCode(box, {
-    text: getVerifyUrl(code),
-    width: 180,
-    height: 180,
-    correctLevel: QRCode.CorrectLevel.H
-  });
-
-  $("qr-modal").classList.remove("hidden");
-}
-
-function downloadQRImage() {
-  const img = document.querySelector("#qrcode-box img");
-  const canvas = document.querySelector("#qrcode-box canvas");
-
-  const url = img?.src || canvas?.toDataURL("image/png");
-  if (!url) return;
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `SONAA-QR-${currentQRCodeString}.png`;
-  a.click();
-}
-
-function shareQRWhatsApp() {
-  const url = getVerifyUrl(currentQRCodeString);
-
-  window.open(
-    `https://wa.me/?text=${encodeURIComponent("رابط التحقق من الشهادة: " + url)}`,
-    "_blank"
-  );
-}
-
-function shareWhatsApp(code) {
-  const cert = allCertificates.find(c => c.cert_code === code);
-  const url = getVerifyUrl(code);
-
-  const message =
-    `شهادة ${cert?.full_name || ""}\nرابط التحقق: ${url}`;
-
-  window.open(
-    `https://wa.me/?text=${encodeURIComponent(message)}`,
-    "_blank"
-  );
-}
-
-// =====================================
-// DOWNLOAD QR ZIP
-// =====================================
-
-async function downloadAllQRZip() {
-  const list = selectedCodes.size
-    ? allCertificates.filter(c => selectedCodes.has(c.cert_code))
-    : allCertificates.slice(0, 200);
-
-  if (!list.length) {
-    alert("لا توجد شهادات.");
-    return;
-  }
-
-  if (list.length > 200 && !selectedCodes.size) {
-    alert("حدد الشهادات المطلوبة أو حمّل أول 200 شهادة.");
-    return;
-  }
-
-  const zip = new JSZip();
-
-  for (let i = 0; i < list.length; i++) {
-    const cert = list[i];
-
-    const temp = document.createElement("div");
-
-    new QRCode(temp, {
-      text: getVerifyUrl(cert.cert_code),
-      width: 200,
-      height: 200,
-      correctLevel: QRCode.CorrectLevel.H
-    });
-
-    await new Promise(resolve => setTimeout(resolve, 50));
-
-    const canvas = temp.querySelector("canvas");
-    const img = temp.querySelector("img");
-
-    const dataUrl = canvas
-      ? canvas.toDataURL("image/png")
-      : img?.src;
-
-    if (!dataUrl) continue;
-
-    const safeName = String(cert.full_name || "certificate")
-      .replace(/[\\/:*?"<>|]/g, "_")
-      .slice(0, 50);
-
-    zip.file(
-      `QR-${safeName}-${cert.cert_code}.png`,
-      dataUrl.split(",")[1],
-      { base64: true }
-    );
-  }
-
-  const blob = await zip.generateAsync({ type: "blob" });
-
-  const downloadUrl = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-
-  a.href = downloadUrl;
-  a.download = `SONAA-VERIFY-${list.length}-QR.zip`;
-  a.click();
-
-  setTimeout(() => URL.revokeObjectURL(downloadUrl), 3000);
-}
-
-// =====================================
-// START
-// =====================================
-
 checkSession();
 </script>
 </body>
