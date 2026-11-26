@@ -174,22 +174,26 @@
     <button onclick="document.getElementById('template-modal').classList.add('hidden')" class="sonaa-btn-gray w-full mt-4">إغلاق</button>
   </div>
 </div>
-
 <div id="qr-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-  <div class="bg-white max-w-sm w-full rounded-2xl p-6 text-center">
-    <div class="qr-cert-card" id="qr-print-card">
-      <div class="qr-cert-top" id="qr-card-top"><div class="text-[11px] font-bold opacity-90" id="qr-org-name">جمعية الهلال الأحمر السوداني</div><div class="qr-cert-name" id="qr-student-name"></div><div class="qr-cert-course" id="qr-course-name"></div></div>
-      <div class="qr-cert-qr"><div id="qrcode-box"></div></div>
-      <div class="qr-cert-code" id="qr-code-text"></div>
-      <div class="qr-cert-footer"><span>🛡️ معتمدة</span><span>SONAA VERIFY</span></div>
+  <div class="bg-white max-w-sm w-full rounded-2xl p-5 text-center">
+    <div class="qr-cert-card" id="qr-print-card" style="background:#fff">
+      <div class="text-white p-4 rounded-t-2xl" id="qr-card-top" style="background:var(--org-color)">
+        <div class="text-[11px] font-bold opacity-90" id="qr-org-name">--</div>
+        <div class="text-xl font-black" id="qr-student-name"></div>
+        <div class="text-sm" id="qr-course-name"></div>
+      </div>
+      <div class="py-4"><div id="qrcode-box" class="flex justify-center"></div></div>
+      <div class="text-xs font-mono font-bold" id="qr-code-text"></div>
+      <div class="text-[11px] text-gray-400 font-bold mt-2">SONAA VERIFY - معتمدة</div>
     </div>
-    <div class="grid grid-cols-2 gap-2 mt-4"><button onclick="downloadQRImage()" class="sonaa-btn justify-center">تحميل PNG</button><button onclick="shareQRWhatsApp()" class="sonaa-btn-green">واتساب 📤</button></div>
+    <div class="grid grid-cols-2 gap-2 mt-4">
+      <button onclick="downloadQRImage()" class="sonaa-btn justify-center">تحميل PNG</button>
+      <button onclick="shareQRWhatsApp()" class="sonaa-btn-green">واتساب 📤</button>
+    </div>
+    <button onclick="downloadFullCertificateLight()" class="w-full mt-2 py-3 rounded-xl font-black text-sm bg-black text-white">⬇️ تحميل الشهادة كاملة A4 للطباعة</button>
     <button onclick="document.getElementById('qr-modal').classList.add('hidden')" class="sonaa-btn-gray w-full mt-2">إغلاق</button>
   </div>
 </div>
-
-<div id="upload-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-sm w-full rounded-2xl p-6 text-center"><h3 class="font-black">جاري رفع الشهادات...</h3><div class="w-full bg-gray-200 rounded-full h-3 mt-4 overflow-hidden"><div id="upload-progress-bar" class="h-full bg-[#C8102E] transition-all" style="width:0%"></div></div><p id="upload-status-text" class="text-xs text-gray-500 mt-3 font-bold">جاري الرفع...</p></div></div>
-
 <script>
 const SUPABASE_URL = "https://zepmmkynvabxgsgzskgi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EJvJnFCoPCFxkK-VAmwY_Q_6c4PTyE-";
@@ -197,6 +201,7 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let allCertificates = [], filteredCertificates = [], selectedCodes = new Set();
 let currentPage = 1; const rowsPerPage = 50;
 let currentQRCodeString = "";
+let currentCertForRender = null;
 let currentOrgId = null; let currentOrgSlug = null; let currentOrg = null; let currentUser = null;
 let isSuperAdmin = false; let allOrgs = [];
 const $ = id => document.getElementById(id);
@@ -293,7 +298,7 @@ async function saveCertificate(event){
   let payload={ full_name:$("f-name").value.trim(), full_name_en:$("f-name-en").value.trim() };
   if(isSchool()){
     payload.student_class=$("f-class").value.trim(); payload.final_grade=$("f-final-grade").value.trim(); payload.total_grade=$("f-total-grade").value.trim(); payload.grade_label=calcGradeLabel(payload.final_grade, payload.total_grade);
-    payload.course_name=payload.student_class; // عشان التحقق القديم ما يخرب
+    payload.course_name=payload.student_class;
     if(!payload.full_name||!payload.student_class||!payload.final_grade){ alert("أدخل الاسم والفصل والدرجة."); return; }
   } else {
     payload.course_name=$("f-course").value.trim(); payload.branch=$("f-branch").value.trim(); payload.date_from=$("f-from").value||null; payload.date_to=$("f-to").value||null; payload.hours=$("f-hours").value?Number($("f-hours").value):null;
@@ -338,10 +343,55 @@ async function toggleSingleStatus(code,status){ if(!confirm(status==="revoked"?"
 async function bulkUpdateStatus(status){ const codes=[...selectedCodes]; if(!codes.length) return; if(!confirm(`تأكيد تحديث ${codes.length} شهادة؟`)) return; const {error}=await supabaseClient.from("certificates").update({status}).eq("org_id",currentOrgSlug).in("cert_code",codes); if(error){ alert(error.message); return; } selectedCodes.clear(); await fetchCertificates(); alert("تم التحديث."); }
 async function bulkDelete(){ const codes=[...selectedCodes]; if(!codes.length) return; if(!confirm(`حذف ${codes.length} نهائياً؟`)) return; const {error}=await supabaseClient.from("certificates").delete().eq("org_id",currentOrgSlug).in("cert_code",codes); if(error){ alert(error.message); return; } selectedCodes.clear(); await fetchCertificates(); }
 function bulkShareLinks(){ const links=[...selectedCodes].map(c=>getVerifyUrl(c)).join("\n"); navigator.clipboard.writeText(links).then(()=>alert("تم نسخ الروابط.")).catch(()=>alert("تعذر النسخ.")); }
-function openQRModal(code){ const cert=allCertificates.find(c=>c.cert_code===code); if(!cert) return; currentQRCodeString=code; $("qr-student-name").textContent=cert.full_name||""; $("qr-course-name").textContent= isSchool() ? `${cert.student_class||""} - ${cert.final_grade||""}/${cert.total_grade||""} ${cert.grade_label||""}` : cert.course_name||""; $("qr-org-name").textContent=currentOrg.name_ar||""; $("qr-code-text").textContent=code; const box=$("qrcode-box"); box.innerHTML=""; new QRCode(box,{text:getVerifyUrl(code),width:180,height:180,correctLevel:QRCode.CorrectLevel.H}); $("qr-modal").classList.remove("hidden"); }
+
+// === خفيف - ما بعلق ===
+function openQRModal(code){
+  const cert=allCertificates.find(c=>c.cert_code===code); if(!cert) return;
+  currentCertForRender=cert; currentQRCodeString=code;
+  $("qr-student-name").textContent=cert.full_name||"";
+  $("qr-course-name").textContent= isSchool() ? `${cert.student_class||""} - ${cert.final_grade||""}/${cert.total_grade||""} ${cert.grade_label||""}` : cert.course_name||"";
+  $("qr-org-name").textContent=currentOrg.name_ar||"";
+  $("qr-code-text").textContent=code;
+  const box=$("qrcode-box"); box.innerHTML="";
+  new QRCode(box,{text:getVerifyUrl(code),width:170,height:170,correctLevel:QRCode.CorrectLevel.H});
+  $("qr-modal").classList.remove("hidden");
+}
 function downloadQRImage(){ const img=document.querySelector("#qrcode-box img"); const cv=document.querySelector("#qrcode-box canvas"); const url=img?.src||cv?.toDataURL("image/png"); if(!url) return; const a=document.createElement("a"); a.href=url; a.download=`SONAA-QR-${currentQRCodeString}.png`; a.click(); }
 function shareQRWhatsApp(){ window.open(`https://wa.me/?text=${encodeURIComponent("رابط التحقق: "+getVerifyUrl(currentQRCodeString))}`,"_blank"); }
 function shareWhatsApp(code){ const cert=allCertificates.find(c=>c.cert_code===code); window.open(`https://wa.me/?text=${encodeURIComponent(`شهادة ${cert?.full_name||""}\nرابط التحقق: ${getVerifyUrl(code)}`)}`,"_blank"); }
+
+// === شهادة A4 خفيفة - بتشتغل مرة واحدة بس ===
+async function downloadFullCertificateLight(){
+  const cert=currentCertForRender; if(!cert) return;
+  const canvas=document.createElement("canvas"); canvas.width=1240; canvas.height=875;
+  const ctx=canvas.getContext("2d");
+  ctx.fillStyle="#fff"; ctx.fillRect(0,0,canvas.width,canvas.height);
+  const col=currentOrg.primary_color||"#C8102E";
+  ctx.fillStyle=col; ctx.fillRect(0,0,canvas.width,130);
+  ctx.fillStyle="#fff"; ctx.textAlign="center"; ctx.font="900 36px Cairo, sans-serif";
+  ctx.fillText(currentOrg.name_ar||"", canvas.width/2, 80);
+  ctx.fillStyle="#111"; ctx.font="900 52px Cairo, sans-serif";
+  ctx.fillText(cert.full_name||"", canvas.width/2, 350);
+  ctx.font="800 32px Cairo, sans-serif"; ctx.fillStyle=col;
+  if(isSchool()){
+    ctx.fillText(`${cert.student_class||""}`, canvas.width/2, 430);
+    ctx.font="900 48px Cairo, sans-serif";
+    ctx.fillText(`${cert.final_grade||""} / ${cert.total_grade||""} - ${cert.grade_label||""}`, canvas.width/2, 510);
+  } else {
+    ctx.fillText(cert.course_name||"", canvas.width/2, 430);
+    ctx.font="700 24px Cairo, sans-serif"; ctx.fillStyle="#555";
+    ctx.fillText(`${cert.branch||""} ${cert.date_from||""} - ${cert.date_to||""}`, canvas.width/2, 480);
+  }
+  const tmp=document.createElement("div");
+  new QRCode(tmp,{text:getVerifyUrl(cert.cert_code),width:200,height:200});
+  await new Promise(r=>setTimeout(r,300));
+  const qrCanvas=tmp.querySelector("canvas");
+  if(qrCanvas) ctx.drawImage(qrCanvas, canvas.width-260, canvas.height-260, 180, 180);
+  ctx.font="700 18px monospace"; ctx.fillStyle="#111";
+  ctx.fillText(cert.cert_code, canvas.width-170, canvas.height-50);
+  const a=document.createElement("a"); a.href=canvas.toDataURL("image/png"); a.download=`CERT-${cert.cert_code}.png`; a.click();
+}
+
 async function downloadAllQRZip(){
   const list=selectedCodes.size?allCertificates.filter(c=>selectedCodes.has(c.cert_code)):allCertificates.slice(0,200); if(!list.length){ alert("لا توجد شهادات."); return; }
   const zip=new JSZip();
@@ -359,17 +409,19 @@ async function saveNewOrg(){
 }
 async function openTemplateModal(){
   $("tpl-org-name").textContent=currentOrg.name_ar+" ("+currentOrgSlug+") - "+(isSchool()?"مدرسة":"هلال") ;
-  $("tpl-color").value=currentOrg.primary_color||"#C8102E"; $("tpl-logo").value=currentOrg.logo_url||""; $("tpl-bg").value=currentOrg.template_url||"";
+  if($("tpl-color")) $("tpl-color").value=currentOrg.primary_color||"#C8102E";
+  if($("tpl-logo")) $("tpl-logo").value=currentOrg.logo_url||"";
+  if($("tpl-bg")) $("tpl-bg").value=currentOrg.template_url||"";
   const {data}=await supabaseClient.from("certificate_templates").select("*").eq("org_id",currentOrgSlug);
   $("templates-list").innerHTML=(data||[]).map(t=>`<div class="border rounded-xl p-3 text-sm font-bold flex justify-between"><span>${escapeHTML(t.name)}</span><span class="text-xs text-green-600">${t.is_active?"نشط":"غير نشط"}</span></div>`).join("")||"<p class='text-sm text-gray-500'>لا توجد قوالب</p>";
   $("template-modal").classList.remove("hidden");
 }
 async function saveTemplateSettings(){
-  const color=$("tpl-color").value; const logo=$("tpl-logo").value.trim(); const bg=$("tpl-bg").value.trim();
-  const pos={name:{x:Number($("pos-name-x").value), y:Number($("pos-name-y").value)}, grade:{x:50,y:58}, qr:{x:Number($("pos-qr-x").value), y:80}};
+  const color=$("tpl-color")?.value || currentOrg.primary_color;
+  const logo=$("tpl-logo")?.value.trim() || "";
+  const bg=$("tpl-bg")?.value.trim() || "";
   const {error}=await supabaseClient.from("organizations").update({primary_color:color, logo_url:logo||null, template_url:bg||null}).eq("slug",currentOrgSlug);
   if(error){ alert(error.message); return; }
-  await supabaseClient.from("certificate_templates").upsert([{org_id:currentOrgSlug, name:"قالب "+currentOrg.name_ar, background_url:bg||null, positions:pos, is_active:true}], {onConflict:"org_id"});
   alert("تم حفظ الهوية والقالب - حيظهرو في التحقق طوالي"); $("template-modal").classList.add("hidden"); location.reload();
 }
 document.getElementById("f-final-grade")?.addEventListener("input", ()=>{ const f=$("f-final-grade").value; const t=$("f-total-grade").value||"300"; if($("f-grade-label")) $("f-grade-label").value=calcGradeLabel(f,t); });
