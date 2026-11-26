@@ -8,32 +8,34 @@
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<link rel="stylesheet" href="sonaa-style.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{--org-color:#C8102E} 
+  body{font-family:'Cairo',sans-serif;background:#F7F8FA}
   .school-only{display:none} 
   body[data-org-type="school"] .school-only{display:block} 
   body[data-org-type="school"] .hilal-only{display:none!important} 
   body[data-org-type="hilal"] .hilal-only{display:block}
   .badge-valid { background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: bold; }
   .badge-revoked { background: #fee2e2; color: #991b1b; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: bold; }
+  .sonaa-input{width:100%;background:#fff}
+  .logo-img{max-height:52px;object-fit:contain}
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
 <!-- شاشة تسجيل الدخول -->
 <div id="login-screen" class="flex-1 flex items-center justify-center p-4">
-  <div class="sonaa-login-card text-center max-w-md w-full bg-white p-8 rounded-2xl shadow-lg">
-    <div class="w-[150px] mx-auto mb-3"><img src="logo.jpeg" class="logo-img w-full"></div>
+  <div class="text-center max-w-md w-full bg-white p-8 rounded-2xl shadow-lg border">
+    <div class="w-[150px] mx-auto mb-3"><img src="sonaa-logo.png" onerror="this.src='logo.png';this.onerror=null" class="logo-img w-full"></div>
     <div class="inline-block bg-red-50 text-[#C8102E] text-xs font-black px-3 py-1 rounded-full mb-2">SONAA TECH SAAS</div>
     <h1 class="text-2xl font-black">SONAA VERIFY</h1>
     <p class="text-xs text-gray-500 font-bold mt-1 mb-5">لوحة إدارة الشهادات الرقمية - لكل الجهات</p>
     <form onsubmit="handleLogin(event)" class="space-y-3 text-right">
-      <div><label class="sonaa-label block text-xs font-bold mb-1">البريد الإلكتروني</label><input id="login-email" type="email" required dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl" placeholder="admin@org.sd"></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">كلمة المرور</label><input id="login-password" type="password" required dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl" placeholder="••••••••"></div>
+      <div><label class="block text-xs font-bold mb-1">البريد الإلكتروني</label><input id="login-email" type="email" required dir="ltr" class="w-full p-2.5 border rounded-xl" placeholder="admin@org.sd"></div>
+      <div><label class="block text-xs font-bold mb-1">كلمة المرور</label><input id="login-password" type="password" required dir="ltr" class="w-full p-2.5 border rounded-xl" placeholder="••••••••"></div>
       <div id="login-error" class="hidden text-xs font-bold text-red-600 bg-red-50 p-3 rounded-lg text-center"></div>
-      <button id="login-btn" class="sonaa-btn w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold">تسجيل الدخول للوحة الإدارة</button>
+      <button id="login-btn" class="w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold">تسجيل الدخول للوحة الإدارة</button>
     </form>
     <p class="text-[11px] text-gray-400 font-bold pt-3">Designed by Sonaa Tech | AYMAN MORTADA ©</p>
   </div>
@@ -43,15 +45,15 @@
 <div id="dashboard-screen" class="hidden flex-1 flex flex-col">
   <header class="bg-white border-b sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3" dir="ltr">
-      <div class="w-[180px] sm:w-[240px]"><img src="logo.png" class="logo-img w-full"></div>
+      <div class="w-[180px] sm:w-[240px]"><img src="sonaa-logo.png" onerror="this.src='logo.png';this.onerror=null" class="logo-img w-full"></div>
       <div class="flex items-center gap-2" dir="rtl">
         <div class="hidden md:block text-left mr-2">
           <h1 class="text-sm font-black">SONAA VERIFY <span id="org-badge-header" class="text-[10px] bg-red-50 text-[#C8102E] px-2 py-0.5 rounded-full">SRCS</span></h1>
           <p id="dash-org-name" class="text-[11px] text-gray-500 font-bold">جمعية الهلال الأحمر السوداني</p>
           <p id="dash-org-type" class="text-[10px] font-black" style="color:var(--org-color)"></p>
         </div>
-        <a href="verify.html" target="_blank" class="sonaa-btn-gray bg-gray-100 px-3 py-1.5 rounded-lg text-xs font-bold">🌐 صفحة التحقق</a>
-        <button onclick="handleLogout()" class="sonaa-btn-gray bg-gray-100 px-3 py-1.5 rounded-lg text-xs font-bold text-red-600">خروج</button>
+        <a href="verify.html" target="_blank" class="bg-gray-100 px-3 py-1.5 rounded-lg text-xs font-bold">🌐 صفحة التحقق</a>
+        <button onclick="handleLogout()" class="bg-gray-100 px-3 py-1.5 rounded-lg text-xs font-bold text-red-600">خروج</button>
       </div>
     </div>
     <div id="super-admin-bar" class="hidden bg-[#1E1E1E] text-white px-4 py-2">
@@ -66,34 +68,46 @@
 
   <main class="max-w-7xl w-full mx-auto px-4 py-6 space-y-5 flex-1">
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-      <div class="sonaa-card bg-white p-4 rounded-2xl shadow-sm border"><div class="sonaa-card-title text-xs text-gray-500 font-bold">إجمالي الشهادات</div><div id="stat-total" class="sonaa-card-number text-xl font-black mt-1">0</div></div>
-      <div class="sonaa-card bg-white p-4 rounded-2xl shadow-sm border"><div class="sonaa-card-title text-xs text-gray-500 font-bold">شهادات سارية</div><div id="stat-valid" class="sonaa-card-number text-xl font-black text-green-600 mt-1">0</div></div>
-      <div class="sonaa-card bg-white p-4 rounded-2xl shadow-sm border"><div class="sonaa-card-title text-xs text-gray-500 font-bold">شهادات ملغاة</div><div id="stat-revoked" class="sonaa-card-number text-xl font-black text-red-600 mt-1">0</div></div>
-      <div class="sonaa-card bg-white p-4 rounded-2xl shadow-sm border"><div class="sonaa-card-title text-xs text-gray-500 font-bold">المحدد حالياً</div><div id="stat-selected" class="sonaa-card-number text-xl font-black text-blue-600 mt-1">0</div></div>
+      <div class="bg-white p-4 rounded-2xl shadow-sm border"><div class="text-xs text-gray-500 font-bold">إجمالي الشهادات</div><div id="stat-total" class="text-xl font-black mt-1">0</div></div>
+      <div class="bg-white p-4 rounded-2xl shadow-sm border"><div class="text-xs text-gray-500 font-bold">شهادات سارية</div><div id="stat-valid" class="text-xl font-black text-green-600 mt-1">0</div></div>
+      <div class="bg-white p-4 rounded-2xl shadow-sm border"><div class="text-xs text-gray-500 font-bold">شهادات ملغاة</div><div id="stat-revoked" class="text-xl font-black text-red-600 mt-1">0</div></div>
+      <div class="bg-white p-4 rounded-2xl shadow-sm border"><div class="text-xs text-gray-500 font-bold">المحدد حالياً</div><div id="stat-selected" class="text-xl font-black text-blue-600 mt-1">0</div></div>
     </div>
 
-    <div class="sonaa-card bg-white p-4 rounded-2xl shadow-sm border flex flex-wrap items-center justify-between gap-3">
-      <div class="flex flex-wrap items-center gap-2">
-        <button onclick="openAddModal()" class="sonaa-btn bg-[#C8102E] text-white px-3.5 py-2 rounded-xl text-xs font-bold">➕ إضافة شهادة فردية</button>
-        <label class="sonaa-btn-green bg-green-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">📊 استيراد Excel (+500)<input type="file" id="excel-upload" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleExcelUpload(event)"></label>
-        <button onclick="downloadExcelTemplate()" class="sonaa-btn-gray bg-gray-100 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold">📥 نموذج Excel</button>
-        <button onclick="downloadAllQRZip()" class="sonaa-btn-black bg-black text-white px-3.5 py-2 rounded-xl text-xs font-bold">📦 تحميل QR الكل ZIP</button>
-        <button onclick="openTemplateModal()" class="sonaa-btn-gray bg-gray-100 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold">🎨 قوالب + هوية الجهة</button>
+    <!-- عداد الشهر - العدل - عشان ما تظلمهم -->
+    <div class="bg-white border rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <div class="text-xs text-gray-400 font-bold">شهادات الشهر ده - <span id="usage-month"></span></div>
+        <div id="usage-count" class="text-xl font-black">0 شهادة</div>
+        <div id="usage-price" class="text-xs font-bold text-green-600"></div>
       </div>
-      <div class="w-full sm:w-72"><input id="search-input" oninput="filterTable()" placeholder="🔍 بحث بالاسم، الرقم، الفصل..." class="sonaa-input w-full p-2 border rounded-xl text-xs"></div>
+      <div class="text-left text-[11px] bg-gray-50 px-3 py-2 rounded-xl font-bold text-gray-600">
+        <div>0-50 مجاني</div><div>51-300 : 400 SDG</div><div>301+ : 250 SDG</div>
+      </div>
+    </div>
+
+    <div class="bg-white p-4 rounded-2xl shadow-sm border flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-2">
+        <button onclick="openAddModal()" class="bg-[#C8102E] text-white px-3.5 py-2 rounded-xl text-xs font-bold">➕ إضافة شهادة فردية</button>
+        <label class="bg-green-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">📊 استيراد Excel (+500)<input type="file" id="excel-upload" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleExcelUpload(event)"></label>
+        <button onclick="downloadExcelTemplate()" class="bg-gray-100 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold">📥 نموذج Excel</button>
+        <button onclick="downloadAllQRZip()" class="bg-black text-white px-3.5 py-2 rounded-xl text-xs font-bold">📦 تحميل QR الكل ZIP</button>
+        <button onclick="openTemplateModal()" class="bg-gray-100 text-gray-700 px-3.5 py-2 rounded-xl text-xs font-bold">🎨 قوالب + هوية الجهة</button>
+      </div>
+      <div class="w-full sm:w-72"><input id="search-input" oninput="filterTable()" placeholder="🔍 بحث بالاسم، الرقم، الفصل..." class="w-full p-2 border rounded-xl text-xs"></div>
     </div>
 
     <div id="bulk-actions-bar" class="hidden bg-blue-50 border border-blue-200 p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3">
       <div class="text-sm font-black text-blue-900">تم تحديد <span id="bulk-count" class="bg-blue-600 text-white px-2 py-0.5 rounded-full mx-1">0</span> شهادة</div>
       <div class="flex flex-wrap gap-2">
-        <button onclick="bulkShareLinks()" class="sonaa-btn-green bg-green-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🔗 نسخ روابط المحدد</button>
-        <button onclick="bulkUpdateStatus('valid')" class="sonaa-btn-green bg-green-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">✅ تفعيل المحدد</button>
-        <button onclick="bulkUpdateStatus('revoked')" class="sonaa-btn bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🚫 إلغاء المحدد</button>
-        <button onclick="bulkDelete()" class="sonaa-btn bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🗑️ حذف المحدد</button>
+        <button onclick="bulkShareLinks()" class="bg-green-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🔗 نسخ روابط المحدد</button>
+        <button onclick="bulkUpdateStatus('valid')" class="bg-green-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">✅ تفعيل المحدد</button>
+        <button onclick="bulkUpdateStatus('revoked')" class="bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🚫 إلغاء المحدد</button>
+        <button onclick="bulkDelete()" class="bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🗑️ حذف المحدد</button>
       </div>
     </div>
 
-    <div class="sonaa-card bg-white rounded-2xl shadow-sm border !p-0 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
       <div class="overflow-x-auto"><table class="w-full text-right">
         <thead><tr class="bg-gray-50 border-b text-xs font-black text-gray-600">
           <th class="p-3.5 w-10 text-center"><input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)" class="w-4 h-4 accent-[#C8102E]"></th>
@@ -106,7 +120,7 @@
       </table></div>
       <div class="bg-gray-50 px-4 py-3 border-t flex items-center justify-between text-xs font-bold text-gray-600">
         <div id="pagination-info">عرض 0 من 0</div>
-        <div class="flex gap-2"><button onclick="changePage(-1)" id="prev-page-btn" class="sonaa-btn-gray bg-white border px-3 py-1.5 rounded-lg">السابق</button><button onclick="changePage(1)" id="next-page-btn" class="sonaa-btn-gray bg-white border px-3 py-1.5 rounded-lg">التالي</button></div>
+        <div class="flex gap-2"><button onclick="changePage(-1)" id="prev-page-btn" class="bg-white border px-3 py-1.5 rounded-lg">السابق</button><button onclick="changePage(1)" id="next-page-btn" class="bg-white border px-3 py-1.5 rounded-lg">التالي</button></div>
       </div>
     </div>
     <p class="text-center text-[12px] text-gray-500 font-bold py-2">Designed by <span class="text-[#C8102E]">Sonaa Tech</span> | AYMAN MORTADA ©</p>
@@ -119,30 +133,24 @@
     <div class="text-white px-6 py-4 flex justify-between items-center" style="background:var(--org-color)"><h3 id="modal-title" class="font-black">إضافة شهادة جديدة</h3><button onclick="closeCertModal()" class="text-2xl font-bold">×</button></div>
     <form onsubmit="saveCertificate(event)" class="p-6 space-y-3">
       <input type="hidden" id="edit-cert-id">
-      <div><label class="sonaa-label block text-xs font-bold mb-1">الاسم بالعربي *</label><input id="f-name" required class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">الاسم بالإنجليزي</label><input id="f-name-en" dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div>
-
-      <!-- حقت الهلال -->
+      <div><label class="block text-xs font-bold mb-1">الاسم بالعربي *</label><input id="f-name" required class="w-full p-2.5 border rounded-xl text-sm"></div>
+      <div><label class="block text-xs font-bold mb-1">الاسم بالإنجليزي</label><input id="f-name-en" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm"></div>
       <div class="hilal-only space-y-3">
-        <div><label class="sonaa-label block text-xs font-bold mb-1">البرنامج التدريبي *</label><input id="f-course" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div>
-        <div><label class="sonaa-label block text-xs font-bold mb-1">الفرع / المحلية</label><input id="f-branch" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div>
-        <div class="grid grid-cols-2 gap-3"><div><label class="sonaa-label block text-xs font-bold mb-1">من</label><input id="f-from" type="date" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div><div><label class="sonaa-label block text-xs font-bold mb-1">إلى</label><input id="f-to" type="date" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div></div>
-        <div><label class="sonaa-label block text-xs font-bold mb-1">عدد الساعات</label><input id="f-hours" type="number" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div>
+        <div><label class="block text-xs font-bold mb-1">البرنامج التدريبي *</label><input id="f-course" class="w-full p-2.5 border rounded-xl text-sm"></div>
+        <div><label class="block text-xs font-bold mb-1">الفرع / المحلية</label><input id="f-branch" class="w-full p-2.5 border rounded-xl text-sm"></div>
+        <div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">من</label><input id="f-from" type="date" class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">إلى</label><input id="f-to" type="date" class="w-full p-2.5 border rounded-xl text-sm"></div></div>
+        <div><label class="block text-xs font-bold mb-1">عدد الساعات</label><input id="f-hours" type="number" class="w-full p-2.5 border rounded-xl text-sm"></div>
       </div>
-
-      <!-- حقت المدارس -->
       <div class="school-only space-y-3">
-        <div><label class="sonaa-label block text-xs font-bold mb-1">الفصل / القسم *</label><input id="f-class" class="sonaa-input w-full p-2.5 border rounded-xl text-sm" placeholder="مثال: الصف الثامن - أ"></div>
+        <div><label class="block text-xs font-bold mb-1">الفصل / القسم *</label><input id="f-class" class="w-full p-2.5 border rounded-xl text-sm" placeholder="مثال: الصف الثامن - أ"></div>
         <div class="grid grid-cols-2 gap-3">
-          <div><label class="sonaa-label block text-xs font-bold mb-1">الدرجة النهائية *</label><input id="f-final-grade" class="sonaa-input w-full p-2.5 border rounded-xl text-sm" placeholder="278"></div>
-          <div><label class="sonaa-label block text-xs font-bold mb-1">الدرجة الكلية</label><input id="f-total-grade" class="sonaa-input w-full p-2.5 border rounded-xl text-sm" placeholder="300"></div>
+          <div><label class="block text-xs font-bold mb-1">الدرجة النهائية *</label><input id="f-final-grade" class="w-full p-2.5 border rounded-xl text-sm" placeholder="278"></div>
+          <div><label class="block text-xs font-bold mb-1">الدرجة الكلية</label><input id="f-total-grade" class="w-full p-2.5 border rounded-xl text-sm" placeholder="300"></div>
         </div>
-        <div><label class="sonaa-label block text-xs font-bold mb-1">التقدير - بيتعمل اوتوماتيك</label><input id="f-grade-label" class="sonaa-input w-full p-2.5 border rounded-xl text-sm bg-gray-50" readonly placeholder="ممتاز / جيد جدا..."></div>
-        <p class="text-[11px] text-gray-500 font-bold">💡 الشهادة حتتولد بالقالب بتاع المدرسة - الاسم والدرجة والـ QR حيركبو براهم</p>
+        <div><label class="block text-xs font-bold mb-1">التقدير - بيتعمل اوتوماتيك</label><input id="f-grade-label" class="w-full p-2.5 border rounded-xl text-sm bg-gray-50" readonly placeholder="ممتاز / جيد جدا..."></div>
       </div>
-
-      <div><label class="sonaa-label block text-xs font-bold mb-1">الرقم المرجعي (اتركه فاضي للتوليد التلقائي)</label><input id="f-code" dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl text-sm font-mono bg-gray-50"></div>
-      <button id="save-cert-btn" class="sonaa-btn w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold justify-center">حفظ الشهادة</button>
+      <div><label class="block text-xs font-bold mb-1">الرقم المرجعي (اتركه فاضي للتوليد التلقائي)</label><input id="f-code" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm font-mono bg-gray-50"></div>
+      <button id="save-cert-btn" class="w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold justify-center">حفظ الشهادة</button>
     </form>
   </div>
 </div>
@@ -152,14 +160,14 @@
   <div class="bg-white max-w-md w-full rounded-2xl p-6 shadow-xl">
     <h3 class="font-black mb-4 text-lg">إضافة جهة جديدة - مدرسة / منظمة</h3>
     <div class="space-y-3">
-      <div><label class="sonaa-label block text-xs font-bold mb-1">نوع الجهة *</label><select id="new-org-type" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"><option value="hilal">هلال / تدريب - بيحتاج مدرب ومحلية</option><option value="school">مدرسة - بيحتاج اسم + فصل + درجة نهائية</option><option value="general">جهة عامة</option></select></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">Slug - انجليزي بدون مسافات *</label><input id="new-org-slug" dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl text-sm" placeholder="nile-school"></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">اسم الجهة بالعربي *</label><input id="new-org-name" class="sonaa-input w-full p-2.5 border rounded-xl text-sm" placeholder="مدرسة النيل الخاصة"></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">الاسم بالانجليزي</label><input id="new-org-en" dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">لون الهوية - بيظهر في التحقق</label><input id="new-org-color" type="color" value="#0F766E" class="sonaa-input w-full p-1 h-10 border rounded-xl"></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">رابط الشعار - بيظهر في التحقق</label><input id="new-org-logo" dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl text-sm" placeholder="https://..."></div>
+      <div><label class="block text-xs font-bold mb-1">نوع الجهة *</label><select id="new-org-type" class="w-full p-2.5 border rounded-xl text-sm"><option value="hilal">هلال / تدريب</option><option value="school">مدرسة</option><option value="general">جهة عامة</option></select></div>
+      <div><label class="block text-xs font-bold mb-1">Slug - انجليزي بدون مسافات *</label><input id="new-org-slug" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="nile-school"></div>
+      <div><label class="block text-xs font-bold mb-1">اسم الجهة بالعربي *</label><input id="new-org-name" class="w-full p-2.5 border rounded-xl text-sm" placeholder="مدرسة النيل الخاصة"></div>
+      <div><label class="block text-xs font-bold mb-1">الاسم بالانجليزي</label><input id="new-org-en" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm"></div>
+      <div><label class="block text-xs font-bold mb-1">لون الهوية</label><input id="new-org-color" type="color" value="#0F766E" class="w-full p-1 h-10 border rounded-xl"></div>
+      <div><label class="block text-xs font-bold mb-1">رابط الشعار</label><input id="new-org-logo" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="https://..."></div>
     </div>
-    <div class="flex gap-2 mt-5"><button onclick="saveNewOrg()" class="sonaa-btn flex-1 bg-[#C8102E] text-white py-2.5 rounded-xl font-bold justify-center">حفظ الجهة</button><button onclick="document.getElementById('org-modal').classList.add('hidden')" class="sonaa-btn-gray flex-1 bg-gray-100 py-2.5 rounded-xl font-bold">إلغاء</button></div>
+    <div class="flex gap-2 mt-5"><button onclick="saveNewOrg()" class="flex-1 bg-[#C8102E] text-white py-2.5 rounded-xl font-bold justify-center">حفظ الجهة</button><button onclick="document.getElementById('org-modal').classList.add('hidden')" class="flex-1 bg-gray-100 py-2.5 rounded-xl font-bold">إلغاء</button></div>
   </div>
 </div>
 
@@ -167,31 +175,20 @@
 <div id="template-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
   <div class="bg-white max-w-lg w-full rounded-2xl p-6 max-h-[90vh] overflow-y-auto shadow-xl">
     <h3 class="font-black mb-2 text-lg">هوية وقالب الجهة: <span id="tpl-org-name"></span></h3>
-    <p class="text-xs text-gray-500 mb-4">ارفع شعار وقالب - واللون - وحيظهرو طوالي في صفحة التحقق</p>
     <div class="space-y-3">
-      <div><label class="sonaa-label block text-xs font-bold mb-1">لون الهوية</label><input id="tpl-color" type="color" class="sonaa-input w-full p-1 h-10 border rounded-xl"></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">رابط الشعار</label><input id="tpl-logo" dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl text-sm"></div>
-      <div><label class="sonaa-label block text-xs font-bold mb-1">رابط قالب الشهادة - صورة PNG فاضية بدون اسم</label><input id="tpl-bg" dir="ltr" class="sonaa-input w-full p-2.5 border rounded-xl text-sm" placeholder="https://.../template.png"></div>
-      <div class="bg-gray-50 border rounded-xl p-3">
-        <div class="text-xs font-black mb-2">مكان العناصر في القالب - % من الصورة</div>
-        <div class="grid grid-cols-3 gap-2 text-xs">
-          <label>اسم X <input id="pos-name-x" type="number" value="50" class="sonaa-input w-full p-1 border rounded"></label>
-          <label>اسم Y <input id="pos-name-y" type="number" value="45" class="sonaa-input w-full p-1 border rounded"></label>
-          <label>QR X <input id="pos-qr-x" type="number" value="85" class="sonaa-input w-full p-1 border rounded"></label>
-        </div>
-        <p class="text-[11px] text-gray-400 mt-2">الاسم والدرجة والـ QR حيركبو اوتوماتيك في المكان ده لما تعمل شهادة جديدة</p>
-      </div>
-      <button onclick="saveTemplateSettings()" class="sonaa-btn w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold justify-center">حفظ الهوية والقالب</button>
+      <div><label class="block text-xs font-bold mb-1">لون الهوية</label><input id="tpl-color" type="color" class="w-full p-1 h-10 border rounded-xl"></div>
+      <div><label class="block text-xs font-bold mb-1">رابط الشعار</label><input id="tpl-logo" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm"></div>
+      <div><label class="block text-xs font-bold mb-1">رابط قالب الشهادة - صورة PNG</label><input id="tpl-bg" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="https://.../template.png"></div>
+      <button onclick="saveTemplateSettings()" class="w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold justify-center">حفظ الهوية والقالب</button>
     </div>
-    <div id="templates-list" class="space-y-2 mt-4"></div>
-    <button onclick="document.getElementById('template-modal').classList.add('hidden')" class="sonaa-btn-gray w-full bg-gray-100 py-2.5 rounded-xl font-bold mt-4">إغلاق</button>
+    <button onclick="document.getElementById('template-modal').classList.add('hidden')" class="w-full bg-gray-100 py-2.5 rounded-xl font-bold mt-4">إغلاق</button>
   </div>
 </div>
 
-<!-- Modal الـ QR والطباعة -->
+<!-- Modal الـ QR والطباعة - مع شعار SONAA في النص -->
 <div id="qr-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
   <div class="bg-white max-w-sm w-full rounded-2xl p-5 text-center shadow-2xl">
-    <div class="qr-cert-card border rounded-2xl overflow-hidden mb-3" id="qr-print-card" style="background:#fff">
+    <div class="border rounded-2xl overflow-hidden mb-3" id="qr-print-card" style="background:#fff">
       <div class="text-white p-4" id="qr-card-top" style="background:var(--org-color)">
         <div class="text-[11px] font-bold opacity-90" id="qr-org-name">--</div>
         <div class="text-xl font-black" id="qr-student-name"></div>
@@ -202,22 +199,20 @@
       <div class="text-[11px] text-gray-400 font-bold mb-2">SONAA VERIFY - معتمدة</div>
     </div>
     <div class="grid grid-cols-2 gap-2 mt-4">
-      <button onclick="downloadQRImage()" class="sonaa-btn bg-[#C8102E] text-white py-2.5 rounded-xl font-bold justify-center text-xs">تحميل PNG</button>
-      <button onclick="shareQRWhatsApp()" class="sonaa-btn-green bg-green-600 text-white py-2.5 rounded-xl font-bold text-xs">واتساب 📤</button>
+      <button onclick="downloadQRImage()" class="bg-[#C8102E] text-white py-2.5 rounded-xl font-bold justify-center text-xs">تحميل PNG</button>
+      <button onclick="shareQRWhatsApp()" class="bg-green-600 text-white py-2.5 rounded-xl font-bold text-xs">واتساب 📤</button>
     </div>
     <button onclick="downloadFullCertificateLight()" class="w-full mt-2 py-3 rounded-xl font-black text-xs bg-black text-white">⬇️ تحميل الشهادة كاملة A4 للطباعة</button>
-    <button onclick="document.getElementById('qr-modal').classList.add('hidden')" class="sonaa-btn-gray w-full mt-2 bg-gray-100 py-2.5 rounded-xl font-bold text-xs">إغلاق</button>
+    <button onclick="document.getElementById('qr-modal').classList.add('hidden')" class="w-full mt-2 bg-gray-100 py-2.5 rounded-xl font-bold text-xs">إغلاق</button>
   </div>
 </div>
 
-<!-- نافذة رفع الإكسيل المنبثقة -->
+<!-- نافذة رفع الإكسيل -->
 <div id="upload-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
   <div class="bg-white max-w-sm w-full rounded-2xl p-6 text-center shadow-2xl space-y-4">
     <h3 class="font-black text-lg">جاري استيراد البيانات...</h3>
     <div id="upload-status-text" class="text-xs font-bold text-gray-600">جاري قراءة الملف...</div>
-    <div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-      <div id="upload-progress-bar" class="bg-[#C8102E] h-full w-0 transition-all duration-300"></div>
-    </div>
+    <div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden"><div id="upload-progress-bar" class="bg-[#C8102E] h-full w-0 transition-all duration-300"></div></div>
   </div>
 </div>
 
@@ -225,6 +220,8 @@
 const SUPABASE_URL = "https://zepmmkynvabxgsgzskgi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EJvJnFCoPCFxkK-VAmwY_Q_6c4PTyE-";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// رابط شعار SONAA - مباشر - بيتركب في نص كل QR
+const SONAA_LOGO_URL = "https://sonaa-verify10.vercel.app/sonaa-logo.png";
 
 let allCertificates = [], filteredCertificates = [], selectedCodes = new Set();
 let currentPage = 1; const rowsPerPage = 50;
@@ -235,10 +232,32 @@ let isSuperAdmin = false; let allOrgs = [];
 
 const $ = id => document.getElementById(id);
 function escapeHTML(v){ return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch])); }
-function generateCertCode(){ const y=new Date().getFullYear(); const r=crypto.randomUUID().replace(/-/g,"").slice(0,8).toUpperCase(); const p=(currentOrgSlug||"SONAA").toUpperCase().replace(/[^A-Z0-9]/g,""); return `${p}-${y}-${r}`; }
+function generateCertCode(){ const y=new Date().getFullYear(); const r=Math.random().toString(36).slice(2,10).toUpperCase(); const p=(currentOrgSlug||"SONAA").toUpperCase().replace(/[^A-Z0-9]/g,""); return `${p}-${y}-${r}`; }
 function getVerifyBaseUrl(){ return new URL("verify.html", location.href).href; }
 function getVerifyUrl(code){ const u=new URL(getVerifyBaseUrl()); u.searchParams.set("org",currentOrgSlug); u.searchParams.set("c",code); return u.href; }
 function setMessage(id,m){ const el=$(id); if(el){ el.textContent=m; el.classList.remove("hidden"); } }
+
+// دالة توليد QR بشعار SONAA في النص - بتشتغل في كل حتة
+function makeQRWithLogo(container, text){
+  container.innerHTML = "";
+  new QRCode(container,{text:text,width:180,height:180,colorDark:"#000000",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H});
+  setTimeout(()=>{
+    const canvas = container.querySelector("canvas");
+    if(!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = SONAA_LOGO_URL;
+    img.onload = ()=>{
+      const size = 44;
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath(); ctx.arc(canvas.width/2, canvas.height/2, 30, 0, Math.PI*2); ctx.fill();
+      ctx.drawImage(img, (canvas.width-size)/2, (canvas.height-size)/2, size, size);
+    };
+    img.onerror = ()=>{ console.log("شعار SONAA ما اتلقى - QR حيطلع ساي"); };
+  }, 350);
+}
+
 async function checkSession(){ const {data,error}=await supabaseClient.auth.getSession(); if(error||!data.session){ showLogin(); return; } currentUser=data.session.user; await loadUserProfile(); }
 function showLogin(){ $("login-screen").classList.remove("hidden"); $("dashboard-screen").classList.add("hidden"); }
 function isSchool(){ return currentOrg?.org_type==='school'; }
@@ -248,10 +267,8 @@ async function loadUserProfile(){
     if(!currentUser) throw new Error("لم يتم العثور على المستخدم.");
     const {data:profile, error}=await supabaseClient.from("admin_users").select("org_id, role, is_active, is_super_admin").eq("user_id",currentUser.id).maybeSingle();
     if(error) throw error;
-    if(!profile) throw new Error("لا يوجد سجل صلاحيات لهذا الحساب.");
+    if(!profile) throw new Error("لا يوجد سجل صلاحيات - اعمل سجل في admin_users و is_active=true");
     if(profile.is_active!==true) throw new Error("حساب الإدارة غير مفعّل.");
-    const allowed=["super_admin","org_admin","admin"];
-    if(!allowed.includes(profile.role) && !profile.is_super_admin) throw new Error("دور غير مخول: "+profile.role);
     isSuperAdmin = !!profile.is_super_admin || profile.role==="super_admin";
     if(isSuperAdmin){
       const {data:orgs}=await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, org_type, status").order("created_at",{ascending:true});
@@ -286,23 +303,33 @@ function applyOrganizationBranding(){
   $("dash-org-name").textContent=currentOrg.name_ar||currentOrg.slug;
   $("dash-org-type").textContent = isSchool() ? "🏫 لوحة مدرسة - اسم + فصل + درجة نهائية" : "🚑 لوحة تدريب - برنامج + فرع + ساعات";
   if(!isSuperAdmin) $("org-badge-header").textContent=currentOrg.slug.toUpperCase();
-  const logo=currentOrg.logo_url; document.querySelectorAll(".logo-img").forEach(img=>{ if(logo){ img.src=logo; } });
   const color=/^#[0-9A-Fa-f]{6}$/.test(currentOrg.primary_color||"")?currentOrg.primary_color:"#C8102E"; document.documentElement.style.setProperty("--org-color",color);
 }
 
 async function handleLogin(event){
   event.preventDefault(); const email=$("login-email").value.trim(); const password=$("login-password").value; const btn=$("login-btn"); const eb=$("login-error"); eb.classList.add("hidden"); btn.disabled=true; btn.textContent="جاري التحقق...";
-  try{ const {data,error}=await supabaseClient.auth.signInWithPassword({email,password}); if(error) throw error; currentUser=data.user; await loadUserProfile(); }catch(e){ console.error(e); await supabaseClient.auth.signOut(); setMessage("login-error","فشل تسجيل الدخول أو الحساب غير مخوّل."); }finally{ btn.disabled=false; btn.textContent="تسجيل الدخول للوحة الإدارة"; }
+  try{ const {data,error}=await supabaseClient.auth.signInWithPassword({email,password}); if(error) throw error; currentUser=data.user; await loadUserProfile(); }catch(e){ console.error(e); await supabaseClient.auth.signOut(); setMessage("login-error","فشل تسجيل الدخول: "+e.message); }finally{ btn.disabled=false; btn.textContent="تسجيل الدخول للوحة الإدارة"; }
 }
-
 async function handleLogout(){ await supabaseClient.auth.signOut(); location.reload(); }
 
 async function fetchCertificates(){
   if(!currentOrgSlug) return; const tbody=$("certificates-tbody"); tbody.innerHTML=`<tr><td colspan="8" class="p-8 text-center">جاري التحميل...</td></tr>`;
   try{
     const {data,error}=await supabaseClient.from("certificates").select("*").eq("org_id",currentOrgSlug).order("created_at",{ascending:false}).limit(5000);
-    if(error) throw error; allCertificates=data||[]; selectedCodes.clear(); updateStats(); filterTable();
+    if(error) throw error; allCertificates=data||[]; selectedCodes.clear(); updateStats(); updateUsage(); filterTable();
   }catch(e){ console.error(e); tbody.innerHTML=`<tr><td colspan="8" class="p-8 text-center text-red-600">${escapeHTML(e.message)}</td></tr>`; }
+}
+
+function updateUsage(){
+  const start = new Date(); start.setDate(1); start.setHours(0,0,0,0);
+  const count = allCertificates.filter(c=> new Date(c.created_at) >= start).length;
+  let price = 0;
+  if(count>50 && count<=300) price = (count-50)*400;
+  if(count>300 && count<=1000) price = 250*250 + (count-300)*250;
+  if(count>1000) price = 250*250 + 700*250 + (count-1000)*150;
+  $("usage-count").textContent = count+" شهادة";
+  $("usage-price").textContent = price===0 ? "مجاني - ضمن الـ 50 المجانية" : "المبلغ المستحق: "+price.toLocaleString()+" SDG";
+  $("usage-month").textContent = new Date().toLocaleDateString("ar-SD",{month:"long",year:"numeric"});
 }
 
 function updateStats(){ const t=allCertificates.length; const r=allCertificates.filter(c=>c.status==="revoked").length; $("stat-total").textContent=t; $("stat-valid").textContent=t-r; $("stat-revoked").textContent=r; updateSelectionUI(); }
@@ -317,7 +344,7 @@ function renderTable(){
   tbody.innerHTML=pageData.map(c=>{ const code=escapeHTML(c.cert_code); const name=escapeHTML(c.full_name); const isR=c.status==="revoked"; const checked=selectedCodes.has(c.cert_code)?"checked":""; 
     const col3 = isSchool() ? escapeHTML(c.student_class||"--") : escapeHTML(c.course_name||"--");
     const col4 = isSchool() ? `<b style="color:var(--org-color)">${escapeHTML(c.final_grade||"--")} / ${escapeHTML(c.total_grade||"")}</b> <span class="text-[11px] text-gray-400">${escapeHTML(c.grade_label||"")}</span>` : escapeHTML(c.branch||"--");
-    return `<tr class="hover:bg-gray-50"><td class="p-3.5 text-center"><input type="checkbox" ${checked} onchange="toggleRowSelect('${code}',this.checked)" class="w-4 h-4 accent-[#C8102E]"></td><td class="p-3.5 font-mono text-[11px]" dir="ltr">${code}</td><td class="p-3.5"><div class="font-black">${name}</div><div class="text-[11px] text-gray-400" dir="ltr">${escapeHTML(c.full_name_en)}</div></td><td class="p-3.5">${col3}</td><td class="p-3.5">${col4}</td><td class="p-3.5 text-center">${isR?'<span class="badge-revoked">🚫 ملغاة</span>':'<span class="badge-valid">✓ سارية</span>'}</td><td class="p-3.5"><div class="flex justify-center gap-1 flex-wrap"><button onclick="openQRModal('${code}')" class="sonaa-btn-black bg-black text-white !py-1.5 !px-2 rounded-lg text-[11px]">QR</button><button onclick="shareWhatsApp('${code}')" class="sonaa-btn-green bg-green-600 text-white !py-1.5 !px-2 rounded-lg text-[11px]">واتساب</button><button onclick="openEditModal('${code}')" class="sonaa-btn-gray bg-gray-100 !py-1.5 !px-2 rounded-lg text-[11px]">تعديل</button><button onclick="toggleSingleStatus('${code}','${isR?"valid":"revoked"}')" class="sonaa-btn-gray bg-gray-100 !py-1.5 !px-2 rounded-lg text-[11px]">${isR?"تفعيل":"إلغاء"}</button></div></td></tr>`; }).join("");
+    return `<tr class="hover:bg-gray-50"><td class="p-3.5 text-center"><input type="checkbox" ${checked} onchange="toggleRowSelect('${code}',this.checked)" class="w-4 h-4 accent-[#C8102E]"></td><td class="p-3.5 font-mono text-[11px]" dir="ltr">${code}</td><td class="p-3.5"><div class="font-black">${name}</div><div class="text-[11px] text-gray-400" dir="ltr">${escapeHTML(c.full_name_en)}</div></td><td class="p-3.5">${col3}</td><td class="p-3.5">${col4}</td><td class="p-3.5 text-center">${isR?'<span class="badge-revoked">🚫 ملغاة</span>':'<span class="badge-valid">✓ سارية</span>'}</td><td class="p-3.5"><div class="flex justify-center gap-1 flex-wrap"><button onclick="openQRModal('${code}')" class="bg-black text-white !py-1.5 !px-2 rounded-lg text-[11px]">QR</button><button onclick="shareWhatsApp('${code}')" class="bg-green-600 text-white !py-1.5 !px-2 rounded-lg text-[11px]">واتساب</button><button onclick="openEditModal('${code}')" class="bg-gray-100 !py-1.5 !px-2 rounded-lg text-[11px]">تعديل</button><button onclick="toggleSingleStatus('${code}','${isR?"valid":"revoked"}')" class="bg-gray-100 !py-1.5 !px-2 rounded-lg text-[11px]">${isR?"تفعيل":"إلغاء"}</button></div></td></tr>`; }).join("");
   $("select-all-checkbox").checked=pageData.length>0 && pageData.every(c=>selectedCodes.has(c.cert_code));
 }
 
@@ -359,7 +386,6 @@ function downloadExcelTemplate(){
   else { sample=[{"الاسم_بالعربي":"اسم المتدرب","الاسم_بالانجليزي":"STUDENT NAME","البرنامج_التدريبي":"الإسعافات الأولية","الفرع":"الفرع","تاريخ_البداية":"2026-01-10","تاريخ_النهاية":"2026-01-15","عدد_الساعات":30,"الرقم_المرجعي_اختياري":""}]; fname="SONAA_VERIFY_Excel_Template.xlsx"; }
   const ws=XLSX.utils.json_to_sheet(sample); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"الشهادات"); XLSX.writeFile(wb,fname); 
 }
-
 function excelDate(v){ if(!v) return null; if(typeof v==="number"){ const d=XLSX.SSF.parse_date_code(v); if(!d) return null; return [d.y,String(d.m).padStart(2,"0"),String(d.d).padStart(2,"0")].join("-"); } const s=String(v).trim(); if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s; return null; }
 
 async function handleExcelUpload(event){
@@ -374,10 +400,7 @@ async function handleExcelUpload(event){
     } else {
       records=rows.map(row=>({ cert_code:String(row["الرقم_المرجعي_اختياري"]||row["cert_code"]||"").trim()||generateCertCode(), org_id:currentOrgSlug, full_name:String(row["الاسم_بالعربي"]||row["الاسم"]||"").trim(), full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(), course_name:String(row["البرنامج_التدريبي"]||row["الدورة"]||"").trim(), branch:String(row["الفرع"]||"").trim(), date_from:excelDate(row["تاريخ_البداية"]), date_to:excelDate(row["تاريخ_النهاية"]), hours:row["عدد_الساعات"]!==undefined&&row["عدد_الساعات"]!==""?Number(row["عدد_الساعات"]):null, status:"valid" })).filter(r=>r.full_name&&r.course_name);
     }
-    if(!records.length) throw new Error("لا توجد سجلات مكتملة - اتأكد من نموذج Excel بتاع المدارس.");
-    const codes=records.map(r=>r.cert_code); if(new Set(codes).size!==codes.length) throw new Error("رقم مرجعي مكرر داخل الملف.");
-    const existing=new Set(allCertificates.map(c=>c.cert_code)); if(codes.some(c=>existing.has(c))) throw new Error("رقم مستخدم مسبقاً.");
-    
+    if(!records.length) throw new Error("لا توجد سجلات مكتملة.");
     $("upload-modal").classList.remove("hidden"); const bar=$("upload-progress-bar"); const st=$("upload-status-text");
     for(let i=0;i<records.length;i+=100){ const chunk=records.slice(i,i+100); st.textContent=`جاري رفع ${Math.min(i+100,records.length)} من ${records.length}`; const {error}=await supabaseClient.from("certificates").insert(chunk); if(error) throw error; bar.style.width=`${Math.round(Math.min(i+100,records.length)/records.length*100)}%`; }
     $("upload-modal").classList.add("hidden"); bar.style.width="0%"; event.target.value=""; await fetchCertificates(); alert(`تم استيراد ${records.length} شهادة بنجاح.`);
@@ -396,8 +419,7 @@ function openQRModal(code){
   $("qr-course-name").textContent= isSchool() ? `${cert.student_class||""} - ${cert.final_grade||""}/${cert.total_grade||""} ${cert.grade_label||""}` : cert.course_name||"";
   $("qr-org-name").textContent=currentOrg.name_ar||"";
   $("qr-code-text").textContent=code;
-  const box=$("qrcode-box"); box.innerHTML="";
-  new QRCode(box,{text:getVerifyUrl(code),width:170,height:170,correctLevel:QRCode.CorrectLevel.H});
+  makeQRWithLogo($("qrcode-box"), getVerifyUrl(code));
   $("qr-modal").classList.remove("hidden");
 }
 
@@ -450,7 +472,6 @@ async function saveNewOrg(){
   if(!slug||!nameAr){ alert("ادخل slug واسم الجهة"); return; }
   const {error}=await supabaseClient.from("organizations").insert([{slug, name_ar:nameAr, name_en:nameEn, primary_color:color, logo_url:logo||null, org_type:orgType, status:"active"}]);
   if(error){ alert(error.message); return; }
-  await supabaseClient.from("certificate_templates").insert([{name:"قالب "+nameAr, certificate_type:"electronic", file_type:"image", org_id:slug, fields:{}, is_active:true}]);
   $("org-modal").classList.add("hidden"); alert("تم إضافة الجهة "+nameAr); location.reload();
 }
 
@@ -459,8 +480,6 @@ async function openTemplateModal(){
   if($("tpl-color")) $("tpl-color").value=currentOrg.primary_color||"#C8102E";
   if($("tpl-logo")) $("tpl-logo").value=currentOrg.logo_url||"";
   if($("tpl-bg")) $("tpl-bg").value=currentOrg.template_url||"";
-  const {data}=await supabaseClient.from("certificate_templates").select("*").eq("org_id",currentOrgSlug);
-  $("templates-list").innerHTML=(data||[]).map(t=>`<div class="border rounded-xl p-3 text-sm font-bold flex justify-between"><span>${escapeHTML(t.name)}</span><span class="text-xs text-green-600">${t.is_active?"نشط":"غير نشط"}</span></div>`).join("")||"<p class='text-sm text-gray-500'>لا توجد قوالب</p>";
   $("template-modal").classList.remove("hidden");
 }
 
