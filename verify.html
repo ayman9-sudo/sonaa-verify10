@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SONAA VERIFY | منصة التحقق الموحدة</title>
 <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="sonaa-style.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -116,6 +117,13 @@ body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
       </div>
 
       <div class="border-t pt-4 flex items-center justify-between gap-4">
+      </div>
+      <!-- QR - ختو هنا - بين الرقم المرجعي والازرار -->
+<div class="flex flex-col items-center justify-center py-4 border-t border-dashed mt-4">
+  <div id="qrcode" class="bg-white p-2 border rounded-xl"></div>
+  <div class="text-[11px] font-bold text-gray-500 mt-2">امسح للتحقق الفوري • SONAA VERIFY</div>
+  <div id="qr-url" class="text-[9px] text-gray-400 font-mono mt-0.5" dir="ltr"></div>
+</div>
         <div><div class="text-[11px] text-gray-400 font-bold">الرقم المرجعي للشهادة</div><span id="code" class="text-xs font-mono font-bold text-gray-800" dir="ltr"></span></div>
         <div class="text-left"><div class="text-[11px] text-gray-400 font-bold">حالة المطابقة</div><div id="match-result" class="text-green-700 text-sm font-black"></div></div>
       </div>
@@ -244,7 +252,58 @@ async function initialize(){
     showError("تعذر تحميل المؤسسات: "+e.message+" - راجع Policies في Supabase","تعذر الاتصال");
   }
 }
-initialize();
+
+ // توليد QR بشعار SONAA في النص - جاهز - رابط مباشر
+const SONAA_LOGO_URL = "https://sonaa-verify10.vercel.app/sonaa-logo.png";
+// لو ما رفعتها لسه في Vercel - استخدم ده مؤقتا - شغال طوالي:
+// const SONAA_LOGO_URL = "https://i.postimg.cc/0Q2YqJxP/sonaa-logo.png";
+
+function makeQR(text){
+  const box = document.getElementById("qrcode");
+  if(!box) return;
+  box.innerHTML = "";
+  document.getElementById("qr-code-text").textContent = text;
+  const qr = new QRCode(box, {
+    text: text,
+    width: 180,
+    height: 180,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H // لازم H عشان الشعار ما يخرب الـ QR
+  });
+  setTimeout(()=>{
+    const canvas = box.querySelector("canvas");
+    if(!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = SONAA_LOGO_URL;
+    img.onload = ()=>{
+      // خلفية بيضاء دائرية في النص عشان الشعار يظهر نضيف
+      const size = 46;
+      const x = (canvas.width - size)/2;
+      const y = (canvas.height - size)/2;
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.arc(canvas.width/2, canvas.height/2, 32, 0, Math.PI*2);
+      ctx.fill();
+      // ارسم الشعار
+      ctx.drawImage(img, x, y, size, size);
+    };
+    img.onerror = ()=>{
+      console.log("logo ما اتلقى - QR حيطلع ساي بدون شعار - اتأكد انك رفعت sonaa-logo.png في Vercel");
+    };
+  }, 350);
+}
+
+// كيف تناديها - لما تجي تطبع شهادة:
+// مثلا بعد ما تجيب بيانات الشهادة:
+function printCertificate(cert){
+  const verifyUrl = `https://sonaa-verify10.vercel.app/verify.html?org=${cert.org_id}&c=${cert.cert_code}`;
+  makeQR(verifyUrl);
+  setTimeout(()=> window.print(), 600);
+}
+  initialize();
 </script>
 </body>
 </html>
