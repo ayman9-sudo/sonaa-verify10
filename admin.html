@@ -62,6 +62,53 @@
         <button onclick="openOrgsModal()" class="bg-[#C8102E] px-3 py-1.5 rounded-lg text-white">+ إضافة جهة جديدة</button>
       </div>
     </div>
+    <!-- قسم استوديو قوالب الشهادات -->
+<div class="sonaa-card space-y-4 mt-6">
+  <div class="flex justify-between items-center border-b pb-3">
+    <h2 class="font-black text-base">🎨 استوديو قوالب الشهادات (تحديد مكان الاسم والـ QR)</h2>
+    <span class="text-xs bg-blue-50 text-blue-700 font-bold px-3 py-1 rounded-full">ميزة متقدمة</span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- أدوات التحكم -->
+    <div class="space-y-3">
+      <div>
+        <label class="sonaa-label">1. اختر قالب جاهز أو ارفع تصميمك (صورة)</label>
+        <select id="preset-templates" onchange="selectPresetTemplate()" class="sonaa-input mb-2">
+          <option value="">-- اختر من القوالب الجاهزة --</option>
+          <option value="https://placehold.co">قالب ذهبي كلاسيكي</option>
+          <option value="https://placehold.co">قالب رسمي حديث</option>
+        </select>
+        <input type="file" id="custom-template-file" accept="image/*" onchange="uploadCustomTemplate(event)" class="sonaa-input text-xs">
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded-xl">
+        
+        <div class="col-span-2 text-xs font-black text-[#C8102E]">📍 إحداثيات الاسم</div>
+        <div><label class="text-[11px] font-bold">أفقي (X)</label><input type="number" id="cfg-nameX" value="500" oninput="renderPreviewCert()" class="sonaa-input py-1"></div>
+        <div><label class="text-[11px] font-bold">رأسي (Y)</label><input type="number" id="cfg-nameY" value="350" oninput="renderPreviewCert()" class="sonaa-input py-1"></div>
+        <div><label class="text-[11px] font-bold">حجم الخط</label><input type="number" id="cfg-fontSize" value="38" oninput="renderPreviewCert()" class="sonaa-input py-1"></div>
+        <div><label class="text-[11px] font-bold">لون الخط</label><input type="color" id="cfg-fontColor" value="#111827" oninput="renderPreviewCert()" class="sonaa-input py-1 h-9"></div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 bg-gray-50 p-3 rounded-xl">
+        <div class="col-span-3 text-xs font-black text-green-700">🔲 إحداثيات الـ QR</div>
+        <div><label class="text-[11px] font-bold">أفقي (X)</label><input type="number" id="cfg-qrX" value="100" oninput="renderPreviewCert()" class="sonaa-input py-1"></div>
+        <div><label class="text-[11px] font-bold">رأسي (Y)</label><input type="number" id="cfg-qrY" value="480" oninput="renderPreviewCert()" class="sonaa-input py-1"></div>
+        <div><label class="text-[11px] font-bold">الحجم</label><input type="number" id="cfg-qrSize" value="130" oninput="renderPreviewCert()" class="sonaa-input py-1"></div>
+      </div>
+
+      <button onclick="saveTemplateSettings()" class="sonaa-btn w-full justify-center py-3">💾 حفظ القالب كافتراضي للمؤسسة</button>
+    </div>
+
+    <!-- شاشة المعاينة الحية (Canvas) -->
+    <div class="lg:col-span-2 bg-gray-100 rounded-2xl p-4 flex flex-col items-center justify-center border">
+      <p class="text-xs text-gray-500 font-bold mb-2">معاينة حية (اضغط في أي مكان على الشهادة لنقل الاسم مباشرة!)</p>
+      <canvas id="cert-canvas" width="1000" height="700" onclick="pickPositionOnCanvas(event)" class="max-w-full h-auto bg-white shadow-md rounded-lg cursor-crosshair border"></canvas>
+      <div id="hidden-qr-box" class="hidden"></div>
+    </div>
+  </div>
+</div>
   </header>
 
   <main class="max-w-7xl w-full mx-auto px-4 py-6 space-y-5 flex-1">
@@ -473,8 +520,104 @@ async function saveTemplateSettings(){
   alert("تم حفظ الهوية والقالب - حيظهرو في التحقق طوالي"); $("template-modal").classList.add("hidden"); location.reload();
 }
 
-document.getElementById("f-final-grade")?.addEventListener("input", ()=>{ const f=$("f-final-grade").value; const t=$("f-total-grade").value||"300"; if($("f-grade-label")) $("f-grade-label").value=calcGradeLabel(f,t); });
-checkSession();
+  let activeTemplateUrl = "https://placehold.co";
+
+// 1. اختيار قالب جاهز
+function selectPresetTemplate() {
+  const val = document.getElementById('preset-templates').value;
+  if (val) {
+    activeTemplateUrl = val;
+    renderPreviewCert();
+  }
+}
+
+// 2. قراءة صورة قالب مرفوعة من جهاز المدير
+function uploadCustomTemplate(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    activeTemplateUrl = ev.target.result;
+    renderPreviewCert();
+  };
+  reader.readAsDataURL(file);
+}
+
+// 3. ميزة ذكية: الضغط بالماوس/اللمس على الشهادة يحدد مكان الاسم فوراً!
+function pickPositionOnCanvas(e) {
+  const canvas = document.getElementById('cert-canvas');
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  document.getElementById('cfg-nameX').value = Math.round((e.clientX - rect.left) * scaleX);
+  document.getElementById('cfg-nameY').value = Math.round((e.clientY - rect.top) * scaleY);
+  renderPreviewCert();
+}
+
+// 4. رسم الشهادة الكاملة (الخلفية + الاسم + الـ QR)
+function renderPreviewCert(studentName = "أيمن مرتضى الشيخ", certCode = "SRCS-2026-SAMPLE") {
+  const canvas = document.getElementById('cert-canvas');
+  const ctx = canvas.getContext('2d');
+  const bgImg = new Image();
+  bgImg.crossOrigin = "Anonymous";
+  bgImg.src = activeTemplateUrl;
+
+  bgImg.onload = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+
+    // رسم الاسم
+    const nameX = parseInt(document.getElementById('cfg-nameX').value);
+    const nameY = parseInt(document.getElementById('cfg-nameY').value);
+    const fontSize = parseInt(document.getElementById('cfg-fontSize').value);
+    const fontColor = document.getElementById('cfg-fontColor').value;
+
+    ctx.font = `900 ${fontSize}px Cairo, sans-serif`;
+    ctx.fillStyle = fontColor;
+    ctx.textAlign = "center";
+    ctx.fillText(studentName, nameX, nameY);
+
+    // توليد ورسم الـ QR
+    const qrBox = document.getElementById('hidden-qr-box');
+    qrBox.innerHTML = "";
+    const verifyUrl = `${location.origin}/verify.html?c=${certCode}&org=${currentUserOrg}`;
+    new QRCode(qrBox, { text: verifyUrl, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.H });
+
+    setTimeout(() => {
+      const qrCanvas = qrBox.querySelector('canvas');
+      if (qrCanvas) {
+        const qrX = parseInt(document.getElementById('cfg-qrX').value);
+        const qrY = parseInt(document.getElementById('cfg-qrY').value);
+        const qrSize = parseInt(document.getElementById('cfg-qrSize').value);
+        ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+      }
+    }, 100);
+  };
+}
+
+// 5. حفظ الإعدادات في Supabase
+async function saveTemplateSettings() {
+  const config = {
+    nameX: parseInt(document.getElementById('cfg-nameX').value),
+    nameY: parseInt(document.getElementById('cfg-nameY').value),
+    fontSize: parseInt(document.getElementById('cfg-fontSize').value),
+    fontColor: document.getElementById('cfg-fontColor').value,
+    qrX: parseInt(document.getElementById('cfg-qrX').value),
+    qrY: parseInt(document.getElementById('cfg-qrY').value),
+    qrSize: parseInt(document.getElementById('cfg-qrSize').value)
+  };
+
+  const { error } = await sb.from('organizations')
+    .update({ cert_template_url: activeTemplateUrl, template_config: config })
+    .eq('id', currentUserOrg);
+
+  if (error) alert("خطأ في الحفظ: " + error.message);
+  else alert("✅ تم حفظ قالب الشهادة وإحداثياته بنجاح!");
+}
+  document.getElementById("f-final-grade")?.addEventListener("input", ()=>{ const f=$("f-final-grade").value; const t=$("f-total-grade").value||"300"; if($("f-grade-label")) $("f-grade-label").value=calcGradeLabel(f,t); });
+
+  checkSession();
 </script>
 </body>
 </html>
