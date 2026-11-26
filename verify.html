@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SONAA VERIFY | منصة التحقق الموحدة</title>
 <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="sonaa-style.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root { --org-color: #C8102E; }
 body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
-.card-header { background: linear-gradient(135deg, var(--org-color), #111); color: white; padding: 35px 20px; text-align: center; transition: background .3s; }
+.card-header { background: linear-gradient(135deg, var(--org-color), #111); color: white; padding: 35px 20px; text-align: center; }
 .status-badge { display: inline-flex; align-items: center; gap: 7px; padding: 8px 17px; border-radius: 30px; font-size: 13px; font-weight: 800; }
 .status-valid { background: #ECFDF3; color: #027A48; border: 1px solid #ABEFC6; }
 .status-revoked { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
@@ -27,7 +27,6 @@ body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-<!-- الترويصة العلوية الموحدة -->
 <header class="bg-white border-b no-print sticky top-0 z-30">
   <div class="max-w-[850px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
     <div class="flex items-center gap-3">
@@ -53,7 +52,6 @@ body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
 
   <div id="loading" class="text-center py-16"><div class="spinner"></div><p id="loading-text" class="mt-4 text-sm font-bold text-gray-500">جاري الاتصال بقاعدة البيانات...</p></div>
 
-  <!-- البحث اليدوي -->
   <div id="manual-search" class="hidden bg-white border rounded-2xl p-6 text-center shadow-sm no-print">
     <div class="text-4xl mb-3">🔍</div>
     <h2 class="font-black text-lg">التحقق اليدوي السريع</h2>
@@ -66,7 +64,6 @@ body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
     <p class="text-[11px] text-gray-400 mt-4">SONAA VERIFY — Powered by SONAA TECH</p>
   </div>
 
-  <!-- كارت النتيجة النهائية -->
   <div id="card" class="hidden bg-white border rounded-[20px] overflow-hidden shadow-sm">
     <div class="card-header">
       <div class="flex justify-center mb-3">
@@ -75,9 +72,7 @@ body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
       <div id="org-name" class="text-base font-black">اسم المؤسسة</div>
       <div id="org-name-en" class="text-[11px] opacity-80 mt-0.5" dir="ltr"></div>
       <div id="org-type-label" class="text-[11px] font-bold mt-2 px-3 py-1 bg-white/20 rounded-full inline-block"></div>
-      
       <div class="w-16 h-[2px] bg-white/40 mx-auto my-4"></div>
-      
       <div class="text-xs uppercase tracking-wider opacity-90 font-bold">تشهد الجهة بأن الطالب / المشارك:</div>
       <h2 id="name" class="text-2xl sm:text-3xl font-black mt-2">--</h2>
       <div id="name-en" class="text-sm font-bold opacity-90 mt-1" dir="ltr"></div>
@@ -126,8 +121,8 @@ body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
       </div>
 
       <div class="flex gap-2 no-print pt-2">
-        <button onclick="window.print()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl p-3 font-bold text-xs">🖨️ طباعة النتيجة</button>
-        <button onclick="shareResult()" class="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl p-3 font-bold text-xs">📤 مشاركة واتساب</button>
+        <button onclick="window.print()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl p-3 font-bold text-xs">🖨️ طباعة</button>
+        <button onclick="shareResult()" class="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl p-3 font-bold text-xs">📤 واتساب</button>
         <button onclick="resetPage()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl p-3 font-bold text-xs">🔍 فحص أخرى</button>
       </div>
     </div>
@@ -156,7 +151,7 @@ const params = new URLSearchParams(location.search);
 const code = params.get("c") || params.get("cert_code") || "";
 const selectedSlug = params.get("org") || "";
 
-function hideAll(){ $("loading").classList.add("hidden"); $("manual-search").classList.add("hidden"); $("card").classList.add("hidden"); $("error").classList.add("hidden"); }
+function hideAll(){ ["loading","manual-search","card","error"].forEach(id=>$(id).classList.add("hidden")); }
 function showError(m,t="تعذر العثور على الشهادة"){ hideAll(); $("error-title").textContent=t; $("error-message").textContent=m; $("error").classList.remove("hidden"); }
 function showManual(){ hideAll(); $("manual-search").classList.remove("hidden"); }
 function formatDate(v){ if(!v) return "--"; return v; }
@@ -165,30 +160,37 @@ function shareResult(){
   const txt=`✅ ${$("org-name").textContent}\nالطالب: ${$("name").textContent}\nالرقم: ${$("code").textContent}\nالرابط: ${location.href}`;
   window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,"_blank");
 }
+
 async function loadOrganizations(){
-  const {data,error}=await supabaseClient.from("organizations").select("slug,name_ar,name_en,logo_url,primary_color,org_type,status").eq("status","active").order("created_at");
+  console.log("load orgs...");
+  const {data,error} = await supabaseClient.from("organizations").select("slug,name_ar,name_en,logo_url,primary_color,org_type,status").eq("status","active").order("created_at",{ascending:true});
+  console.log("orgs:",data,error);
   if(error) throw error;
   const sel=$("organization-select");
   sel.innerHTML='<option value="">اختر المؤسسة أو المدرسة</option>';
-  data.forEach(o=>{ const op=document.createElement("option"); op.value=o.slug; op.textContent=o.name_ar; sel.appendChild(op); });
+  (data||[]).forEach(o=>{ const op=document.createElement("option"); op.value=o.slug; op.textContent=o.name_ar; sel.appendChild(op); });
   if(selectedSlug) sel.value=selectedSlug;
+  if(!data || !data.length) throw new Error("لا توجد مؤسسات مفعلة - راجع جدول organizations و status=active");
 }
+
 function applyOrganization(org){
   $("org-name").textContent=org.name_ar||"";
   $("org-name-en").textContent=org.name_en||"";
-  const logo=org.logo_url; const color=/^#[0-9A-Fa-f]{6}$/.test(org.primary_color||"")?org.primary_color:"#C8102E";
+  const logo=org.logo_url;
+  const color=/^#[0-9A-Fa-f]{6}$/.test(org.primary_color||"")?org.primary_color:"#C8102E";
   if(logo){ $("org-logo").src=logo; $("org-logo").classList.remove("hidden"); $("header-logo").src=logo; $("header-logo").classList.remove("hidden"); }
   else { $("org-logo").classList.add("hidden"); $("header-logo").classList.add("hidden"); }
   document.documentElement.style.setProperty("--org-color",color);
   $("org-type-label").textContent=org.org_type==='school'?"🏫 نتيجة دراسية معتمدة رسمياً":"🚑 شهادة تدريبية معتمدة رسمياً";
 }
+
 function displayCertificate(c,org){
   hideAll();
   $("name").textContent=c.full_name||"--"; $("name-en").textContent=c.full_name_en||"";
   $("course").textContent=c.course_name||"--"; $("branch").textContent=c.branch||"";
   $("from").textContent=formatDate(c.date_from); $("to").textContent=formatDate(c.date_to);
   $("hours").textContent=c.hours?c.hours+" ساعة":"--"; $("code").textContent=c.cert_code||"";
-  const isSchool=org.org_type==='school'||c.student_class||c.final_grade;
+  const isSchool=org.org_type==='school' || c.student_class || c.final_grade;
   $("hilal-fields").classList.toggle("hidden",isSchool); $("school-fields").classList.toggle("hidden",!isSchool);
   if(isSchool){ $("student-class").textContent=c.student_class||c.course_name||"--"; $("final-grade").textContent=c.final_grade||"--"; $("total-grade-line").textContent=c.total_grade?"من اجمالي "+c.total_grade:""; $("grade-label").textContent=c.grade_label||"--"; }
   const revoked=c.status==="revoked";
@@ -197,21 +199,52 @@ function displayCertificate(c,org){
   else { $("status-container").innerHTML='<span class="status-badge status-valid">✓ وثيقة رسمية معتمدة وسارية</span>'; $("match-result").textContent="✓ مطابقة وصحيحة"; $("match-result").className="text-green-700 text-sm font-black"; }
   $("card").classList.remove("hidden");
 }
-async function verifyCertificate(certCode,slug=null){
-  if(!certCode.trim()){ showError("يرجى كتابة الرقم المرجعي."); return; }
+
+async function verifyCertificate(certCode,slug){
   hideAll(); $("loading").classList.remove("hidden"); $("loading-text").textContent="جاري مطابقة بيانات الشهادة...";
   try{
     let q=supabaseClient.from("certificates").select("*").eq("cert_code",certCode.trim());
     if(slug) q=q.eq("org_id",slug);
-    const {data:certs,error}=await q.maybeSingle();
+    const {data:cert,error}=await q.maybeSingle();
+    console.log("cert:",cert,error);
     if(error) throw error;
-    if(!certs){ showError("لا توجد شهادة مطابقة بهذا الرقم المرجعي لدى الجهة المحددة."); return; }
-    const {data:org,error:orgErr}=await supabaseClient.from("organizations").select("*").eq("slug",certs.org_id).maybeSingle();
+    if(!cert){ showError("لا توجد شهادة مطابقة بهذا الرقم المرجعي لدى الجهة المحددة. تأكد من الرقم."); return; }
+    const {data:org,error:orgErr}=await supabaseClient.from("organizations").select("*").eq("slug",cert.org_id).maybeSingle();
+    console.log("org:",org,orgErr);
     if(orgErr) throw orgErr;
     if(!org){ showError("المؤسسة غير متاحة حالياً.","المؤسسة غير متاحة"); return; }
-    applyOrganization(org); displayCertificate(certs,org);
-  }catch(e){ console.error(e); showError("تعذر الاتصال بخادم التحقق. حاول مرة أخرى لاحقاً. "+e.message,"خطأ في الاتصال"); }
+    applyOrganization(org); displayCertificate(cert,org);
+  }catch(e){
+    console.error(e);
+    showError("خطأ: "+e.message,"خطأ في الاتصال");
+  }
 }
-$("search-form").addEventListener("submit",function(e){ e.preventDefault(); const slug=$("organization-select").value; const cc=$("manual-code-input").value.trim(); if(!slug||!cc){ showError("يرجى اختيار المؤسسة وكتابة الرقم المرجعي."); return; } const u=new URL(location.href); u.search=""; u.searchParams.set("org",slug); u.searchParams.set("c",cc); location.href=u.toString(); });
-async function initialize(){ hideAll(); $("loading").classList.remove("hidden"); try{ if(code){ await verifyCertificate(code, selectedSlug||null); return; } await loadOrganizations(); showManual(); }catch(e){ console.error(e); showError("تعذر تحميل قائمة المؤسسات. "+e.message,"تعذر الاتصال"); } }
+
+$("search-form").addEventListener("submit",function(e){
+  e.preventDefault();
+  const slug=$("organization-select").value; const cc=$("manual-code-input").value.trim();
+  if(!slug||!cc){ showError("يرجى اختيار المؤسسة وكتابة الرقم المرجعي."); return; }
+  const u=new URL(location.href); u.search=""; u.searchParams.set("org",slug); u.searchParams.set("c",cc); location.href=u.toString();
+});
+
+async function initialize(){
+  hideAll(); $("loading").classList.remove("hidden");
+  // تايم اوت - ما بخليها تلف اكتر من 8 ثواني
+  const timeoutId=setTimeout(()=>{
+    if(!$("loading").classList.contains("hidden")){
+      showError("Supabase ما ردت - اتأكد انك عملت Policies للقراءة في Supabase (SELECT for anon) وانك رفعت الملف الجديد في Vercel","تعذر الاتصال - Timeout");
+    }
+  },8000);
+  try{
+    if(code){ await verifyCertificate(code, selectedSlug||null); clearTimeout(timeoutId); return; }
+    await loadOrganizations(); clearTimeout(timeoutId); showManual();
+  }catch(e){
+    clearTimeout(timeoutId);
+    console.error(e);
+    showError("تعذر تحميل المؤسسات: "+e.message+" - راجع Policies في Supabase","تعذر الاتصال");
+  }
+}
 initialize();
+</script>
+</body>
+</html>
