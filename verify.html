@@ -3,120 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SONAA VERIFY | التحقق من الشهادات</title>
+<title>SONAA VERIFY | منصة التحقق الموحدة</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="sonaa-style.css">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root { --org-color: #C8102E; }
 body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
-.card-header { background: linear-gradient(135deg, var(--org-color), #111); color: white; padding: 30px 20px; text-align: center; transition: background .3s; }
+.card-header { background: linear-gradient(135deg, var(--org-color), #111); color: white; padding: 35px 20px; text-align: center; transition: background .3s; }
 .status-badge { display: inline-flex; align-items: center; gap: 7px; padding: 8px 17px; border-radius: 30px; font-size: 13px; font-weight: 800; }
 .status-valid { background: #ECFDF3; color: #027A48; border: 1px solid #ABEFC6; }
 .status-revoked { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
 .spinner { width: 42px; height: 42px; border: 4px solid #FEE4E7; border-top-color: var(--org-color); border-radius: 50%; animation: spin .8s linear infinite; margin: auto; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.logo-img { max-height: 65px; max-width: 220px; object-fit: contain; }
+.logo-img { max-height: 70px; max-width: 220px; object-fit: contain; }
+.header-logo { max-height: 42px; max-width: 120px; object-fit: contain; }
 #search-btn { background: var(--org-color) !important; }
 .top-badge { background: color-mix(in srgb, var(--org-color) 10%, white); color: var(--org-color); }
 .grade-big { color: var(--org-color); }
 @media print { .no-print { display: none !important; } body { background: white !important; } #card { box-shadow: none !important; } }
 </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between">
 
-<header class="bg-white border-b no-print">
+<!-- الترويصة العلوية الموحدة -->
+<header class="bg-white border-b no-print sticky top-0 z-30">
   <div class="max-w-[850px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
-    <div class="flex items-center gap-2">
-      <img id="org-logo" class="logo-img hidden" alt="Organization Logo">
-      <div id="brand-fallback">
-        <div class="font-black text-xl text-gray-900">SONAA <span style="color:var(--org-color)">VERIFY</span></div>
-        <div class="text-[10px] text-gray-500">Certificate Verification Platform</div>
+    <div class="flex items-center gap-3">
+      <img id="header-logo" class="header-logo hidden" alt="logo">
+      <div>
+        <div class="font-black text-xl text-gray-900 leading-none">SONAA <span style="color:var(--org-color)">TECH</span></div>
+        <div class="text-[10px] text-gray-500 font-bold mt-1">منصة التحقق الموحدة</div>
       </div>
+      <div class="text-xs bg-gray-100 text-gray-600 font-bold px-2.5 py-1 rounded-full hidden sm:block">SONAA VERIFY</div>
     </div>
-    <div class="text-xs font-bold bg-green-50 text-green-700 border border-green-200 px-3 py-2 rounded-full">✓ بوابة تحقق آمنة</div>
+    <div class="text-xs font-bold bg-green-50 text-green-700 border border-green-200 px-3 py-1.5 rounded-full flex items-center gap-1">
+      <span>✓</span> <span>رابط تحقق آمن وموثق</span>
+    </div>
   </div>
 </header>
 
-<main class="max-w-[620px] mx-auto px-4 py-8">
+<main class="max-w-[620px] w-full mx-auto px-4 py-8 flex-1">
   <div class="text-center mb-6 no-print">
-    <div class="inline-block top-badge text-xs font-bold px-4 py-2 rounded-full mb-3">SONAA TECH • SONAA VERIFY</div>
-    <h1 class="text-2xl sm:text-3xl font-black">التحقق من الشهادات</h1>
-    <p class="text-sm text-gray-500 mt-2">منصة موحدة للتحقق من الشهادات الصادرة عن المؤسسات</p>
+    <div class="inline-block top-badge text-xs font-bold px-4 py-2 rounded-full mb-3">SONAA VERIFY • نظام منع التزوير</div>
+    <h1 class="text-2xl sm:text-3xl font-black">التحقق من صحة الشهادة</h1>
+    <p class="text-sm text-gray-500 mt-2">نظام رقمي موثق لمطابقة البيانات ومنع التزوير</p>
   </div>
 
-  <div id="loading" class="text-center py-16"><div class="spinner"></div><p id="loading-text" class="mt-4 text-sm font-bold text-gray-500">جاري الاتصال...</p></div>
+  <div id="loading" class="text-center py-16"><div class="spinner"></div><p id="loading-text" class="mt-4 text-sm font-bold text-gray-500">جاري الاتصال بقاعدة البيانات...</p></div>
 
+  <!-- البحث اليدوي -->
   <div id="manual-search" class="hidden bg-white border rounded-2xl p-6 text-center shadow-sm no-print">
     <div class="text-4xl mb-3">🔍</div>
-    <h2 class="font-black text-lg">التحقق اليدوي</h2>
-    <p class="text-xs text-gray-500 mt-2 mb-5">اختر المؤسسة واكتب الرقم المرجعي للشهادة</p>
+    <h2 class="font-black text-lg">التحقق اليدوي السريع</h2>
+    <p class="text-xs text-gray-500 mt-2 mb-5">اختر المؤسسة واكتب الرقم المرجعي الموجود على الشهادة</p>
     <form id="search-form" class="space-y-3">
       <select id="organization-select" required class="w-full border rounded-xl p-3 bg-white text-sm font-bold"><option value="">جاري تحميل المؤسسات...</option></select>
-      <input id="manual-code-input" placeholder="اكتب الرقم المرجعي للشهادة" required dir="ltr" autocomplete="off" class="w-full border rounded-xl p-3 text-center font-mono">
+      <input id="manual-code-input" placeholder="اكتب الرقم المرجعي هنا (مثال: SCH-2026-...)" required dir="ltr" autocomplete="off" class="w-full border rounded-xl p-3 text-center font-mono">
       <button id="search-btn" type="submit" class="w-full text-white rounded-xl p-3 font-bold">تحقق الآن</button>
     </form>
     <p class="text-[11px] text-gray-400 mt-4">SONAA VERIFY — Powered by SONAA TECH</p>
   </div>
 
+  <!-- كارت النتيجة النهائية -->
   <div id="card" class="hidden bg-white border rounded-[20px] overflow-hidden shadow-sm">
     <div class="card-header">
-      <div id="org-name" class="text-sm font-bold">اسم المؤسسة</div>
-      <div id="org-name-en" class="text-[11px] opacity-80 mt-1" dir="ltr"></div>
-      <div id="org-type-label" class="text-[11px] font-black mt-2 opacity-90"></div>
-      <div class="w-12 h-[2px] bg-white/50 mx-auto my-4"></div>
-      <div class="text-sm opacity-90">تشهد الجهة بأن</div>
-      <h2 id="name" class="text-2xl font-black mt-2">--</h2>
+      <div class="flex justify-center mb-3">
+        <img id="org-logo" class="logo-img bg-white/10 p-2 rounded-xl hidden" alt="Organization Logo">
+      </div>
+      <div id="org-name" class="text-base font-black">اسم المؤسسة</div>
+      <div id="org-name-en" class="text-[11px] opacity-80 mt-0.5" dir="ltr"></div>
+      <div id="org-type-label" class="text-[11px] font-bold mt-2 px-3 py-1 bg-white/20 rounded-full inline-block"></div>
+      
+      <div class="w-16 h-[2px] bg-white/40 mx-auto my-4"></div>
+      
+      <div class="text-xs uppercase tracking-wider opacity-90 font-bold">تشهد الجهة بأن الطالب / المشارك:</div>
+      <h2 id="name" class="text-2xl sm:text-3xl font-black mt-2">--</h2>
       <div id="name-en" class="text-sm font-bold opacity-90 mt-1" dir="ltr"></div>
     </div>
 
     <div class="p-6 space-y-5">
       <div id="status-container" class="text-center"></div>
-      <div id="revoked-alert" class="hidden bg-red-50 border border-red-200 rounded-xl p-4 text-center text-sm font-bold text-red-800">⚠️ تم إلغاء هذه الشهادة ولا تعتبر سارية.</div>
+      <div id="revoked-alert" class="hidden bg-red-50 border border-red-200 rounded-xl p-4 text-center text-sm font-bold text-red-800">⚠️ تم إلغاء هذه الشهادة رسمياً من قِبل الإدارة ولا تعتبر سارية.</div>
 
-      <!-- حقت الهلال -->
       <div id="hilal-fields">
         <div class="text-center bg-gray-50 border rounded-xl p-5">
-          <div class="text-xs text-gray-400 font-bold">البرنامج التدريبي</div>
-          <h3 id="course" class="font-black mt-1">--</h3>
-          <div id="branch" class="text-xs text-gray-500 font-bold mt-1"></div>
+          <div class="text-xs text-gray-400 font-bold">البرنامج أو الدورة التدريبية</div>
+          <h3 id="course" class="font-black text-lg mt-1 text-gray-900">--</h3>
+          <div id="branch" class="text-xs text-gray-600 font-bold mt-1"></div>
         </div>
         <div class="grid grid-cols-3 gap-2 text-center mt-2">
-          <div class="bg-gray-50 rounded-xl p-3"><div class="text-[11px] text-gray-400 font-bold">البداية</div><div id="from" class="text-sm font-black">--</div></div>
-          <div class="bg-gray-50 rounded-xl p-3"><div class="text-[11px] text-gray-400 font-bold">النهاية</div><div id="to" class="text-sm font-black">--</div></div>
-          <div class="bg-gray-50 rounded-xl p-3"><div class="text-[11px] text-gray-400 font-bold">الساعات</div><div id="hours" class="text-sm font-black">--</div></div>
+          <div class="bg-gray-50 rounded-xl p-3"><div class="text-[11px] text-gray-400 font-bold">تاريخ البداية</div><div id="from" class="text-xs sm:text-sm font-black mt-1">--</div></div>
+          <div class="bg-gray-50 rounded-xl p-3"><div class="text-[11px] text-gray-400 font-bold">تاريخ النهاية</div><div id="to" class="text-xs sm:text-sm font-black mt-1">--</div></div>
+          <div class="bg-gray-50 rounded-xl p-3"><div class="text-[11px] text-gray-400 font-bold">الساعات</div><div id="hours" class="text-xs sm:text-sm font-black mt-1">--</div></div>
         </div>
       </div>
 
-      <!-- حقت المدارس -->
       <div id="school-fields" class="hidden">
         <div class="text-center bg-gray-50 border rounded-xl p-5">
-          <div class="text-xs text-gray-400 font-bold">الفصل / القسم</div>
-          <h3 id="student-class" class="font-black mt-1">--</h3>
-          <div class="text-xs text-gray-400 mt-1">نتيجة امتحانات - معتمدة من إدارة المدرسة</div>
+          <div class="text-xs text-gray-400 font-bold">الفصل الدراسي / القسم</div>
+          <h3 id="student-class" class="font-black text-lg mt-1 text-gray-900">--</h3>
+          <div class="text-xs text-gray-500 mt-1">نتيجة اكتمال العام الدراسي - معتمدة من إدارة المدرسة</div>
         </div>
         <div class="grid grid-cols-2 gap-2 text-center mt-2">
           <div class="rounded-xl p-4 border" style="background: color-mix(in srgb, var(--org-color) 8%, white)">
-            <div class="text-[11px] text-gray-500 font-bold">الدرجة النهائية</div>
-            <div id="final-grade" class="text-3xl font-black grade-big">--</div>
-            <div id="total-grade-line" class="text-[11px] text-gray-500 font-bold"></div>
+            <div class="text-[11px] text-gray-600 font-bold">الدرجة النهائية المحرزة</div>
+            <div id="final-grade" class="text-3xl font-black grade-big mt-1">--</div>
+            <div id="total-grade-line" class="text-[11px] text-gray-500 font-bold mt-0.5"></div>
           </div>
-          <div class="bg-gray-50 rounded-xl p-4 border">
-            <div class="text-[11px] text-gray-400 font-bold">التقدير</div>
-            <div id="grade-label" class="text-xl font-black mt-1">--</div>
-            <div class="text-[11px] text-green-600 font-bold mt-1">✓ ناجح</div>
+          <div class="bg-gray-50 rounded-xl p-4 border flex flex-col justify-center">
+            <div class="text-[11px] text-gray-400 font-bold">التقدير العام</div>
+            <div id="grade-label" class="text-xl font-black mt-1 text-gray-900">--</div>
+            <div class="text-[11px] text-green-600 font-bold mt-1">✓ نتيجة ناجح وموثقة</div>
           </div>
         </div>
       </div>
 
-      <div class="border-t pt-4 flex justify-between gap-4">
-        <div><div class="text-[11px] text-gray-400 font-bold">الرقم المرجعي</div><span id="code" class="text-xs font-mono font-bold" dir="ltr"></span></div>
-        <div class="text-left"><div class="text-[11px] text-gray-400 font-bold">نتيجة المطابقة</div><div id="match-result" class="text-green-700 text-sm font-black"></div></div>
+      <div class="border-t pt-4 flex items-center justify-between gap-4">
+        <div><div class="text-[11px] text-gray-400 font-bold">الرقم المرجعي للشهادة</div><span id="code" class="text-xs font-mono font-bold text-gray-800" dir="ltr"></span></div>
+        <div class="text-left"><div class="text-[11px] text-gray-400 font-bold">حالة المطابقة</div><div id="match-result" class="text-green-700 text-sm font-black"></div></div>
       </div>
 
-      <div class="flex gap-2 no-print">
-        <button onclick="window.print()" class="flex-1 bg-gray-100 rounded-xl p-3 font-bold">🖨️ طباعة</button>
-        <button onclick="resetPage()" class="flex-1 bg-gray-100 rounded-xl p-3 font-bold">🔍 فحص أخرى</button>
+      <div class="flex gap-2 no-print pt-2">
+        <button onclick="window.print()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl p-3 font-bold text-xs">🖨️ طباعة النتيجة</button>
+        <button onclick="shareResult()" class="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl p-3 font-bold text-xs">📤 مشاركة واتساب</button>
+        <button onclick="resetPage()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl p-3 font-bold text-xs">🔍 فحص أخرى</button>
       </div>
     </div>
   </div>
@@ -125,15 +136,15 @@ body { font-family: 'Cairo', sans-serif; background: #F7F8FA; }
     <div class="text-5xl mb-3">⚠️</div>
     <h2 id="error-title" class="font-black text-lg">تعذر العثور على الشهادة</h2>
     <p id="error-message" class="text-sm text-gray-500 mt-2"></p>
-    <button onclick="resetPage()" class="text-white rounded-xl px-6 py-3 font-bold mt-5" style="background:var(--org-color)">بحث جديد</button>
+    <button onclick="resetPage()" class="text-white rounded-xl px-6 py-3 font-bold mt-5 text-sm" style="background:var(--org-color)">إجراء بحث جديد</button>
   </div>
-
-  <footer class="text-center mt-8 no-print text-[11px] text-gray-500 font-bold">
-    <div>SONAA VERIFY</div>
-    <div class="mt-1">Designed and Powered by <span style="color:var(--org-color)">SONAA TECH</span></div>
-    <div class="mt-1 text-gray-400">© 2026 SONAA TECH. All Rights Reserved.</div>
-  </footer>
 </main>
+
+<footer class="text-center py-6 no-print text-xs text-gray-500 font-bold border-t bg-white mt-10">
+  <div>SONAA VERIFY — نظام حماية وتوثيق الشهادات الرقمية</div>
+  <div class="mt-1">Designed and Developed by <span style="color:var(--org-color)">SONAA TECH</span> (AYMAN MORTADA)</div>
+  <div class="mt-1 text-gray-400 text-[10px]">© 2026 SONAA TECH. All Rights Reserved.</div>
+</footer>
 
 <script>
 const SUPABASE_URL = "https://zepmmkynvabxgsgzskgi.supabase.co";
@@ -150,16 +161,29 @@ async function rpc(name, body = {}) {
   if (!response.ok) throw new Error("Supabase RPC Error: " + response.status);
   return await response.json();
 }
+
 function hideAll(){ $("loading").classList.add("hidden"); $("manual-search").classList.add("hidden"); $("card").classList.add("hidden"); $("error").classList.add("hidden"); }
 function showError(message, title = "تعذر العثور على الشهادة"){ hideAll(); $("error-title").textContent = title; $("error-message").textContent = message; $("error").classList.remove("hidden"); }
 function showManual(){ hideAll(); $("manual-search").classList.remove("hidden"); }
 function formatDate(v){ if(!v) return "--"; return v; }
 function resetPage(){ const url = new URL(location.href); url.searchParams.delete("c"); url.searchParams.delete("cert_code"); history.replaceState({}, "", url); $("manual-code-input").value = ""; initialize(); }
 
+function shareResult(){
+  const name = $("name").textContent || "";
+  const codeTxt = $("code").textContent || "";
+  const org = $("org-name").textContent || "";
+  const grade = $("final-grade").textContent || "";
+  const cls = $("student-class").textContent || "";
+  let extra = "";
+  if(grade && grade!=="--") extra = `\nالفصل: ${cls}\nالدرجة: ${grade}`;
+  const txt = `✅ ${org}\nالطالب: ${name}${extra}\nالرقم المرجعي: ${codeTxt}\nرابط التحقق: ${location.href}\n\nعبر SONAA VERIFY - SONAA TECH`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,"_blank");
+}
+
 async function loadOrganizations(){
   organizations = await rpc("list_public_organizations");
   const select = $("organization-select");
-  select.innerHTML = '<option value="">اختر المؤسسة</option>';
+  select.innerHTML = '<option value="">اختر المؤسسة أو المدرسة</option>';
   organizations.forEach(org => {
     const option = document.createElement("option");
     option.value = org.slug; option.textContent = org.name_ar;
@@ -174,11 +198,18 @@ function applyOrganization(org){
   const logo = org.organization_logo || org.logo_url;
   const colorRaw = org.organization_color || org.primary_color || "";
   const color = /^#[0-9A-Fa-f]{6}$/.test(colorRaw) ? colorRaw : "#C8102E";
-  if (logo) { $("org-logo").src = logo; $("org-logo").classList.remove("hidden"); $("brand-fallback").classList.add("hidden"); }
-  else { $("org-logo").classList.add("hidden"); $("brand-fallback").classList.remove("hidden"); }
+  
+  if (logo) {
+    $("org-logo").src = logo; $("org-logo").classList.remove("hidden");
+    $("header-logo").src = logo; $("header-logo").classList.remove("hidden");
+  } else {
+    $("org-logo").classList.add("hidden");
+    $("header-logo").classList.add("hidden");
+  }
+  
   document.documentElement.style.setProperty("--org-color", color);
   const isSchool = (org.org_type === 'school');
-  $("org-type-label").textContent = isSchool ? "🏫 شهادة دراسية - نتيجة معتمدة" : "🚑 شهادة تدريبية - معتمدة";
+  $("org-type-label").textContent = isSchool ? "🏫 نتيجة دراسية معتمدة رسمياً" : "🚑 شهادة تدريبية معتمدة رسمياً";
 }
 
 function displayCertificate(c){
@@ -198,36 +229,36 @@ function displayCertificate(c){
   if (isSchool){
     $("student-class").textContent = c.student_class || c.course_name || "--";
     $("final-grade").textContent = c.final_grade || "--";
-    $("total-grade-line").textContent = c.total_grade ? "من " + c.total_grade : "";
-    $("grade-label").textContent = c.grade_label || "";
+    $("total-grade-line").textContent = c.total_grade ? "من اجمالي " + c.total_grade : "";
+    $("grade-label").textContent = c.grade_label || "--";
   }
 
   const revoked = c.result_status === "revoked";
   $("revoked-alert").classList.toggle("hidden", !revoked);
   if (revoked){
-    $("status-container").innerHTML = '<span class="status-badge status-revoked">🚫 شهادة ملغاة</span>';
-    $("match-result").textContent = "✕ غير سارية";
+    $("status-container").innerHTML = '<span class="status-badge status-revoked">🚫 شهادة ملغاة وغير سارية</span>';
+    $("match-result").textContent = "✕ غير مطابقة / ملغاة";
     $("match-result").className = "text-red-700 text-sm font-black";
   } else {
-    $("status-container").innerHTML = '<span class="status-badge status-valid">✓ معتمدة وسارية</span>';
-    $("match-result").textContent = "✓ مطابقة";
+    $("status-container").innerHTML = '<span class="status-badge status-valid">✓ وثيقة رسمية معتمدة وسارية</span>';
+    $("match-result").textContent = "✓ مطابقة وصحيحة";
     $("match-result").className = "text-green-700 text-sm font-black";
   }
   $("card").classList.remove("hidden");
 }
 
 async function verifyCertificate(certCode, slug = null){
-  if (!certCode.trim()){ showError("يرجى كتابة الرقم المرجعي."); return; }
-  hideAll(); $("loading").classList.remove("hidden"); $("loading-text").textContent = "جاري التحقق من الشهادة...";
+  if (!certCode.trim()){ showError("يرجى كتابة الرقم المرجعي للتحقق."); return; }
+  hideAll(); $("loading").classList.remove("hidden"); $("loading-text").textContent = "جاري مطابقة بيانات الشهادة والتحقق منها...";
   try{
     const result = await rpc("verify_certificate", { p_code: certCode.trim(), p_host: hostname, p_slug: slug });
     if (!result || !result.length){ showError("لم تصل نتيجة من خادم التحقق."); return; }
     const certificate = result[0];
     if (certificate.result_status === "organization_not_found" || certificate.result_status === "organization_unavailable"){
-      showError("لم يتم التعرف على المؤسسة أو أن حسابها غير متاح.", "المؤسسة غير متاحة"); return;
+      showError("لم يتم التعرف على المؤسسة أو أن حسابها غير متاح حالياً.", "المؤسسة غير متاحة"); return;
     }
     if (certificate.result_status === "not_found"){
-      showError("لا توجد شهادة بهذا الرقم المرجعي لدى المؤسسة المحددة."); return;
+      showError("لا توجد شهادة مطابقة بهذا الرقم المرجعي لدى الجهة المحددة. تأكد من صحة الرقم."); return;
     }
     applyOrganization(certificate);
     displayCertificate(certificate);
@@ -241,7 +272,7 @@ $("search-form").addEventListener("submit", function(e){
   e.preventDefault();
   const slug = $("organization-select").value;
   const certCode = $("manual-code-input").value.trim();
-  if (!slug || !certCode){ showError("اختر المؤسسة واكتب الرقم المرجعي."); return; }
+  if (!slug || !certCode){ showError("يرجى اختيار المؤسسة وكتابة الرقم المرجعي."); return; }
   const url = new URL(location.href); url.search = ""; url.searchParams.set("org", slug); url.searchParams.set("c", certCode); location.href = url.toString();
 });
 
@@ -252,7 +283,7 @@ async function initialize(){
     await loadOrganizations(); showManual();
   } catch (error){
     console.error(error);
-    showError("تعذر تحميل المؤسسات. تأكد من إعداد قاعدة البيانات ودوال التحقق.", "تعذر الاتصال");
+    showError("تعذر تحميل قائمة المؤسسات. تأكد من اتصال قاعدة البيانات.", "تعذر الاتصال");
   }
 }
 initialize();
