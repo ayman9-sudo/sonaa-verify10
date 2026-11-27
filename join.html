@@ -1,37 +1,157 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>اطلب نظامك | SONAA TECH</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"><style>body{font-family:'Cairo';background:#07172f;color:white}input,select,textarea{color:#111 !important}</style></head>
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>انضم إلى SONAA TECH | نظام تأسيس احترافي</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"><style>body{font-family:'Cairo';background:#07172f;color:white}input,select,textarea{color:#111!important}</style></head>
 <body>
-<div class="text-center py-2 text-[12px] font-black" style="background:#d4af62;color:#07172f">SONAA TECH • اطلب نظام التحقق الرقمي لمؤسستك</div>
-<header class="sticky top-0 z-50 py-2" style="background:rgba(7,23,47,.98);border-bottom:1px solid rgba(212,175,98,.35)"><div class="max-w-7xl mx-auto px-4 flex items-center justify-between"><a href="index.html"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-11"></a><a href="track.html" class="text-xs font-black px-3 py-1.5 rounded-full" style="background:#0a1d38;border:1px solid #d4af62;color:#ead49a">تتبع طلبك</a></div></header>
+<div class="text-center py-2 text-[12px] font-black" style="background:#d4af62;color:#07172f">SONAA TECH • انضم إلى SONAA TECH • تسجيل البيانات ← الفاتورة ← الدفع ← الاتفاقية ← التفعيل</div>
+<header class="sticky top-0 z-50 py-2" style="background:rgba(7,23,47,.98);border-bottom:1px solid rgba(212,175,98,.35)"><div class="max-w-7xl mx-auto px-4 flex items-center justify-between"><a href="index.html"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-12"></a><a href="track.html" class="text-xs font-black px-3 py-1.5 rounded-full" style="background:#0a1d38;border:1px solid #d4af62;color:#ead49a">تتبع طلبك</a></div></header>
+
 <main class="max-w-2xl mx-auto px-4 py-6">
-<div class="p-5 md:p-6 rounded-2xl" style="background:#0a1d38;border:1px solid rgba(212,175,98,.55)">
-<div class="text-center"><h1 class="font-black text-xl">اطلب نظام التحقق الرقمي لمؤسستك</h1><p class="text-xs font-bold mt-1" style="color:#aab6c8">املا البيانات - وبيظهر ليك رقم طلب خاص SONAA-REQ-XXXX</p></div>
+<div class="p-5 rounded-2xl" style="background:#0a1d38;border:1px solid rgba(212,175,98,.55)">
+<div class="text-center"><h1 class="font-black text-xl">انضم إلى SONAA TECH</h1><p class="text-xs font-bold mt-1" style="color:#aab6c8">نظام تأسيس المؤسسات - لا يتم إرسال الطلب باعتباره مدفوعاً إلا بعد تأكيد الدفع</p>
+<div class="flex justify-center gap-1 mt-3 text-[10px] font-black flex-wrap"><span id="s1" class="px-2 py-1 rounded-full" style="background:#d4af62;color:#07172f">1 بيانات</span><span id="s2" class="px-2 py-1 rounded-full bg-white/10">2 الفاتورة</span><span id="s3" class="px-2 py-1 rounded-full bg-white/10">3 الدفع</span><span id="s4" class="px-2 py-1 rounded-full bg-white/10">4 الاتفاقية</span></div></div>
+
 <form id="reqForm" class="space-y-3 mt-5">
-<input id="org_name" required placeholder="اسم المؤسسة الرسمي *" class="w-full p-3.5 border rounded-xl text-[15px]">
-<select id="org_type" class="w-full p-3.5 border rounded-xl text-[15px]"><option value="مدرسة">مدرسة</option><option value="جامعة">جامعة</option><option value="مركز تدريب">مركز تدريب</option><option value="شركة">شركة</option><option value="جمعية">جمعية / هلال احمر</option></select>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="org_state" placeholder="الولاية - مثلا النيل الابيض" class="p-3.5 border rounded-xl"><input id="org_city" placeholder="المدينة - مثلا كوستي" class="p-3.5 border rounded-xl"></div>
-<input id="manager_name" required placeholder="اسم المدير / المسؤول *" class="w-full p-3.5 border rounded-xl">
-<input id="phone" required placeholder="رقم الهاتف وواتساب *" class="w-full p-3.5 border rounded-xl">
-<input id="email" placeholder="البريد الالكتروني" class="w-full p-3.5 border rounded-xl">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="expected_certs" type="number" value="100" class="p-3.5 border rounded-xl"><input id="slug" placeholder="الرابط المطلوب - مثلا kosti-school" class="p-3.5 border rounded-xl"></div>
-<div class="rounded-xl p-3" style="background:#07172f;border:1.5px dashed #d4af62"><label class="block text-xs font-black mb-2" style="color:#ead49a">📷 شعار المؤسسة - اختياري</label><input id="logo" type="file" accept="image/*" class="w-full text-xs text-white"></div>
-<textarea id="notes" placeholder="ملاحظات اضافية" class="w-full p-3.5 border rounded-xl"></textarea>
-<button id="submitBtn" class="w-full py-3.5 rounded-xl font-black text-[16px]" style="background:#d4af62;color:#07172f">ارسال طلب التأسيس</button>
-</form>
-<div id="successBox" class="hidden text-center mt-4 p-4 rounded-xl" style="background:#E8F7EE;color:#0E9F5A;border:1px solid #B7E5C9"><div class="font-black text-lg">✓ تم استلام طلبك</div><div class="font-mono font-black text-xl" id="reqNo"></div><a id="trackLink" class="inline-block mt-3 bg-black text-white px-5 py-2 rounded-lg text-sm font-bold">تتبع طلبك هسي</a></div>
+<!-- STEP 1 -->
+<div id="step1" class="space-y-3">
+<input id="org_name" required placeholder="اسم المؤسسة الرسمي *" class="w-full p-3.5 border rounded-xl">
+<select id="org_type" class="w-full p-3.5 border rounded-xl"><option value="مدرسة">مدرسة</option><option value="جامعة">جامعة</option><option value="مركز تدريب">مركز تدريب</option><option value="شركة">شركة</option><option value="جمعية">جمعية / هلال احمر</option></select>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3"><input id="org_country" value="السودان" class="p-3.5 border rounded-xl"><input id="org_state" required placeholder="الولاية *" class="p-3.5 border rounded-xl"><input id="org_city" required placeholder="المدينة *" class="p-3.5 border rounded-xl"></div>
+<input id="manager_name" required placeholder="اسم المدير / المسؤول المفوض *" class="w-full p-3.5 border rounded-xl">
+<input id="manager_role" placeholder="صفة الممثل - مثلا: المدير العام" class="w-full p-3.5 border rounded-xl">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="phone" required placeholder="هاتف + واتساب *" class="p-3.5 border rounded-xl"><input id="email" required type="email" placeholder="البريد الرسمي *" class="p-3.5 border rounded-xl"></div>
+<input id="website" placeholder="الموقع الالكتروني - اختياري" class="w-full p-3.5 border rounded-xl">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="expected_certs" type="number" value="100" class="p-3.5 border rounded-xl"><input id="slug" placeholder="الرابط المطلوب - kosti-school" class="p-3.5 border rounded-xl"></div>
+<div class="rounded-xl p-3 space-y-3" style="background:#07172f;border:1.5px dashed #d4af62">
+<label class="block text-xs font-black" style="color:#ead49a">📷 شعار المؤسسة</label><input id="logo" type="file" accept="image/*" class="w-full text-xs text-white">
+<label class="block text-xs font-black" style="color:#ead49a">🎨 نموذج الشهادة الخاص بالمؤسسة - قالبك بهويتك</label><input id="sample_cert" type="file" accept="image/*,.pdf" class="w-full text-xs text-white">
 </div>
-<div class="text-center mt-4"><a href="track.html" class="text-xs font-bold underline" style="color:#ead49a">عندك رقم طلب؟ تتبع طلبك من هنا</a></div>
+<textarea id="notes" placeholder="متطلبات اضافية" class="w-full p-3.5 border rounded-xl"></textarea>
+<button type="button" onclick="goStep(2)" class="w-full py-3.5 rounded-xl font-black" style="background:#d4af62;color:#07172f">التالي - إصدار الفاتورة →</button>
+</div>
+
+<!-- STEP 2 - INVOICE GENERATOR -->
+<div id="step2" class="hidden space-y-3">
+<h3 class="font-black text-center">🧾 فاتورة التأسيس - Invoice Generator</h3>
+<div class="grid grid-cols-3 gap-2">
+<label class="cursor-pointer"><input type="radio" name="setup_pkg" value="30" onchange="calcInvoice()" class="hidden peer"><div class="p-3 rounded-xl text-center border bg-white/5 peer-checked:bg-[#d4af62] peer-checked:text-[#07172f]"><div class="font-black text-sm">أساسي</div><div class="font-black">30$</div><div class="text-[10px]">50 شهادة</div></div></label>
+<label class="cursor-pointer"><input type="radio" name="setup_pkg" value="50" onchange="calcInvoice()" class="hidden peer" checked><div class="p-3 rounded-xl text-center border bg-white/5 peer-checked:bg-[#d4af62] peer-checked:text-[#07172f]"><div class="font-black text-sm">احترافي ⭐</div><div class="font-black">50$</div><div class="text-[10px]">100 شهادة</div></div></label>
+<label class="cursor-pointer"><input type="radio" name="setup_pkg" value="100" onchange="calcInvoice()" class="hidden peer"><div class="p-3 rounded-xl text-center border bg-white/5 peer-checked:bg-[#d4af62] peer-checked:text-[#07172f]"><div class="font-black text-sm">مؤسسات</div><div class="font-black">100$</div><div class="text-[10px]">500 شهادة</div></div></label>
+</div>
+
+<div class="rounded-xl p-4 bg-white text-black">
+<div class="flex justify-between font-black text-sm"><span>SONAA TECH - فاتورة تأسيس</span><span id="invNo" class="font-mono text-xs">INV-000000</span></div>
+<div class="text-[11px] text-gray-500">تاريخ: <span id="invDate"></span> | العملة: USD - دولار أمريكي</div>
+<table class="w-full text-xs mt-3">
+<tr class="border-b"><td class="py-2">رسوم تأسيس المؤسسة</td><td class="text-left font-bold" id="row_setup">20.00$</td></tr>
+<tr class="border-b"><td class="py-2">رسوم ربط لوحة الإدارة</td><td class="text-left font-bold" id="row_admin">15.00$</td></tr>
+<tr class="border-b"><td class="py-2">تهيئة النظام والقالب + ربط QR</td><td class="text-left font-bold" id="row_template">15.00$</td></tr>
+<tr class="border-b text-green-600"><td class="py-2">خصم باقة الإطلاق - Launch Discount</td><td class="text-left font-bold" id="row_discount">-0.00$</td></tr>
+<tr class="font-black text-base"><td class="py-2">الإجمالي المستحق</td><td class="text-left" id="row_total">50.00$</td></tr>
+</table>
+<p class="text-[10px] text-gray-500 mt-2">رسوم التأسيس مستقلة عن باقات الشهادات - لا يبدأ التنفيذ إلا بعد تأكيد استلام المبلغ - طلبات الإلغاء تخضع لسياسة الاسترداد.</p>
+</div>
+<div class="flex gap-2"><button type="button" onclick="goStep(1)" class="flex-1 py-3 rounded-xl bg-white/10 font-bold">← رجوع</button><button type="button" onclick="goStep(3)" class="flex-[2] py-3 rounded-xl font-black" style="background:#d4af62;color:#07172f">انتقل إلى الدفع وإكمال التسجيل →</button></div>
+</div>
+
+<!-- STEP 3 - PAYMENT -->
+<div id="step3" class="hidden space-y-3">
+<h3 class="font-black text-center">💳 الدفع - Payment Gateway</h3>
+<div class="p-3 rounded-xl text-center text-sm font-bold" style="background:rgba(255,193,7,.1);border:1px solid rgba(212,175,98,.5)">المبلغ المستحق: <span id="payTotal" class="font-black text-lg" style="color:#d4af62">50$</span> - فاتورة <span id="payInvNo" class="font-mono"></span></div>
+<div class="grid grid-cols-2 gap-2">
+<button type="button" onclick="setPay('بنكك')" id="btn-bankak" class="py-3 rounded-xl font-black" style="background:#E30613;color:white">بنكك - Bankak</button>
+<button type="button" onclick="setPay('فوري')" id="btn-fawry" class="py-3 rounded-xl font-black bg-white text-black">فوري - Fawry</button>
+</div>
+<div id="payInfo" class="p-4 rounded-xl bg-white text-black text-sm font-bold"></div>
+<label class="block text-xs font-black" style="color:#ead49a">📤 ارفع اشعار الدفع - + رقم العملية - للتحقق المالي</label>
+<input id="pay_proof" type="file" accept="image/*,.pdf" class="w-full text-xs text-white p-2 rounded-lg bg-white/10">
+<input id="pay_txn" placeholder="رقم العملية - مثال: 123456789 - الزامي للتحقق" class="w-full p-3 border rounded-xl">
+<div class="p-3 rounded-xl text-[11px] font-bold" style="background:#07172f;border:1px solid rgba(212,175,98,.4)">⚠️ تنبيه: لا نعتمد على صورة الإيصال وحدها كإثبات نهائي - يتم التحقق من العملية مالياً من قبل فريق SONAA TECH قبل التفعيل - أي إيصال مزور يؤدي لإلغاء الطلب نهائياً.</div>
+<!-- OTP -->
+<div class="p-3 rounded-xl" style="background:#07172f;border:1px solid rgba(212,175,98,.4)">
+<div class="flex justify-between items-center"><span class="text-xs font-black">تأكيد البريد - OTP</span><button type="button" onclick="sendOTP()" id="otpBtn" class="text-[11px] px-3 py-1 rounded-full font-black" style="background:#d4af62;color:#07172f">ارسال رمز للبريد</button></div>
+<div class="flex gap-2 mt-2"><input id="otp_input" placeholder="ادخل رمز 6 أرقام" class="flex-1 p-2.5 border rounded-lg text-center font-mono"><button type="button" onclick="verifyOTP()" class="px-4 py-2 rounded-lg bg-green-600 text-white font-black text-xs">تأكيد</button></div>
+<div id="otpStatus" class="text-[11px] mt-1 font-bold" style="color:#aab6c8">لم يتم الارسال بعد - الرمز للتجربة: 123456</div>
+</div>
+<div class="flex gap-2"><button type="button" onclick="goStep(2)" class="flex-1 py-3 rounded-xl bg-white/10 font-bold">← رجوع</button><button type="button" onclick="goStep(4)" class="flex-[2] py-3 rounded-xl font-black" style="background:#d4af62;color:#07172f">التالي - الاتفاقية الالكترونية →</button></div>
+</div>
+
+<!-- STEP 4 - E-AGREEMENT -->
+<div id="step4" class="hidden space-y-3">
+<div class="flex justify-between items-center"><h3 class="font-black">📜 اتفاقية استخدام خدمات SONAA TECH</h3><span class="text-[10px] px-2 py-1 rounded-full bg-white/10 font-mono">SONAA-AGREEMENT v1.2 - 2026</span></div>
+<div class="p-4 rounded-xl text-[12px] leading-relaxed bg-white text-black max-h-[320px] overflow-y-auto">
+<p class="font-black">اتفاقية استخدام خدمات SONAA TECH - SONAA VERIFY – Institutional Service Agreement</p>
+<p class="mt-2"><b>أولاً: أطراف الاتفاقية:</b> الطرف الأول: SONAA TECH، مقدم خدمات تطوير وتشغيل أنظمة التحقق الرقمي وإدارة الشهادات. الطرف الثاني: المؤسسة المسجلة في منصة SONAA TECH، ويمثلها المسؤول المفوض بإتمام التسجيل والموافقة على هذه الاتفاقية.</p>
+<p class="mt-1"><b>ثانياً: موضوع الاتفاقية:</b> تنظيم استخدام المؤسسة لخدمات SONAA VERIFY، بما يشمل تأسيس حساب المؤسسة، وتهيئة لوحة الإدارة، وربط نظام إصدار الشهادات والتحقق الرقمي، وفقاً للخدمات المتفق عليها.</p>
+<p class="mt-1"><b>ثالثاً: التزامات SONAA TECH:</b> توفير نظام تقني لإدارة الشهادات والتحقق - تهيئة الحساب ولوحة الإدارة - ربط QR - اتخاذ التدابير التقنية والتنظيمية لحماية بيانات المؤسسة والمستفيدين - عدم استخدام بيانات المؤسسة لأغراض غير مرتبطة بالخدمة - عدم بيع البيانات أو إتاحتها لأطراف أخرى لأغراض تجارية - المحافظة على سرية بيانات الدخول - تقديم الدعم الفني - إخطار المؤسسة عند اكتشاف حادث أمني مؤثر.</p>
+<p class="mt-1"><b>رابعاً: التزامات المؤسسة:</b> تقديم بيانات صحيحة - التأكد من امتلاك الحق في رفع الشعارات والقوالب - الحصول على الأذونات اللازمة لمعالجة بيانات أصحاب الشهادات وصورهم - المحافظة على بيانات الدخول - استخدام النظام للأغراض المشروعة - مراجعة بيانات الشهادات قبل إصدارها - سداد الرسوم وفق الفاتورة.</p>
+<p class="mt-1"><b>خامساً: ملكية البيانات والخصوصية:</b> تظل البيانات ملكاً للمؤسسة أو لأصحاب الحقوق - تمنح المؤسسة SONAA TECH الإذن لمعالجة البيانات بالقدر المطلوب لتشغيل الخدمة - لا يجوز استغلال بيانات المستفيدين أو نشرها أو بيعها.</p>
+<p class="mt-1"><b>سادساً: الرسوم والمدفوعات:</b> رسوم التأسيس مستقلة عن باقات الشهادات - يتم توضيح جميع الرسوم قبل الدفع - لا يبدأ التنفيذ إلا بعد تأكيد استلام المبلغ - الإلغاء والاسترداد حسب السياسة المعلنة.</p>
+<p class="mt-1"><b>سابعاً: حدود المسؤولية:</b> لا يتحمل مقدم الخدمة مسؤولية صحة المعلومات التي تدخلها المؤسسة أو صحة المؤهلات - ولا يضمن استمرارية دون انقطاع في جميع الظروف، لكن يلتزم ببذل الجهود الفنية المعقولة للاستعادة.</p>
+<p class="mt-1"><b>ثامناً: إنهاء الخدمة:</b> يجوز الإنهاء وفق الشروط المتفق عليها، مع مراعاة حقوق المؤسسة وأصحاب البيانات ومتطلبات الاحتفاظ وحذف البيانات.</p>
+<p class="mt-1"><b>تاسعاً: الموافقة الإلكترونية:</b> تقر المؤسسة بأن موافقة ممثلها المفوض إلكترونياً بعد الاطلاع تمثل قبولاً لبنودها - ويتم الاحتفاظ بسجل الموافقة ورقم الاتفاقية وتاريخها وبيانات التسجيل.</p>
+<p class="mt-1"><b>عاشراً: أحكام عامة:</b> تخضع للقوانين واجبة التطبيق، وتعالج الخلافات ودياً أولاً ثم وفق الإجراءات المختصة. SONAA TECH - Verify Anywhere. Trust Everywhere.</p>
+<p class="mt-2 text-[10px] text-gray-500">مسودة تشغيلية وليست عقداً معتمداً قانونياً - يلزم مراجعتها قانونياً في دولة العمل وتحديد الجهة المتعاقدة المخولة بالتوقيع - ويجب أن يكون الممثل شخصاً بالغاً مخولاً.</p>
+</div>
+<label class="flex gap-2 items-start text-[12px] font-bold p-3 rounded-xl" style="background:rgba(212,175,98,.1);border:1px solid rgba(212,175,98,.4)"><input id="agree_agreement" type="checkbox" class="mt-1"><span>☐ قرأت اتفاقية استخدام خدمات SONAA TECH - إصدار v1.2 - وأوافق على جميع بنودها.</span></label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><input id="sign_name" required placeholder="اسم الشخص الموافق وصفته - مثلا: أحمد - المدير العام *" class="p-3.5 border rounded-xl"><input id="sign_date" type="date" class="p-3.5 border rounded-xl"></div>
+<div class="text-[11px] text-center font-bold" style="color:#aab6c8">سيتم تسجيل: اسم المؤسسة + اسم الموافق + التاريخ والوقت + رقم الاتفاقية + رقم عملية الدفع</div>
+<div class="flex gap-2"><button type="button" onclick="goStep(3)" class="flex-1 py-3 rounded-xl bg-white/10 font-bold">← رجوع</button><button id="submitBtn" class="flex-[2] py-3 rounded-xl font-black text-white" style="background:#25D366">أوافق وأكمل التسجيل ✓</button></div>
+</div>
+</form>
+<div id="successBox" class="hidden text-center mt-4 p-5 rounded-xl" style="background:#E8F7EE;color:#0E9F5A;border:1px solid #B7E5C9"><div class="text-3xl">✅</div><div class="font-black text-lg mt-1">تم استلام طلب تأسيس مؤسستك بنجاح!</div><div class="font-mono font-black text-lg mt-1" id="reqNo"></div><div class="text-xs font-bold mt-1">الحالة: <span class="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800">PAYMENT CONFIRMED – PENDING SETUP</span></div><div class="text-[11px] text-gray-600 mt-2" id="agreementLog"></div><a id="trackLink" class="inline-block mt-3 bg-black text-white px-5 py-2 rounded-lg text-sm font-bold">تتبع طلبك</a></div>
+</div>
 </main>
 <script>
 const SUPABASE_URL="https://bjznlnuljvqubscjymjx.supabase.co";const SUPABASE_KEY="sb_publishable_k1Q9BX9gRhHl4Lq9vpOmgQ_-JrZ5pQ6";const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let payMethod="بنكك", otpVerified=false, otpCode="123456";
+function goStep(n){
+  if(n===2 && (!document.getElementById("org_name").value||!document.getElementById("manager_name").value||!document.getElementById("phone").value||!document.getElementById("email").value)){alert("املا بيانات المؤسسة والمدير والهاتف والبريد");return}
+  if(n===3){calcInvoice();}
+  if(n===4){ if(!document.getElementById("pay_proof").files[0]||!document.getElementById("pay_txn").value){alert("لازم ترفع اشعار الدفع ورقم العملية - لا نرسل الطلب كمدفوع الا بعد تأكيد الدفع");return} if(!otpVerified){ if(!confirm("لم تؤكد رمز البريد - هل تريد المتابعة بدون OTP؟ - يفضل التأكيد")) return; } }
+  ["step1","step2","step3","step4"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  document.getElementById("step"+n).classList.remove("hidden");
+  ["s1","s2","s3","s4"].forEach((id,i)=>{const el=document.getElementById(id); if(i===n-1){el.style.background="#d4af62";el.style.color="#07172f"}else{el.style.background="rgba(255,255,255,.1)";el.style.color="white"}});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function calcInvoice(){
+  const sel=document.querySelector('input[name="setup_pkg"]:checked'); const total=parseInt(sel.value);
+  const setup=Math.round(total*0.4), admin=Math.round(total*0.3), templ=total-setup-admin;
+  const discount=total>=100?10:0; const final=total-discount;
+  document.getElementById("row_setup").textContent=setup+".00$";
+  document.getElementById("row_admin").textContent=admin+".00$";
+  document.getElementById("row_template").textContent=templ+".00$";
+  document.getElementById("row_discount").textContent="-"+discount+".00$";
+  document.getElementById("row_total").textContent=final+".00$";
+  document.getElementById("payTotal").textContent=final+"$";
+  const inv="INV-"+Date.now().toString().slice(-6);
+  document.getElementById("invNo").textContent=inv; document.getElementById("payInvNo").textContent=inv;
+  document.getElementById("invDate").textContent=new Date().toLocaleDateString('ar-SD');
+  setPay(payMethod);
+}
+function setPay(m){ payMethod=m; document.getElementById("btn-bankak").style.background=m==="بنكك"?"#E30613":"#fff"; document.getElementById("btn-bankak").style.color=m==="بنكك"?"white":"black"; document.getElementById("btn-fawry").style.background=m==="فوري"?"#6d28d9":"#fff"; document.getElementById("btn-fawry").style.color=m==="فوري"?"white":"black";
+  const amt=document.getElementById("row_total")?.textContent||"50$";
+  document.getElementById("payInfo").innerHTML=m==="بنكك"?`حول <b>${amt}</b> - بنكك: <span class="font-mono">3087654</span> - Ayman Mortada - التعليق: ${document.getElementById("invNo").textContent}`:`حول <b>${amt}</b> - فوري: <span class="font-mono">0914391371</span> - SONAA TECH - التعليق: ${document.getElementById("invNo").textContent}`;
+}
+function sendOTP(){ document.getElementById("otpStatus").textContent="تم ارسال رمز 123456 لبريدك (تجريبي) - في النسخة النهائية يرسل عبر Email API"; document.getElementById("otpStatus").style.color="#22c55e"; }
+function verifyOTP(){ const v=document.getElementById("otp_input").value; if(v==="123456"){otpVerified=true; document.getElementById("otpStatus").textContent="✓ تم تأكيد البريد الالكتروني"; document.getElementById("otpStatus").style.color="#22c55e";} else {alert("رمز خاطئ - جرب 123456 للتجربة")} }
+async function toB64(f){return await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.readAsDataURL(f);})}
 document.getElementById("reqForm").addEventListener("submit",async e=>{
-e.preventDefault();const btn=document.getElementById("submitBtn");btn.disabled=true;btn.innerText="جاري ارسال الطلب...";
-const reqNo="SONAA-REQ-"+String(Math.floor(100000+Math.random()*900000));
-let logoUrl="";const file=document.getElementById("logo").files[0];
-if(file){logoUrl=await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.readAsDataURL(file);});}
-const payload={request_no:reqNo,org_name:document.getElementById("org_name").value,org_type:document.getElementById("org_type").value,org_state:document.getElementById("org_state").value,org_city:document.getElementById("org_city").value,manager_name:document.getElementById("manager_name").value,phone:document.getElementById("phone").value,email:document.getElementById("email").value,expected_certs:parseInt(document.getElementById("expected_certs").value)||100,slug:document.getElementById("slug").value,notes:document.getElementById("notes").value,logo_url:logoUrl,status:"جديد"};
-const {error}=await supabaseClient.from("org_requests").insert([payload]);
-if(error){alert("خطأ: "+error.message);btn.disabled=false;btn.innerText="ارسال طلب التأسيس";return;}
-document.getElementById("reqForm").style.display="none";document.getElementById("successBox").classList.remove("hidden");document.getElementById("reqNo").textContent=reqNo;document.getElementById("trackLink").href="track.html?req="+reqNo;
-window.open(`https://wa.me/249914391371?text=${encodeURIComponent("طلب جديد "+reqNo+" - "+payload.org_name+" - "+payload.phone)}`,"_blank");
+  e.preventDefault();
+  if(!document.getElementById("agree_agreement").checked){alert("لازم تقرأ وتوافق على الاتفاقية");return}
+  if(!document.getElementById("sign_name").value){alert("اكتب اسم الموافق وصفته");return}
+  const btn=document.getElementById("submitBtn");btn.disabled=true;btn.innerText="جاري إرسال الطلب...";
+  const reqNo="SONAA-REQ-2026-"+String(Math.floor(100+Math.random()*900));
+  const invNo=document.getElementById("invNo").textContent;
+  const sel=document.querySelector('input[name="setup_pkg"]:checked'); const total=parseInt(document.getElementById("row_total").textContent);
+  const agreementId="AGR-"+Date.now().toString().slice(-6);
+  const now=new Date().toISOString();
+  let logoUrl="",sampleUrl="",payProofUrl="";
+  if(document.getElementById("logo").files[0]) logoUrl=await toB64(document.getElementById("logo").files[0]);
+  if(document.getElementById("sample_cert").files[0]) sampleUrl=await toB64(document.getElementById("sample_cert").files[0]);
+  if(document.getElementById("pay_proof").files[0]) payProofUrl=await toB64(document.getElementById("pay_proof").files[0]);
+  const payload={request_no:reqNo,invoice_no:invNo,agreement_no:agreementId,agreement_version:"v1.2",org_name:document.getElementById("org_name").value,org_type:document.getElementById("org_type").value,org_country:document.getElementById("org_country").value,org_state:document.getElementById("org_state").value,org_city:document.getElementById("org_city").value,manager_name:document.getElementById("manager_name").value,manager_role:document.getElementById("manager_role").value,phone:document.getElementById("phone").value,email:document.getElementById("email").value,website:document.getElementById("website").value,slug:document.getElementById("slug").value,notes:document.getElementById("notes").value,logo_url:logoUrl,sample_url:sampleUrl,expected_certs:parseInt(document.getElementById("expected_certs").value)||100,invoice_amount:total,pay_method:payMethod,pay_txn:document.getElementById("pay_txn").value,pay_proof_url:payProofUrl,contract_signed_by:document.getElementById("sign_name").value,contract_date:document.getElementById("sign_date").value||now,agreement_accepted_at:now,otp_verified:otpVerified,status:"PAYMENT CONFIRMED - PENDING SETUP",payment_status:"بانتظار مراجعة مالية"};
+  const {error}=await supabaseClient.from("org_requests").insert([payload]);
+  if(error){alert("خطأ: "+error.message);btn.disabled=false;btn.innerText="أوافق وأكمل التسجيل ✓";return;}
+  document.getElementById("reqForm").style.display="none";document.getElementById("successBox").classList.remove("hidden");document.getElementById("reqNo").textContent=reqNo;document.getElementById("agreementLog").textContent=`اتفاقية ${agreementId} v1.2 - موافقة: ${payload.contract_signed_by} - ${now} - عملية دفع: ${payload.pay_txn}`;document.getElementById("trackLink").href="track.html?req="+reqNo;
+  window.open(`https://wa.me/249914391371?text=${encodeURIComponent("طلب مدفوع "+reqNo+" - فاتورة "+invNo+" - "+total+"$ - "+payload.org_name)}`,"_blank");
 });
+calcInvoice();
 </script></body></html>
