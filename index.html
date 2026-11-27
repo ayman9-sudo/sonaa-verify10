@@ -4,41 +4,27 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SONAA TECH | نظام التحقق الموحد</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{font-family:'Cairo',sans-serif}
-body{background:#07172f;color:white}
-.gold{color:#d4af62}.gold-bg{background:#d4af62;color:#07172f}.gold-border{border-color:rgba(212,175,98,.55)}
+body{font-family:'Cairo';background:#07172f;color:white}
 .hero-card{background:#0a1d38;border:1px solid rgba(212,175,98,.55)}
-.float{animation:float 4s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.lang-btn.active{background:#d4af62;color:#07172f}
 .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:blink 1s infinite}@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.lang-btn.active{background:#d4af62;color:#07172f}
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
-<!-- الشريط الذهبي - شلتو من ملفك -->
 <div class="text-center py-2 px-3 text-[12px] font-black" style="background:#d4af62;color:#07172f">SONAA TECH • VERIFY ANYWHERE • TRUST EVERYWHERE</div>
-<div class="text-center py-2 text-[13px] font-extrabold flex justify-center gap-3 flex-wrap" style="background:#050e1d;color:#ead49a;border-bottom:1px solid rgba(212,175,98,.4)">
-<span><span class="dot"></span> <span data-i18n="live">تحقق مباشر</span></span><span id="clockTime">--:--:--</span><span id="clockDate"></span>
-</div>
+<div class="text-center py-2 text-[13px] font-extrabold flex justify-center gap-3" style="background:#050e1d;color:#ead49a;border-bottom:1px solid rgba(212,175,98,.4)"><span><span class="dot"></span> <span data-i18n="live">تحقق مباشر</span></span><span id="clockTime">--:--</span><span id="clockDate"></span></div>
 
-<!-- HEADER - فيهو الشعار والازرار بالجنبة -->
-<header class="sticky top-0 z-50" style="background:rgba(7,23,47,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,175,98,.35)">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-    <a href="index.html" class="flex items-center gap-3">
-      <!-- الشعار بتاعك من ملف التحقق -->
-      <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-11 w-auto object-contain">
-      <div class="leading-none">
-        <div class="font-black text-lg">SONAA <span class="gold">TECH</span></div>
-        <div class="text-[10px] font-bold" style="color:#aab6c8">VERIFY • TRUST • GLOBAL</div>
-      </div>
-    </a>
+<!-- HEADER V2 - صورة بس -->
+<header class="sticky top-0 z-50" style="background:rgba(7,23,47,.98);border-bottom:1px solid rgba(212,175,98,.35)">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-11 w-auto object-contain"></a>
     <nav class="hidden md:flex items-center gap-2 text-sm font-bold">
-      <a href="index.html" class="px-3 py-1.5 rounded-lg" style="background:#0a1d38;border:1px solid rgba(212,175,98,.5)" data-i18n="nav_home">🏠 الرئيسية</a>
+      <a href="index.html" class="px-3 py-1.5 rounded-lg" style="background:#0a1d38;border:1px solid rgba(212,175,98,.5)" data-i18n="nav_home">الرئيسية</a>
       <a href="about.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10" data-i18n="nav_about">من نحن</a>
-      <a href="verify.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10" data-i18n="nav_verify">🔍 تحقق</a>
-      <a href="join.html" class="px-3 py-1.5 rounded-lg font-black gold-bg" data-i18n="nav_join">➕ انضم مؤسستك</a>
+      <a href="verify.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10" data-i18n="nav_verify">تحقق</a>
+      <a href="join.html" class="px-3 py-1.5 rounded-lg font-black" style="background:#d4af62;color:#07172f" data-i18n="nav_join">انضم مؤسستك</a>
       <a href="admin.html" class="px-3 py-1.5 rounded-lg bg-white text-black" data-i18n="nav_admin">لوحة الإدارة</a>
     </nav>
     <div class="flex items-center gap-2">
@@ -49,95 +35,92 @@ body{background:#07172f;color:white}
       <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden w-9 h-9 rounded-lg font-black" style="background:#0a1d38;border:1px solid rgba(212,175,98,.4)">☰</button>
     </div>
   </div>
-  <div id="mobile-menu" class="hidden md:hidden border-t px-4 py-3 space-y-2 text-sm font-bold" style="border-color:rgba(212,175,98,.3);background:#07172f">
-    <a href="index.html" class="block py-2" data-i18n="nav_home">🏠 الرئيسية</a>
-    <a href="about.html" class="block py-2" data-i18n="nav_about">من نحن</a>
-    <a href="verify.html" class="block py-2" data-i18n="nav_verify">🔍 تحقق من شهادة</a>
-    <a href="join.html" class="block py-2 gold" data-i18n="nav_join">➕ انضم مؤسستك - مجاني</a>
-    <a href="admin.html" class="block py-2" data-i18n="nav_admin">لوحة الإدارة</a>
+  <div id="mobile-menu" class="hidden md:hidden px-4 py-3 space-y-1 text-sm font-bold" style="background:#07172f;border-top:1px solid rgba(212,175,98,.3)">
+    <a href="index.html" class="block py-2.5 px-3 rounded-lg" style="background:#0a1d38" data-i18n="nav_home">الرئيسية</a>
+    <a href="about.html" class="block py-2.5 px-3 rounded-lg" data-i18n="nav_about">من نحن</a>
+    <a href="verify.html" class="block py-2.5 px-3 rounded-lg" data-i18n="nav_verify">تحقق من شهادة</a>
+    <a href="join.html" class="block py-2.5 px-3 rounded-lg font-black" style="color:#d4af62" data-i18n="nav_join">انضم مؤسستك - مجاني</a>
+    <a href="track.html" class="block py-2.5 px-3 rounded-lg" data-i18n="nav_track">تتبع طلبك</a>
+    <a href="admin.html" class="block py-2.5 px-3 rounded-lg" data-i18n="nav_admin">لوحة الإدارة</a>
   </div>
 </header>
 
-<!-- HERO - بنفس الوان ملفك -->
 <main class="flex-1">
 <section>
-  <div class="max-w-7xl mx-auto px-4 py-10 md:py-16 grid md:grid-cols-2 gap-10 items-center">
+  <div class="max-w-7xl mx-auto px-4 py-8 md:py-12 grid md:grid-cols-2 gap-8 items-center">
     <div class="text-center md:text-right">
-      <div class="inline-block text-xs font-black px-3 py-1 rounded-full" style="background:rgba(212,175,98,.15);border:1px solid rgba(212,175,98,.5);color:#ead49a" data-i18n="hero_badge">🌍 SONAA TECH • SUDAN → WORLD</div>
-      <h1 class="text-4xl md:text-6xl font-black leading-[1.15] mt-4" data-i18n="hero_title">شهادتك<br>ما بتتزور <span class="gold">تاني.</span></h1>
-      <p class="font-bold mt-4 text-sm md:text-base leading-relaxed" style="color:#aab6c8" data-i18n="hero_desc">نظام التحقق الموحد - منصة التحقق الرقمي والموثوقية. 500 شهادة في دقيقة بالاكسل. 50 شهادة مجانية لأي مؤسسة - بعدها 0.50$ بس. بنفس الوان وشعار نظامك الاصلي.</p>
-      <div class="flex flex-wrap gap-3 mt-6 justify-center md:justify-start">
-        <a href="verify.html" class="gold-bg px-6 py-3 rounded-xl font-black text-sm" data-i18n="hero_verify">🔍 تحقق من شهادة</a>
-        <a href="join.html" class="px-6 py-3 rounded-xl font-black text-sm text-white" style="background:#C8102E;border:1px solid rgba(212,175,98,.5)" data-i18n="hero_join">➕ سجل مؤسستك - مجاني</a>
-        <a href="admin.html" class="px-6 py-3 rounded-xl font-black text-sm text-white" style="background:#0a1d38;border:1px solid rgba(212,175,98,.5)" data-i18n="hero_admin">لوحة الإدارة →</a>
+      <div class="inline-block text-xs font-black px-3 py-1 rounded-full" style="background:rgba(212,175,98,.15);border:1px solid rgba(212,175,98,.5);color:#ead49a" data-i18n="hero_badge">SONAA TECH • SUDAN → WORLD</div>
+      <h1 class="text-[38px] md:text-6xl font-black leading-[1.15] mt-4" data-i18n="hero_title">شهادتك<br>ما بتتزور <span style="color:#d4af62">تاني.</span></h1>
+      <p class="font-bold mt-4 text-[14px] leading-relaxed" style="color:#aab6c8" data-i18n="hero_desc">نظام التحقق الموحد - 500 شهادة في دقيقة بالاكسل. 50 شهادة مجانية لأي مؤسسة - بعدها 0.50$ بس للشهادة.</p>
+      <div class="flex flex-col sm:flex-row gap-3 mt-6">
+        <a href="verify.html" class="flex-1 sm:flex-none px-6 py-3 rounded-xl font-black text-sm text-center" style="background:#d4af62;color:#07172f" data-i18n="hero_verify">تحقق من شهادة</a>
+        <a href="join.html" class="flex-1 sm:flex-none px-6 py-3 rounded-xl font-black text-sm text-center text-white" style="background:#C8102E" data-i18n="hero_join">سجل مؤسستك - مجاني</a>
+        <a href="admin.html" class="px-6 py-3 rounded-xl font-black text-sm text-center text-white" style="background:#0a1d38;border:1px solid rgba(212,175,98,.5)" data-i18n="hero_admin">لوحة الإدارة</a>
       </div>
-      <div class="flex gap-6 mt-8 justify-center md:justify-start text-center">
+      <div class="flex gap-8 mt-8 justify-center md:justify-start text-center">
         <div><div class="text-2xl font-black">50+</div><div class="text-[11px] font-bold" style="color:#aab6c8" data-i18n="stat1">مؤسسة</div></div>
         <div><div class="text-2xl font-black">12K+</div><div class="text-[11px] font-bold" style="color:#aab6c8" data-i18n="stat2">شهادة موثقة</div></div>
-        <div><div class="text-2xl font-black gold">100%</div><div class="text-[11px] font-bold" style="color:#aab6c8" data-i18n="stat3">ضد التزوير</div></div>
+        <div><div class="text-2xl font-black" style="color:#d4af62">100%</div><div class="text-[11px] font-bold" style="color:#aab6c8" data-i18n="stat3">ضد التزوير</div></div>
       </div>
     </div>
 
-    <!-- كارت الديمو - بنفس كارت التحقق بتاعك -->
-    <div class="relative">
-      <div class="float rounded-[20px] p-5 shadow-2xl" style="background:#0a1d38;border:1px solid rgba(212,175,98,.55)">
-        <div class="flex justify-between items-start">
-          <div>
-            <div class="text-[10px] font-black" style="color:#aab6c8">SUDAN RED CRESCENT • KOSTI</div>
-            <div class="font-black text-lg mt-1 text-white">أيمن مرتضى الشيخ</div>
-            <div class="text-xs font-bold gold">الاسعافات الأولية • 30 ساعة • ممتاز</div>
-          </div>
-          <div class="w-16 h-16 rounded-xl flex items-center justify-center text-[10px] font-black text-center" style="background:#d4af62;color:#07172f">SONAA<br>QR</div>
-        </div>
-        <div class="mt-4 pt-4 flex justify-between text-xs font-bold" style="border-top:1px solid rgba(212,175,98,.3);color:#aab6c8">
-          <span class="font-mono">SRCS-2026-AB12CD</span><span style="color:#22c55e">✓ Verified</span>
-        </div>
-        <div class="mt-3 rounded-xl p-3 text-[11px] font-bold" style="background:#07172f;color:#aab6c8" data-i18n="demo_note">امسح الـ QR - بوديك صفحة التحقق الرسمية - بنفس الوان نظامك - وما بتتزور</div>
+    <!-- كارت ديمو V2 - عمودي في الموبايل -->
+    <div class="hero-card rounded-[20px] p-5">
+      <div class="text-center">
+        <div class="text-[10px] font-black tracking-wider" style="color:#aab6c8">SUDAN RED CRESCENT • KOSTI</div>
+        <div class="font-black text-xl mt-2">أيمن مرتضى الشيخ</div>
+        <div class="text-sm font-bold" style="color:#d4af62">الاسعافات الأولية • 30 ساعة • ممتاز</div>
       </div>
-      <div class="absolute -bottom-4 -left-2 text-xs font-black px-3 py-2 rounded-full shadow-lg" style="background:#22c55e;color:white" data-i18n="demo_badge">✓ QR بشعار SONAA - مجرب 100%</div>
-      <!-- الشعار الكبير تحت الكارت - زي الهيدر بتاع ملفك -->
-      <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-[240px] mx-auto mt-8 opacity-90">
+      <div class="mt-4 flex items-center justify-center gap-3">
+        <div class="w-20 h-20 rounded-xl flex items-center justify-center text-[11px] font-black text-center shrink-0" style="background:#d4af62;color:#07172f">SONAA<br>QR</div>
+        <div class="text-right">
+          <div class="font-mono text-sm font-bold">SRCS-2026-AB12CD</div>
+          <div class="text-xs font-black" style="color:#22c55e">✓ Verified • تم التحقق</div>
+          <div class="text-[11px] font-bold mt-1" style="color:#aab6c8" data-i18n="demo_note">امسح الـ QR - بوديك صفحة التحقق الرسمية</div>
+        </div>
+      </div>
+      <div class="mt-4 text-center"><span class="inline-block text-[11px] font-black px-3 py-1.5 rounded-full" style="background:#22c55e;color:white" data-i18n="demo_badge">QR بشعار SONAA - مجرب 100%</span></div>
     </div>
   </div>
 </section>
 
-<!-- خطوات -->
-<section class="max-w-7xl mx-auto px-4 py-8">
+<section class="max-w-7xl mx-auto px-4 py-6">
   <h2 class="text-center font-black text-2xl" data-i18n="how_title">كيف بتشتغل؟ - 3 خطوات بس</h2>
   <div class="grid md:grid-cols-3 gap-4 mt-6">
     <div class="hero-card p-6 rounded-2xl text-center"><div class="text-3xl">📥</div><h3 class="font-black mt-2" data-i18n="step1_t">1. ارفع الاسماء</h3><p class="text-xs font-bold mt-1" style="color:#aab6c8" data-i18n="step1_d">اكسل فيهو 500 نفر - او شهادة فردية - في ثواني</p></div>
     <div class="hero-card p-6 rounded-2xl text-center"><div class="text-3xl">🎨</div><h3 class="font-black mt-2" data-i18n="step2_t">2. اختار قالبك</h3><p class="text-xs font-bold mt-1" style="color:#aab6c8" data-i18n="step2_d">قالبك براك - حرك الاسم والـ QR بالماوس - واطبع A4</p></div>
     <div class="hero-card p-6 rounded-2xl text-center"><div class="text-3xl">🔍</div><h3 class="font-black mt-2" data-i18n="step3_t">3. تحقق عالمي</h3><p class="text-xs font-bold mt-1" style="color:#aab6c8" data-i18n="step3_d">اي زول في العالم يمسح QR - بشوف شهادتك موثقة</p></div>
   </div>
+
+  <!-- باقات V2 - ازرار موحدة -->
   <div class="grid md:grid-cols-3 gap-4 mt-6">
-    <div class="hero-card p-6 rounded-2xl"><div class="font-black">🎁 تجريبي</div><div class="text-3xl font-black mt-2">0$ <span class="text-sm" style="color:#aab6c8">/ 50 شهادة</span></div><p class="text-xs font-bold mt-2" style="color:#aab6c8" data-i18n="plan1">لأي مؤسسة جديدة - جرب كل شي</p><a href="join.html" class="block text-center mt-4 py-2.5 rounded-xl font-bold text-sm" style="background:#07172f;border:1px solid rgba(212,175,98,.4)" data-i18n="plan_btn">ابدأ مجاني</a></div>
-    <div class="p-6 rounded-2xl relative" style="background:#0a1d38;border:2px solid #d4af62"><div class="absolute -top-3 right-4 text-xs font-black px-2 py-0.5 rounded-full gold-bg" data-i18n="popular">الاكثر مبيعاً</div><div class="font-black">🚀 احترافي</div><div class="text-3xl font-black mt-2">50$ <span class="text-sm" style="color:#aab6c8">/ 100 شهادة</span></div><p class="text-xs font-bold mt-2" style="color:#aab6c8" data-i18n="plan2">للمدارس والمراكز - 0.50$ للشهادة</p><a href="join.html" class="block text-center mt-4 py-2.5 rounded-xl font-bold text-sm gold-bg" data-i18n="plan_btn2">اشترك هسي</a></div>
-    <div class="hero-card p-6 rounded-2xl"><div class="font-black">🏢 مؤسسات</div><div class="text-3xl font-black mt-2">200$ <span class="text-sm" style="color:#aab6c8">/ 500 شهادة</span></div><p class="text-xs font-bold mt-2" style="color:#aab6c8" data-i18n="plan3">للجامعات والهلال - دعم خاص وقوالب خاصة</p><a href="join.html" class="block text-center mt-4 py-2.5 rounded-xl font-bold text-sm" style="background:#07172f;border:1px solid rgba(212,175,98,.4)" data-i18n="plan_btn">تواصل معنا</a></div>
+    <div class="hero-card p-6 rounded-2xl flex flex-col"><div class="font-black">🎁 تجريبي</div><div class="text-3xl font-black mt-2">0$ <span class="text-sm font-bold" style="color:#aab6c8">/ 50 شهادة</span></div><p class="text-xs font-bold mt-2 flex-1" style="color:#aab6c8" data-i18n="plan1">لأي مؤسسة جديدة - جرب كل شي</p><a href="join.html" class="block text-center mt-4 py-3 rounded-xl font-black text-sm" style="background:#07172f;border:1px solid rgba(212,175,98,.4)" data-i18n="plan_btn1">ابدأ مجاني</a></div>
+    <div class="p-6 rounded-2xl relative flex flex-col" style="background:#0a1d38;border:2px solid #d4af62"><div class="absolute -top-3 right-4 text-xs font-black px-2 py-0.5 rounded-full" style="background:#d4af62;color:#07172f" data-i18n="popular">الاكثر مبيعاً</div><div class="font-black">🚀 احترافي</div><div class="text-3xl font-black mt-2">50$ <span class="text-sm font-bold" style="color:#aab6c8">/ 100 شهادة</span></div><p class="text-xs font-bold mt-2 flex-1" style="color:#aab6c8" data-i18n="plan2">للمدارس والمراكز - 0.50$ للشهادة</p><a href="join.html" class="block text-center mt-4 py-3 rounded-xl font-black text-sm" style="background:#d4af62;color:#07172f" data-i18n="plan_btn2">اشترك هسي - 50$</a></div>
+    <div class="hero-card p-6 rounded-2xl flex flex-col"><div class="font-black">🏢 مؤسسات</div><div class="text-3xl font-black mt-2">200$ <span class="text-sm font-bold" style="color:#aab6c8">/ 500 شهادة</span></div><p class="text-xs font-bold mt-2 flex-1" style="color:#aab6c8" data-i18n="plan3">للجامعات والهلال - دعم خاص وقوالب خاصة</p><a href="https://wa.me/249914391371?text=عايز باقة المؤسسات 200 دولار" class="block text-center mt-4 py-3 rounded-xl font-black text-sm text-white" style="background:#25D366" data-i18n="plan_btn3">تواصل واتساب</a></div>
   </div>
 </section>
 <section class="max-w-7xl mx-auto px-4 pb-10">
-  <div class="rounded-3xl p-8 flex flex-wrap justify-between items-center gap-4" style="background:#d4af62;color:#07172f">
+  <div class="rounded-3xl p-6 md:p-8 text-center md:text-right md:flex justify-between items-center gap-4" style="background:#d4af62;color:#07172f">
     <div><h3 class="font-black text-xl" data-i18n="cta_t">جاهز توثق شهاداتك؟</h3><p class="text-sm font-bold opacity-70" data-i18n="cta_d">سجل مؤسستك هسي - 50 شهادة مجانية - بدون بطاقة</p></div>
-    <div class="flex gap-2">
-      <a href="join.html" class="bg-white px-6 py-3 rounded-xl font-black text-sm" style="color:#07172f" data-i18n="cta_btn">سجل مؤسستك</a>
+    <div class="flex gap-2 mt-4 md:mt-0 justify-center">
+      <a href="join.html" class="px-6 py-3 rounded-xl font-black text-sm bg-white" style="color:#07172f" data-i18n="cta_btn">سجل مؤسستك</a>
       <a href="verify.html" class="px-6 py-3 rounded-xl font-black text-sm text-white" style="background:#07172f" data-i18n="cta_verify">تحقق</a>
     </div>
   </div>
 </section>
 </main>
-
-<footer class="text-center py-6" style="background:#050e1d;border-top:1px solid rgba(212,175,98,.35)">
-  <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-[200px] mx-auto">
+<footer class="text-center py-6 px-4" style="background:#050e1d;border-top:1px solid rgba(212,175,98,.35)">
+  <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-[140px] mx-auto opacity-90">
   <div class="font-black text-[13px] mt-2" style="color:#ead49a">SONAA TECH © 2026 - كل الحقوق محفوظة</div>
-  <p class="text-[11px] mt-1" style="color:#8492a7">Verify Anywhere. Trust Everywhere. • <a href="index.html" class="underline">الرئيسية</a> • <a href="about.html" class="underline">من نحن</a> • <a href="join.html" class="underline">انضم مؤسستك</a> • <a href="verify.html" class="underline">تحقق</a> • <a href="admin.html" class="underline">لوحة الادارة</a></p>
+  <p class="text-[11px] mt-1" style="color:#8492a7">Verify Anywhere. Trust Everywhere.</p>
+  <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-2 text-[11px] font-bold" style="color:#aab6c8"><a href="index.html" class="underline">الرئيسية</a><a href="about.html" class="underline">من نحن</a><a href="join.html" class="underline">انضم مؤسستك</a><a href="verify.html" class="underline">تحقق</a><a href="admin.html" class="underline">لوحة الادارة</a></div>
   <a href="https://wa.me/249914391371" class="inline-block mt-3 px-5 py-2 rounded-full font-black text-[13px] text-white" style="background:#25D366">💬 تواصل معنا - شكاوي و استفسار</a>
 </footer>
-
 <script>
-function updateClock(){try{const now=new Date();const t=new Intl.DateTimeFormat('ar-SD',{timeZone:'Africa/Khartoum',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(now);const d=new Intl.DateTimeFormat('ar-SD',{timeZone:'Africa/Khartoum',weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(now);document.getElementById('clockTime').textContent=t;document.getElementById('clockDate').textContent=d;}catch(e){}}setInterval(updateClock,1000);updateClock();
+function updateClock(){try{const now=new Date();const t=new Intl.DateTimeFormat('ar-SD',{timeZone:'Africa/Khartoum',hour:'2-digit',minute:'2-digit',hour12:true}).format(now);const d=new Intl.DateTimeFormat('ar-SD',{timeZone:'Africa/Khartoum',weekday:'long',day:'numeric',month:'long'}).format(now);document.getElementById('clockTime').textContent=t;document.getElementById('clockDate').textContent=d;}catch(e){}}setInterval(updateClock,1000);updateClock();
 const T={
-ar:{live:"تحقق مباشر",nav_home:"🏠 الرئيسية",nav_about:"من نحن",nav_verify:"🔍 تحقق",nav_join:"➕ انضم مؤسستك",nav_admin:"لوحة الإدارة",hero_badge:"🌍 SONAA TECH • SUDAN → WORLD",hero_title:'شهادتك<br>ما بتتزور <span style="color:#d4af62">تاني.</span>',hero_desc:"نظام التحقق الموحد - منصة التحقق الرقمي والموثوقية. 500 شهادة في دقيقة بالاكسل. 50 شهادة مجانية لأي مؤسسة - بعدها 0.50$ بس.",hero_verify:"🔍 تحقق من شهادة",hero_join:"➕ سجل مؤسستك - مجاني",hero_admin:"لوحة الإدارة →",stat1:"مؤسسة",stat2:"شهادة موثقة",stat3:"ضد التزوير",demo_note:"امسح الـ QR - بوديك صفحة التحقق الرسمية - بنفس الوان نظامك - وما بتتزور",demo_badge:"✓ QR بشعار SONAA - مجرب 100%",how_title:"كيف بتشتغل؟ - 3 خطوات بس",step1_t:"1. ارفع الاسماء",step1_d:"اكسل فيهو 500 نفر - او شهادة فردية - في ثواني",step2_t:"2. اختار قالبك",step2_d:"قالبك براك - حرك الاسم والـ QR بالماوس - واطبع A4",step3_t:"3. تحقق عالمي",step3_d:"اي زول في العالم يمسح QR - بشوف شهادتك موثقة",plan1:"لأي مؤسسة جديدة - جرب كل شي",plan2:"للمدارس والمراكز - 0.50$ للشهادة",plan3:"للجامعات والهلال - دعم خاص وقوالب خاصة",popular:"الاكثر مبيعاً",plan_btn:"ابدأ مجاني",plan_btn2:"اشترك هسي",cta_t:"جاهز توثق شهاداتك؟",cta_d:"سجل مؤسستك هسي - 50 شهادة مجانية - بدون بطاقة",cta_btn:"سجل مؤسستك",cta_verify:"تحقق"},
-en:{live:"Live Verification",nav_home:"🏠 Home",nav_about:"About",nav_verify:"🔍 Verify",nav_join:"➕ Join Organization",nav_admin:"Admin Dashboard",hero_badge:"🌍 SONAA TECH • SUDAN → WORLD",hero_title:'Your certificate<br>can’t be <span style="color:#d4af62">faked.</span>',hero_desc:"Unified verification system - digital trust platform. 500 certs in 1 minute via Excel. 50 free for every org - then $0.50 per cert.",hero_verify:"🔍 Verify Certificate",hero_join:"➕ Register Org - Free",hero_admin:"Admin Dashboard →",stat1:"Organizations",stat2:"Verified Certs",stat3:"Anti-Forgery",demo_note:"Scan QR - goes to official verify page - same colors as your system - unfakeable",demo_badge:"✓ QR with SONAA logo - 100% tested",how_title:"How it works? - 3 steps",step1_t:"1. Upload names",step1_d:"Excel with 500 people - or single cert - in seconds",step2_t:"2. Choose template",step2_d:"Your own template - drag name & QR - print A4",step3_t:"3. Global verify",step3_d:"Anyone in the world scans QR - sees verified",plan1:"For new orgs - try everything",plan2:"For schools & centers - $0.50 per cert",plan3:"For universities & Red Crescent - special support",popular:"Best Seller",plan_btn:"Start Free",plan_btn2:"Subscribe Now",cta_t:"Ready to verify your certs?",cta_d:"Register your org now - 50 free certs - no card",cta_btn:"Register Org",cta_verify:"Verify"}
+ar:{live:"تحقق مباشر",nav_home:"الرئيسية",nav_about:"من نحن",nav_verify:"تحقق",nav_join:"انضم مؤسستك",nav_admin:"لوحة الإدارة",nav_track:"تتبع طلبك",hero_badge:"SONAA TECH • SUDAN → WORLD",hero_title:'شهادتك<br>ما بتتزور <span style="color:#d4af62">تاني.</span>',hero_desc:"نظام التحقق الموحد - 500 شهادة في دقيقة بالاكسل. 50 شهادة مجانية لأي مؤسسة - بعدها 0.50$ بس للشهادة.",hero_verify:"تحقق من شهادة",hero_join:"سجل مؤسستك - مجاني",hero_admin:"لوحة الإدارة",stat1:"مؤسسة",stat2:"شهادة موثقة",stat3:"ضد التزوير",demo_note:"امسح الـ QR - بوديك صفحة التحقق الرسمية",demo_badge:"QR بشعار SONAA - مجرب 100%",how_title:"كيف بتشتغل؟ - 3 خطوات بس",step1_t:"1. ارفع الاسماء",step1_d:"اكسل فيهو 500 نفر - او شهادة فردية - في ثواني",step2_t:"2. اختار قالبك",step2_d:"قالبك براك - حرك الاسم والـ QR بالماوس - واطبع A4",step3_t:"3. تحقق عالمي",step3_d:"اي زول في العالم يمسح QR - بشوف شهادتك موثقة",plan1:"لأي مؤسسة جديدة - جرب كل شي",plan2:"للمدارس والمراكز - 0.50$ للشهادة",plan3:"للجامعات والهلال - دعم خاص وقوالب خاصة",popular:"الاكثر مبيعاً",plan_btn1:"ابدأ مجاني",plan_btn2:"اشترك هسي - 50$",plan_btn3:"تواصل واتساب",cta_t:"جاهز توثق شهاداتك؟",cta_d:"سجل مؤسستك هسي - 50 شهادة مجانية - بدون بطاقة",cta_btn:"سجل مؤسستك",cta_verify:"تحقق"},
+en:{live:"Live Verification",nav_home:"Home",nav_about:"About",nav_verify:"Verify",nav_join:"Join Organization",nav_admin:"Admin Dashboard",nav_track:"Track Request",hero_badge:"SONAA TECH • SUDAN → WORLD",hero_title:'Your certificate<br>can’t be <span style="color:#d4af62">faked.</span>',hero_desc:"Unified verification - 500 certs in 1 minute via Excel. 50 free for every org - then $0.50 per cert.",hero_verify:"Verify Certificate",hero_join:"Register Org - Free",hero_admin:"Admin Dashboard",stat1:"Organizations",stat2:"Verified Certs",stat3:"Anti-Forgery",demo_note:"Scan QR - goes to official verify page",demo_badge:"QR with SONAA logo - 100% tested",how_title:"How it works? - 3 steps",step1_t:"1. Upload names",step1_d:"Excel with 500 people - or single cert - in seconds",step2_t:"2. Choose template",step2_d:"Your own template - drag name & QR - print A4",step3_t:"3. Global verify",step3_d:"Anyone in the world scans QR - sees verified",plan1:"For new orgs - try everything",plan2:"For schools & centers - $0.50 per cert",plan3:"For universities & Red Crescent - special support",popular:"Best Seller",plan_btn1:"Start Free",plan_btn2:"Subscribe - $50",plan_btn3:"WhatsApp Us",cta_t:"Ready to verify your certs?",cta_d:"Register your org now - 50 free certs - no card",cta_btn:"Register Org",cta_verify:"Verify"}
 };
 function setLang(l){document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';document.getElementById("btn-ar").classList.toggle("active",l==='ar');document.getElementById("btn-en").classList.toggle("active",l==='en');document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(T[l][k])el.innerHTML=T[l][k];});localStorage.setItem("sonaa-lang",l);}setLang(localStorage.getItem("sonaa-lang")||'ar');
 </script>
