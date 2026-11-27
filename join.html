@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>اطلب نظامك | SONAA TECH</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"><style>body{font-family:'Cairo';background:#07172f;color:white}input,select,textarea{color:#111 !important}</style></head>
+<body>
+<div class="text-center py-2 text-[12px] font-black" style="background:#d4af62;color:#07172f">SONAA TECH • اطلب نظام التحقق الرقمي لمؤسستك</div>
+<header class="sticky top-0 z-50" style="background:rgba(7,23,47,.95);border-bottom:1px solid rgba(212,175,98,.35)"><div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between"><a href="index.html" class="flex items-center gap-2"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-10"><span class="font-black">SONAA <span style="color:#d4af62">TECH</span></span></a><nav class="hidden md:flex gap-2 text-sm font-bold"><a href="index.html" class="px-3 py-1.5">🏠 الرئيسية</a><a href="about.html" class="px-3 py-1.5">من نحن</a><a href="verify.html" class="px-3 py-1.5">🔍 تحقق</a><a href="track.html" class="px-3 py-1.5">تتبع طلبك</a><a href="admin.html" class="px-3 py-1.5 bg-white text-black rounded-lg">لوحة الإدارة</a></nav></div></header>
+<main class="max-w-2xl mx-auto px-4 py-8">
+<div class="p-6 rounded-2xl" style="background:#0a1d38;border:1px solid rgba(212,175,98,.55)">
+<div class="text-center"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-[200px] mx-auto"><h1 class="font-black text-xl mt-2">اطلب نظام التحقق الرقمي لمؤسستك</h1><p class="text-xs font-bold mt-1" style="color:#aab6c8">املا البيانات - وبيظهر ليك رقم طلب خاص SONAA-REQ-XXXX - وتقدر تتبعو بعدين</p></div>
+<form id="reqForm" class="space-y-3 mt-5">
+<input id="org_name" required placeholder="اسم المؤسسة الرسمي *" class="w-full p-3 border rounded-xl">
+<select id="org_type" class="w-full p-3 border rounded-xl"><option value="مدرسة">مدرسة</option><option value="جامعة">جامعة</option><option value="مركز تدريب">مركز تدريب</option><option value="شركة">شركة</option><option value="جمعية">جمعية / هلال احمر</option></select>
+<div class="grid grid-cols-2 gap-3"><input id="org_state" placeholder="الولاية - مثلا النيل الابيض" class="p-3 border rounded-xl"><input id="org_city" placeholder="المدينة - مثلا كوستي" class="p-3 border rounded-xl"></div>
+<input id="manager_name" required placeholder="اسم المدير / المسؤول *" class="w-full p-3 border rounded-xl">
+<div class="grid grid-cols-2 gap-3"><input id="phone" required placeholder="رقم الهاتف وواتساب *" class="p-3 border rounded-xl"><input id="email" placeholder="البريد الالكتروني" class="p-3 border rounded-xl"></div>
+<div class="grid grid-cols-2 gap-3"><input id="expected_certs" type="number" value="100" placeholder="عدد الشهادات المتوقع سنوياً" class="p-3 border rounded-xl"><input id="slug" placeholder="الرابط المطلوب - مثلا kosti-school" class="p-3 border rounded-xl"></div>
+<label class="block text-xs font-bold" style="color:#ead49a">شعار المؤسسة (رفع صورة)</label>
+<input id="logo" type="file" accept="image/*" class="w-full p-2 rounded-xl text-white text-xs" style="background:#07172f;border:1px solid #d4af62">
+<textarea id="notes" placeholder="ملاحظات اضافية" class="w-full p-3 border rounded-xl"></textarea>
+<button id="submitBtn" class="w-full py-3 rounded-xl font-black" style="background:#d4af62;color:#07172f">ارسال طلب التأسيس - SONAA-REQ</button>
+</form>
+<div id="successBox" class="hidden text-center mt-4 p-4 rounded-xl" style="background:#E8F7EE;color:#0E9F5A;border:1px solid #B7E5C9"><div class="font-black text-lg">✓ تم استلام طلبك</div><div class="font-mono font-black text-xl" id="reqNo"></div><p class="text-xs font-bold text-gray-600 mt-1">احفظ الرقم ده - تقدر تتبع طلبك بيهو في صفحة تتبع الطلب</p><a id="trackLink" class="inline-block mt-3 bg-black text-white px-5 py-2 rounded-lg text-sm font-bold">تتبع طلبك هسي</a></div>
+</div>
+<div class="text-center mt-4"><a href="track.html" class="text-xs font-bold underline" style="color:#ead49a">عندك رقم طلب؟ تتبع طلبك من هنا</a></div>
+</main>
+<script>
+const SUPABASE_URL="https://bjznlnuljvqubscjymjx.supabase.co";const SUPABASE_KEY="sb_publishable_k1Q9BX9gRhHl4Lq9vpOmgQ_-JrZ5pQ6";const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+document.getElementById("reqForm").addEventListener("submit",async e=>{
+e.preventDefault();const btn=document.getElementById("submitBtn");btn.disabled=true;btn.innerText="جاري ارسال الطلب...";
+const reqNo="SONAA-REQ-"+String(Math.floor(100000+Math.random()*900000));
+let logoUrl="";
+const file=document.getElementById("logo").files[0];
+if(file){const reader=new FileReader();logoUrl=await new Promise(res=>{reader.onload=()=>res(reader.result);reader.readAsDataURL(file);});}
+const payload={request_no:reqNo,org_name:document.getElementById("org_name").value,org_type:document.getElementById("org_type").value,org_state:document.getElementById("org_state").value,org_city:document.getElementById("org_city").value,manager_name:document.getElementById("manager_name").value,phone:document.getElementById("phone").value,email:document.getElementById("email").value,expected_certs:parseInt(document.getElementById("expected_certs").value)||100,slug:document.getElementById("slug").value,notes:document.getElementById("notes").value,logo_url:logoUrl,status:"جديد"};
+const {error}=await supabaseClient.from("org_requests").insert([payload]);
+if(error){alert("خطأ: "+error.message);btn.disabled=false;btn.innerText="ارسال طلب التأسيس";return;}
+document.getElementById("reqForm").style.display="none";
+document.getElementById("successBox").classList.remove("hidden");
+document.getElementById("reqNo").textContent=reqNo;
+document.getElementById("trackLink").href="track.html?req="+reqNo;
+const msg=`طلب جديد ${reqNo} - مؤسسة: ${payload.org_name} - النوع: ${payload.org_type} - المدير: ${payload.manager_name} - تلفون: ${payload.phone} - ولاية: ${payload.org_state} - مدينة: ${payload.org_city} - شهادات متوقعة: ${payload.expected_certs}`;
+window.open(`https://wa.me/249914391371?text=${encodeURIComponent(msg)}`,"_blank");
+});
+</script></body></html>
