@@ -10,69 +10,78 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--org-color:#C8102E}
-body{font-family:'Cairo',sans-serif;background:#F6F7F9}
+:root{--org-color:#d4af62}
+body{font-family:'Cairo',sans-serif;background:#07172f;color:#111}
 .school-only{display:none} body[data-org-type="school"] .school-only{display:block} body[data-org-type="school"] .hilal-only{display:none!important}
 .badge-valid{background:#dcfce7;color:#166534;padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:800}
 .badge-revoked{background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:800}
-.logo-img{max-height:48px;object-fit:contain}
+.logo-img{max-height:52px;object-fit:contain}
 input,select{outline:none}
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-<!-- LOGIN - ظاهرة طوالي بدون انتظار -->
-<div id="login-screen" class="flex-1 flex items-center justify-center p-4">
-  <div class="text-center max-w-md w-full bg-white p-8 rounded-2xl shadow-lg border">
-    <div class="w-[150px] mx-auto mb-3"><img src="sonaa-logo.png" onerror="this.src='logo.png'" class="logo-img w-full"></div>
-    <div class="inline-block bg-red-50 text-[#C8102E] text-xs font-black px-3 py-1 rounded-full mb-2">SONAA TECH • SAAS</div>
-    <h1 class="text-2xl font-black">SONAA VERIFY</h1>
-    <p class="text-xs text-gray-500 font-bold mt-1 mb-5">لوحة إدارة الشهادات - قوالب + QR بشعار SONAA + رصيد</p>
+<!-- LOGIN -->
+<div id="login-screen" class="flex-1 flex items-center justify-center p-4" style="background:#07172f">
+  <div class="text-center max-w-md w-full p-8 rounded-2xl shadow-lg border" style="background:#0a1d38;border-color:rgba(212,175,98,.55)">
+    <div class="w-[220px] mx-auto mb-3"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-full"></div>
+    <div class="inline-block text-xs font-black px-3 py-1 rounded-full mb-2" style="background:#d4af62;color:#07172f">SONAA TECH • SAAS</div>
+    <h1 class="text-2xl font-black text-white">SONAA VERIFY</h1>
+    <p class="text-xs font-bold mt-1 mb-5" style="color:#aab6c8">لوحة إدارة الشهادات - قوالب + QR بشعار SONAA + رصيد</p>
     <form onsubmit="handleLogin(event)" class="space-y-3 text-right">
-      <div><label class="block text-xs font-bold mb-1">البريد الإلكتروني</label><input id="login-email" type="email" required dir="ltr" class="w-full p-2.5 border rounded-xl" placeholder="admin@org.sd"></div>
-      <div><label class="block text-xs font-bold mb-1">كلمة المرور</label><input id="login-password" type="password" required dir="ltr" class="w-full p-2.5 border rounded-xl"></div>
+      <div><label class="block text-xs font-bold mb-1 text-white">البريد الإلكتروني</label><input id="login-email" type="email" required dir="ltr" class="w-full p-2.5 border rounded-xl" placeholder="admin@org.sd"></div>
+      <div><label class="block text-xs font-bold mb-1 text-white">كلمة المرور</label><input id="login-password" type="password" required dir="ltr" class="w-full p-2.5 border rounded-xl"></div>
       <div id="login-error" class="hidden text-xs font-bold text-red-600 bg-red-50 p-3 rounded-lg text-center"></div>
-      <button id="login-btn" class="w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold">دخول للوحة الإدارة</button>
+      <button id="login-btn" class="w-full py-3 rounded-xl font-bold" style="background:#d4af62;color:#07172f">دخول للوحة الإدارة</button>
     </form>
-    <p class="text-[11px] text-gray-400 font-bold pt-3">SONAA TECH | AYMAN MORTADA © 2026</p>
+    <p class="text-[11px] font-bold pt-3" style="color:#aab6c8">SONAA TECH | AYMAN MORTADA © 2026</p>
   </div>
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboard-screen" class="hidden flex-1 flex flex-col">
-<header class="bg-white border-b sticky top-0 z-30">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3" dir="ltr">
-    <div class="w-[180px]"><img src="sonaa-logo.png" onerror="this.src='logo.png'" class="logo-img w-full"></div>
+<div id="dashboard-screen" class="hidden flex-1 flex flex-col" style="background:#F6F7F9">
+<header class="border-b sticky top-0 z-30" style="background:#07172f;border-bottom:1px solid rgba(212,175,98,.4)">
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-3" dir="ltr">
+    <div class="w-[200px]"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-full"></div>
     <div class="flex items-center gap-2" dir="rtl">
       <div class="hidden md:block text-left">
-        <h1 class="text-sm font-black">SONAA VERIFY <span id="org-badge-header" class="text-[10px] bg-red-50 text-[#C8102E] px-2 py-0.5 rounded-full">SRCS</span></h1>
-        <p id="dash-org-name" class="text-[11px] text-gray-500 font-bold">--</p>
-        <p id="dash-org-type" class="text-[10px] font-black" style="color:var(--org-color)"></p>
+        <h1 class="text-sm font-black text-white">SONAA VERIFY <span id="org-badge-header" class="text-[10px] px-2 py-0.5 rounded-full" style="background:#d4af62;color:#07172f">SRCS</span></h1>
+        <p id="dash-org-name" class="text-[11px] font-bold" style="color:#aab6c8">--</p>
+        <p id="dash-org-type" class="text-[10px] font-black" style="color:#ead49a"></p>
       </div>
-      <a href="verify.html" target="_blank" class="bg-gray-100 px-3 py-1.5 rounded-lg text-xs font-bold">🌐 تحقق</a>
-      <button onclick="handleLogout()" class="bg-gray-100 px-3 py-1.5 rounded-lg text-xs font-bold text-red-600">خروج</button>
+      <a href="verify.html" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-bold" style="background:#0a1d38;color:white;border:1px solid rgba(212,175,98,.4)">🌐 تحقق</a>
+      <button onclick="handleLogout()" class="bg-white px-3 py-1.5 rounded-lg text-xs font-bold text-red-600">خروج</button>
     </div>
   </div>
-  <div id="super-admin-bar" class="hidden bg-[#111] text-white px-4 py-2">
+  <div id="super-admin-bar" class="hidden text-white px-4 py-2" style="background:#111">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center gap-2 text-xs font-bold">
       <span>👑 سوبر ادمن:</span><select id="org-switcher" onchange="switchOrg(this.value)" class="bg-white text-black rounded-lg px-3 py-1.5 text-xs font-bold"></select>
-      <button onclick="openOrgsModal()" class="bg-[#C8102E] px-3 py-1.5 rounded-lg text-white">+ جهة جديدة</button>
+      <button onclick="openOrgsModal()" class="px-3 py-1.5 rounded-lg text-white" style="background:#C8102E">+ جهة جديدة</button>
+      <button onclick="toggleRequestsPanel()" class="px-3 py-1.5 rounded-lg" style="background:#d4af62;color:#07172f">📥 طلبات SONAA-REQ</button>
     </div>
   </div>
 </header>
 
 <main class="max-w-7xl w-full mx-auto px-4 py-6 space-y-5 flex-1">
 
-  <!-- كارت الرصيد - خفيف ما بعلق -->
-  <div class="bg-white rounded-2xl border border-r-4 p-4 flex flex-wrap items-center justify-between gap-4" style="border-right-color:var(--org-color)">
+  <!-- طلبات المؤسسات - سوبر ادمن بس -->
+  <div id="requests-panel" class="hidden rounded-2xl border p-4" style="background:#0a1d38;border-color:#d4af62">
+    <div class="flex justify-between items-center"><h2 class="font-black text-white">📥 طلبات المؤسسات - SONAA-REQ</h2><button onclick="loadRequests()" class="text-xs px-3 py-1 rounded-full font-black" style="background:#d4af62;color:#07172f">تحديث</button></div>
+    <div id="requestsList" class="mt-3 space-y-2 text-sm text-white"></div>
+  </div>
+
+  <!-- كارت الرصيد -->
+  <div class="bg-white rounded-2xl border border-r-4 p-4 flex flex-wrap items-center justify-between gap-4" style="border-right-color:#d4af62">
     <div>
       <div class="text-xs text-gray-500 font-bold">💰 رصيد الشهادات - <span id="credit-org-name"></span></div>
-      <div class="text-2xl font-black mt-1"><span id="org-credits" class="text-[#C8102E]">--</span> <span class="text-sm text-gray-600">متبقية</span> <span id="credits-used" class="text-[11px] bg-gray-100 px-2 py-0.5 rounded-full"></span></div>
-      <div class="text-[11px] text-gray-400 font-bold mt-1">50 مجانية • بعدها 0.50$ • بنكك / فوري</div>
+      <div class="text-2xl font-black mt-1"><span id="org-credits" style="color:#C8102E">--</span> <span class="text-sm text-gray-600">متبقية</span> <span id="credits-used" class="text-[11px] bg-gray-100 px-2 py-0.5 rounded-full"></span></div>
+      <div class="text-[11px] text-gray-400 font-bold mt-1">50 مجانية • بعدها 0.50$ • بنكك / فوري • التحقق شغال حتى لو الرصيد صفر</div>
     </div>
     <div class="flex gap-2">
+      <!-- ده زر الزبون - يطلب شحن عبر واتساب -->
       <button onclick="requestTopUp()" class="bg-green-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold">💳 شحن رصيد - واتساب</button>
-      <button id="super-charge-btn" onclick="openChargeModal()" class="hidden bg-black text-white px-4 py-2.5 rounded-xl text-xs font-bold">👑 شحن</button>
+      <!-- ده زر السوبر ادمن بس - مخفي افتراضي - ما بظهر الا للسوبر -->
+      <button id="super-charge-btn" onclick="openChargeModal()" class="hidden px-4 py-2.5 rounded-xl text-xs font-bold" style="background:#07172f;color:#ead49a;border:1px solid #d4af62">👑 شحن مباشر - سوبر ادمن</button>
     </div>
   </div>
 
@@ -85,7 +94,7 @@ input,select{outline:none}
 
   <div class="bg-white p-4 rounded-2xl border flex flex-wrap items-center justify-between gap-3">
     <div class="flex flex-wrap gap-2">
-      <button onclick="openAddModal()" class="bg-[#C8102E] text-white px-3.5 py-2 rounded-xl text-xs font-bold">➕ شهادة فردية</button>
+      <button onclick="openAddModal()" class="text-white px-3.5 py-2 rounded-xl text-xs font-bold" style="background:#C8102E">➕ شهادة فردية</button>
       <label class="bg-green-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold cursor-pointer">📊 Excel +500<input type="file" id="excel-upload" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleExcelUpload(event)"></label>
       <button onclick="downloadExcelTemplate()" class="bg-gray-100 px-3.5 py-2 rounded-xl text-xs font-bold">📥 نموذج Excel</button>
       <button onclick="downloadAllQRZip()" class="bg-black text-white px-3.5 py-2 rounded-xl text-xs font-bold">📦 QR ZIP - بشعار SONAA</button>
@@ -103,12 +112,12 @@ input,select{outline:none}
     </div>
   </div>
 
-  <!-- استوديو - خفيف - ما برسم الا لما تدوس -->
+  <!-- استوديو -->
   <div class="bg-white rounded-2xl border p-4 space-y-4">
     <div class="flex flex-wrap justify-between items-center border-b pb-3 gap-2">
       <div>
-        <h2 class="font-black text-base">🎨 استوديو قوالب - <span id="studio-org-name" class="text-[#C8102E]"></span></h2>
-        <p class="text-[11px] text-gray-500 font-bold">كل جهة قوالبها براها - دوس "عرض المعاينة" عشان تشوف الشهادة - ما بتشتغل اوتوماتيك عشان ما تعلق</p>
+        <h2 class="font-black text-base">🎨 استوديو قوالب - <span id="studio-org-name" style="color:#C8102E"></span></h2>
+        <p class="text-[11px] text-gray-500 font-bold">كل جهة قوالبها براها - دوس "عرض المعاينة" عشان تشوف الشهادة</p>
       </div>
       <div class="flex gap-2">
         <button onclick="downloadSelectedAsZip()" class="bg-black text-white px-3 py-2 rounded-xl text-xs font-bold">📦 شهادات ZIP</button>
@@ -127,14 +136,14 @@ input,select{outline:none}
       </div>
       <div class="flex gap-2 mt-2">
         <input id="new-template-name" placeholder="اسم القالب - مثلا: كوستي 2026" class="flex-1 p-2 border rounded-xl text-xs">
-        <button onclick="saveCurrentAsNewTemplate()" class="bg-[#C8102E] text-white px-4 py-2 rounded-xl text-xs font-bold">💾 حفظ قالب للجهة دي</button>
+        <button onclick="saveCurrentAsNewTemplate()" class="text-white px-4 py-2 rounded-xl text-xs font-bold" style="background:#C8102E">💾 حفظ قالب للجهة دي</button>
       </div>
       <p id="upload-status" class="text-[11px] text-blue-600 font-bold mt-1 hidden"></p>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div class="space-y-3">
         <div class="grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded-xl border">
-          <div class="col-span-2 text-xs font-black text-[#C8102E]">📍 مكان الاسم</div>
+          <div class="col-span-2 text-xs font-black" style="color:#C8102E">📍 مكان الاسم</div>
           <div><label class="text-[11px] font-bold">X</label><input type="number" id="cfg-nameX" value="500" class="w-full p-2 border rounded-lg text-xs"></div>
           <div><label class="text-[11px] font-bold">Y</label><input type="number" id="cfg-nameY" value="320" class="w-full p-2 border rounded-lg text-xs"></div>
           <div><label class="text-[11px] font-bold">حجم الخط</label><input type="number" id="cfg-fontSize" value="38" class="w-full p-2 border rounded-lg text-xs"></div>
@@ -148,13 +157,13 @@ input,select{outline:none}
           <div><label class="text-[11px] font-bold">الحجم</label><input type="number" id="cfg-qrSize" value="130" class="w-full p-2 border rounded-lg text-xs"></div>
           <div class="col-span-3"><label class="text-[11px] font-bold">الرقم Y</label><input type="number" id="cfg-codeY" value="630" class="w-full p-2 border rounded-lg text-xs"></div>
         </div>
-        <button onclick="saveTemplateSettings()" class="w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold text-xs">💾 حفظ احداثيات القالب</button>
+        <button onclick="saveTemplateSettings()" class="w-full text-white py-3 rounded-xl font-bold text-xs" style="background:#C8102E">💾 حفظ احداثيات القالب</button>
         <button onclick="renderPreviewCert()" class="w-full bg-black text-white py-3 rounded-xl font-bold text-xs">👁️ عرض المعاينة - دوس هنا</button>
         <p class="text-[11px] font-bold">المحدد: <span id="selected-for-print" class="text-blue-600">0</span></p>
       </div>
       <div class="lg:col-span-2 bg-gray-100 rounded-2xl p-4 flex flex-col items-center border">
         <div class="flex gap-4 text-[11px] font-bold mb-2">
-          <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="clickTarget" value="name" checked> حرك: <span class="text-[#C8102E]">الاسم</span></label>
+          <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="clickTarget" value="name" checked> حرك: <span style="color:#C8102E">الاسم</span></label>
           <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="clickTarget" value="qr"> حرك: <span class="text-green-700">الـ QR</span></label>
         </div>
         <canvas id="cert-canvas" width="1000" height="700" onclick="pickPositionOnCanvas(event)" class="max-w-full h-auto bg-white shadow rounded-lg cursor-crosshair border"></canvas>
@@ -167,7 +176,7 @@ input,select{outline:none}
     <div class="overflow-x-auto"><table class="w-full text-right">
       <thead><tr class="bg-gray-50 border-b text-xs font-black text-gray-600">
         <th class="p-3.5 w-10 text-center"><input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)"></th>
-        <th class="p-3.5">الرقم</th><th class="p-3.5">الاسم</th><th class="p-3.5 hilal-only">البرنامج</th><th class="p-3.5 hilal-only">الفرع</th><th class="p-3.5 school-only">الفصل</th><th class="p-3.5 school-only">الدرجة</th><th class="p-3.5 text-center">الحالة</th><th class="p-3.5 text-center">إجراءات</th>
+        <th class="p-3.5">الرقم</th><th class="p-3.5">الاسم</th><th class="p-3.5 hilal-only">البرنامج</th><th class="p-3.5 hilal-only">الفرع</th><th class="p-3.5 school-only">الفصل</th><th class="p-3.5 school-only">الدرجة / التقدير</th><th class="p-3.5 text-center">الحالة</th><th class="p-3.5 text-center">إجراءات</th>
       </tr></thead>
       <tbody id="certificates-tbody" class="divide-y text-sm"><tr><td colspan="8" class="p-8 text-center">جاري التحميل...</td></tr></tbody>
     </table></div>
@@ -180,7 +189,7 @@ input,select{outline:none}
 <!-- Modals -->
 <div id="cert-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
   <div class="bg-white max-w-lg w-full rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
-    <div class="text-white px-6 py-4 flex justify-between items-center" style="background:var(--org-color)"><h3 id="modal-title" class="font-black">إضافة شهادة</h3><button onclick="closeCertModal()" class="text-2xl">×</button></div>
+    <div class="text-white px-6 py-4 flex justify-between items-center" style="background:#07172f"><h3 id="modal-title" class="font-black">إضافة شهادة</h3><button onclick="closeCertModal()" class="text-2xl">×</button></div>
     <form onsubmit="saveCertificate(event)" class="p-6 space-y-3">
       <input type="hidden" id="edit-cert-id">
       <div><label class="block text-xs font-bold mb-1">الاسم بالعربي *</label><input id="f-name" required class="w-full p-2.5 border rounded-xl text-sm"></div>
@@ -193,11 +202,12 @@ input,select{outline:none}
       </div>
       <div class="school-only space-y-3">
         <div><label class="block text-xs font-bold mb-1">الفصل *</label><input id="f-class" class="w-full p-2.5 border rounded-xl text-sm"></div>
-        <div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">الدرجة النهائية *</label><input id="f-final-grade" class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">الكلية</label><input id="f-total-grade" class="w-full p-2.5 border rounded-xl text-sm" placeholder="300"></div></div>
-        <div><label class="block text-xs font-bold mb-1">التقدير</label><input id="f-grade-label" readonly class="w-full p-2.5 border rounded-xl text-sm bg-gray-50"></div>
+        <div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">الدرجة النهائية *</label><input id="f-final-grade" type="number" class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">الكلية</label><input id="f-total-grade" type="number" value="300" class="w-full p-2.5 border rounded-xl text-sm"></div></div>
+        <div><label class="block text-xs font-bold mb-1">التقدير - اوتوماتيك</label><input id="f-grade-label" readonly class="w-full p-2.5 border rounded-xl text-sm bg-gray-50 font-black"></div>
+        <p class="text-[11px] font-bold text-gray-500">50% ولفوق = ناجح • 90+ ممتاز • 80+ جيد جدا • 65+ جيد • 50+ مقبول • اقل من 50 راسب</p>
       </div>
       <div><label class="block text-xs font-bold mb-1">الرقم المرجعي</label><input id="f-code" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm font-mono bg-gray-50"></div>
-      <button id="save-cert-btn" class="w-full bg-[#C8102E] text-white py-3 rounded-xl font-bold">حفظ - حينقص 1 من الرصيد</button>
+      <button id="save-cert-btn" class="w-full text-white py-3 rounded-xl font-bold" style="background:#C8102E">حفظ - حينقص 1 من الرصيد</button>
     </form>
   </div>
 </div>
@@ -213,34 +223,35 @@ input,select{outline:none}
       <input id="new-org-color" type="color" value="#0F766E" class="w-full h-10 border rounded-xl">
       <input id="new-org-logo" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="رابط الشعار">
     </div>
-    <div class="flex gap-2 mt-5"><button onclick="saveNewOrg()" class="flex-1 bg-[#C8102E] text-white py-2.5 rounded-xl font-bold">حفظ الجهة</button><button onclick="document.getElementById('org-modal').classList.add('hidden')" class="flex-1 bg-gray-100 py-2.5 rounded-xl font-bold">إلغاء</button></div>
+    <div class="flex gap-2 mt-5"><button onclick="saveNewOrg()" class="flex-1 text-white py-2.5 rounded-xl font-bold" style="background:#C8102E">حفظ الجهة</button><button onclick="document.getElementById('org-modal').classList.add('hidden')" class="flex-1 bg-gray-100 py-2.5 rounded-xl font-bold">إلغاء</button></div>
   </div>
 </div>
 
 <div id="charge-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
   <div class="bg-white max-w-sm w-full rounded-2xl p-6">
-    <h3 class="font-black mb-3">شحن رصيد لـ <span id="charge-org-name"></span></h3>
+    <h3 class="font-black mb-1">👑 شحن رصيد - سوبر ادمن فقط</h3><p class="text-[11px] text-gray-500 font-bold mb-3">ما بظهر للمدارس - انت بس البتشحن</p>
+    <h3 class="font-bold text-sm mb-3">لـ <span id="charge-org-name"></span></h3>
     <label class="text-xs font-bold">عدد الشهادات</label>
     <input id="charge-amount" type="number" value="100" class="w-full p-2.5 border rounded-xl text-sm mb-3">
-    <div class="flex gap-2"><button onclick="doCharge()" class="flex-1 bg-green-600 text-white py-2.5 rounded-xl font-bold">شحن</button><button onclick="document.getElementById('charge-modal').classList.add('hidden')" class="flex-1 bg-gray-100 py-2.5 rounded-xl font-bold">إلغاء</button></div>
+    <div class="flex gap-2"><button onclick="doCharge()" class="flex-1 text-white py-2.5 rounded-xl font-bold" style="background:#07172f">شحن</button><button onclick="document.getElementById('charge-modal').classList.add('hidden')" class="flex-1 bg-gray-100 py-2.5 rounded-xl font-bold">إلغاء</button></div>
   </div>
 </div>
 
 <div id="qr-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
   <div class="bg-white max-w-sm w-full rounded-2xl p-5 text-center">
     <div class="border rounded-2xl overflow-hidden mb-3">
-      <div class="text-white p-4" style="background:var(--org-color)"><div class="text-[11px] opacity-90" id="qr-org-name">--</div><div class="text-xl font-black" id="qr-student-name"></div><div class="text-sm" id="qr-course-name"></div></div>
+      <div class="text-white p-4" style="background:#07172f"><div class="text-[11px] opacity-90" id="qr-org-name">--</div><div class="text-xl font-black" id="qr-student-name"></div><div class="text-sm" id="qr-course-name"></div></div>
       <div class="py-4 flex justify-center"><div id="qrcode-box"></div></div>
       <div class="text-xs font-mono font-bold pb-2" id="qr-code-text"></div>
       <div class="text-[11px] text-gray-400 font-bold mb-2">SONAA VERIFY - QR بشعار SONAA</div>
     </div>
-    <div class="grid grid-cols-2 gap-2"><button onclick="downloadQRImage()" class="bg-[#C8102E] text-white py-2.5 rounded-xl font-bold text-xs">PNG - بشعار</button><button onclick="shareQRWhatsApp()" class="bg-green-600 text-white py-2.5 rounded-xl font-bold text-xs">واتساب</button></div>
+    <div class="grid grid-cols-2 gap-2"><button onclick="downloadQRImage()" class="text-white py-2.5 rounded-xl font-bold text-xs" style="background:#C8102E">PNG - بشعار</button><button onclick="shareQRWhatsApp()" class="bg-green-600 text-white py-2.5 rounded-xl font-bold text-xs">واتساب</button></div>
     <button onclick="downloadFullCertificateLight()" class="w-full mt-2 py-3 rounded-xl font-black text-xs bg-black text-white">⬇️ شهادة A4 كاملة</button>
     <button onclick="document.getElementById('qr-modal').classList.add('hidden')" class="w-full mt-2 bg-gray-100 py-2.5 rounded-xl font-bold text-xs">إغلاق</button>
   </div>
 </div>
 
-<div id="upload-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-sm w-full rounded-2xl p-6 text-center space-y-4"><h3 class="font-black">جاري الاستيراد...</h3><div id="upload-status-text" class="text-xs font-bold"></div><div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden"><div id="upload-progress-bar" class="bg-[#C8102E] h-full w-0"></div></div></div></div>
+<div id="upload-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-sm w-full rounded-2xl p-6 text-center space-y-4"><h3 class="font-black">جاري الاستيراد...</h3><div id="upload-status-text" class="text-xs font-bold"></div><div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden"><div id="upload-progress-bar" class="h-full w-0" style="background:#C8102E"></div></div></div></div>
 
 <script>
 const SUPABASE_URL = "https://zepmmkynvabxgsgzskgi.supabase.co";
@@ -266,7 +277,19 @@ function setMessage(id,m){const el=$(id);if(el){el.textContent=m;el.classList.re
 function isSchool(){return currentOrg?.org_type==='school'}
 function safeFileName(v){ return String(v).replace(/[^a-zA-Z0-9_-]/g,"_").slice(0,80); }
 
-// QR المجرب - مع كاش عشان ما يرجف
+// ===== التقديرات السودانية - النص ولفوق ناجح =====
+function calcGradeLabel(f,t){
+  if(!f||!t) return "";
+  const per=(parseFloat(f)/parseFloat(t))*100;
+  if(isNaN(per)) return "";
+  if(per>=90) return "ممتاز";
+  if(per>=80) return "جيد جداً";
+  if(per>=65) return "جيد";
+  if(per>=50) return "مقبول - ناجح";
+  return "راسب";
+}
+function isPass(f,t){ if(!f||!t) return true; return (parseFloat(f)/parseFloat(t))*100 >= 50; }
+
 async function drawQR(code){
   if(qrCache[code]) return qrCache[code];
   const qr = new QRCodeStyling({width:600,height:600,type:"canvas",data:getVerifyUrl(code),image:SONAA_LOGO,margin:25,qrOptions:{errorCorrectionLevel:"H"},imageOptions:{hideBackgroundDots:true,imageSize:0.18,margin:10,crossOrigin:"anonymous"},dotsOptions:{color:"#000000",type:"square"},backgroundOptions:{color:"#FFFFFF"},cornersSquareOptions:{color:"#000000",type:"square"},cornersDotOptions:{color:"#000000",type:"square"}});
@@ -283,7 +306,6 @@ async function makeQRCanvas(code){
   return cv;
 }
 
-// Boot آمن - ما بعلق
 async function checkSession(){
   try{
     const {data,error}=await supabaseClient.auth.getSession();
@@ -306,7 +328,17 @@ async function loadUserProfile(){
     if(oe) throw oe; if(!org) throw new Error("المؤسسة غير موجودة");
     currentOrgId=org.id; currentOrgSlug=org.slug; currentOrg=org;
     applyOrganizationBranding(); $("login-screen").classList.add("hidden"); $("dashboard-screen").classList.remove("hidden");
-    if(isSuperAdmin){ $("super-admin-bar").classList.remove("hidden"); $("org-switcher").innerHTML=allOrgs.map(o=>`<option value="${o.slug}" ${o.slug===currentOrgSlug?"selected":""}>${escapeHTML(o.name_ar)} (${o.slug})</option>`).join(""); $("org-badge-header").textContent="SUPER ADMIN - "+currentOrgSlug.toUpperCase(); }
+    // ===== الشحن للسوبر بس - هنا الكنترول =====
+    if(isSuperAdmin){
+      $("super-admin-bar").classList.remove("hidden");
+      $("org-switcher").innerHTML=allOrgs.map(o=>`<option value="${o.slug}" ${o.slug===currentOrgSlug?"selected":""}>${escapeHTML(o.name_ar)} (${o.slug})</option>`).join("");
+      $("org-badge-header").textContent="SUPER ADMIN - "+currentOrgSlug.toUpperCase();
+      $("super-charge-btn").classList.remove("hidden");
+      loadRequests();
+    } else {
+      $("super-charge-btn").classList.add("hidden");
+      $("super-charge-btn").style.display="none";
+    }
     await fetchCertificates(); await loadOrgTemplates(); await loadOrgCredits();
     drawEmptyCanvas();
   }catch(e){ console.error(e); $("dashboard-screen").classList.add("hidden"); $("login-screen").classList.remove("hidden"); setMessage("login-error",e.message); }
@@ -324,12 +356,35 @@ async function loadOrgCredits(){
     $("org-credits").textContent=currentCredits;
     $("credit-org-name").textContent=data.name_ar||"";
     $("credits-used").textContent=`استخدمت ${data.credits_used||0}`;
-    if(isSuperAdmin) $("super-charge-btn")?.classList.remove("hidden");
+    // تأكيد تاني - لو ما سوبر اخفي زر الشحن المباشر
+    if(!isSuperAdmin){ const b=$("super-charge-btn"); if(b){ b.classList.add("hidden"); b.style.display="none"; } }
+    else { const b=$("super-charge-btn"); if(b){ b.classList.remove("hidden"); b.style.display=""; } }
   }catch(e){ $("org-credits").textContent="50"; currentCredits=50; }
 }
 function requestTopUp(){ const msg=`السلام عليكم فريق SONAA TECH، نرغب في شحن رصيد شهادات لـ (${currentOrg?.name_ar||currentOrgSlug}) - Slug: ${currentOrgSlug}. الرصيد الحالي: ${currentCredits} شهادة. كم سعر باقة 100 و 500؟`; window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank"); }
-function openChargeModal(){ $("charge-org-name").textContent=currentOrg?.name_ar; $("charge-modal").classList.remove("hidden"); }
-async function doCharge(){ const amt=parseInt($("charge-amount").value); if(!amt||amt<=0) return alert("ادخل عدد صحيح"); const {error}=await supabaseClient.from("organizations").update({credits: currentCredits + amt}).eq("slug",currentOrgSlug); if(error) alert(error.message); else { alert(`تم شحن ${amt} لـ ${currentOrgSlug}`); $("charge-modal").classList.add("hidden"); await loadOrgCredits(); } }
+function openChargeModal(){
+  if(!isSuperAdmin){ alert("الشحن المباشر للسوبر ادمن فقط - انت اطلب شحن عبر واتساب"); return; }
+  $("charge-org-name").textContent=currentOrg?.name_ar; $("charge-modal").classList.remove("hidden");
+}
+async function doCharge(){
+  if(!isSuperAdmin){ alert("⛔ غير مصرح - الشحن للسوبر ادمن فقط"); document.getElementById('charge-modal').classList.add('hidden'); return; }
+  const amt=parseInt($("charge-amount").value); if(!amt||amt<=0) return alert("ادخل عدد صحيح");
+  const {error}=await supabaseClient.from("organizations").update({credits: currentCredits + amt}).eq("slug",currentOrgSlug);
+  if(error) alert(error.message); else { alert(`تم شحن ${amt} لـ ${currentOrgSlug}`); $("charge-modal").classList.add("hidden"); await loadOrgCredits(); }
+}
+
+function toggleRequestsPanel(){ const p=$("requests-panel"); if(p){ p.classList.toggle("hidden"); if(!p.classList.contains("hidden")) loadRequests(); } }
+async function loadRequests(){
+  if(!isSuperAdmin) return;
+  try{
+    const {data}=await supabaseClient.from("org_requests").select("*").order("created_at",{ascending:false}).limit(50);
+    const box=$("requestsList"); if(!box) return;
+    if(!data||!data.length){ box.innerHTML="<div class='text-gray-400 text-xs'>لا توجد طلبات بعد - خلي المدارس تقدم من join.html</div>"; return; }
+    box.innerHTML=data.map(r=>`<div class="p-3 rounded-xl flex flex-wrap justify-between gap-2" style="background:#07172f;border:1px solid rgba(212,175,98,.3)"><div><div class="font-black">${escapeHTML(r.org_name)} <span class="font-mono text-[11px]" style="color:#ead49a">${r.request_no}</span></div><div class="text-[11px] text-gray-400">${escapeHTML(r.org_type)} - ${escapeHTML(r.manager_name)} - ${escapeHTML(r.phone)} - ${escapeHTML(r.org_state||"")} ${escapeHTML(r.org_city||"")} - متوقع: ${r.expected_certs}</div><div class="text-[11px]">الحالة: <b style="color:#d4af62">${r.status}</b> | فاتورة: ${r.invoice_amount||0} | رصيد: ${r.credits_approved||0}</div></div><div class="flex gap-1 flex-wrap"><select onchange="setReqStatus('${r.id}',this.value)" class="text-black text-xs p-1 rounded"><option>${r.status}</option><option>جديد</option><option>قيد المراجعة</option><option>مقبول مبدئياً</option><option>بانتظار الدفع</option><option>مدفوع</option><option>قيد التجهيز</option><option>نشط</option><option>مرفوض</option></select><button onclick="approveOrg('${r.id}')" class="text-xs px-2 py-1 rounded bg-green-600 text-white font-bold">تأسيس + 100 رصيد</button></div></div>`).join("");
+  }catch(e){}
+}
+async function setReqStatus(id,st){ if(!isSuperAdmin) return; await supabaseClient.from("org_requests").update({status:st}).eq("id",id); loadRequests(); }
+async function approveOrg(id){ if(!isSuperAdmin) return; const {data}=await supabaseClient.from("org_requests").select("*").eq("id",id).single(); if(!data) return; const {data:comp}=await supabaseClient.from("organizations").insert([{slug:(data.slug||data.org_name).toLowerCase().replace(/[^a-z0-9]/g,"-"),name_ar:data.org_name,name_en:data.slug||data.org_name,logo_url:data.logo_url,org_type:data.org_type==="مدرسة"?"school":"hilal",status:"active",credits:100,template_config:{templates:[]}}]).select().single(); await supabaseClient.from("org_requests").update({status:"نشط",credits_approved:100}).eq("id",id); alert("تم تأسيس "+data.org_name+" - 100 رصيد"); loadRequests(); }
 
 async function fetchCertificates(){ if(!currentOrgSlug) return; const tb=$("certificates-tbody"); tb.innerHTML=`<tr><td colspan="8" class="p-8 text-center">جاري التحميل...</td></tr>`; try{ const {data,error}=await supabaseClient.from("certificates").select("*").eq("org_id",currentOrgSlug).order("created_at",{ascending:false}).limit(5000); if(error) throw error; allCertificates=data||[]; selectedCodes.clear(); updateStats(); filterTable(); }catch(e){ tb.innerHTML=`<tr><td colspan="8" class="p-8 text-center text-red-600">${escapeHTML(e.message)}</td></tr>`; } }
 function updateStats(){ const t=allCertificates.length; const r=allCertificates.filter(c=>c.status==="revoked").length; $("stat-total").textContent=t; $("stat-valid").textContent=t-r; $("stat-revoked").textContent=r; updateSelectionUI(); }
@@ -342,20 +397,19 @@ function renderTable(){
   if(!page.length){ tb.innerHTML=`<tr><td colspan="8" class="p-8 text-center text-gray-400">لا توجد شهادات</td></tr>`; return; }
   tb.innerHTML=page.map(c=>{ const code=escapeHTML(c.cert_code); const isR=c.status==="revoked"; const chk=selectedCodes.has(c.cert_code)?"checked":"";
     const col3=isSchool()?escapeHTML(c.student_class||"--"):escapeHTML(c.course_name||"--");
-    const col4=isSchool()?`<b style="color:var(--org-color)">${escapeHTML(c.final_grade||"--")} / ${escapeHTML(c.total_grade||"")}</b> ${escapeHTML(c.grade_label||"")}`:escapeHTML(c.branch||"--");
+    const col4=isSchool()?`<b style="color:#C8102E">${escapeHTML(c.final_grade||"--")} / ${escapeHTML(c.total_grade||"")}</b> <span class="text-[11px] font-black ${c.grade_label==='راسب'?'text-red-600':'text-green-700'}">${escapeHTML(c.grade_label||"")}</span>` :escapeHTML(c.branch||"--");
     return `<tr class="hover:bg-gray-50"><td class="p-3.5 text-center"><input type="checkbox" ${chk} onchange="toggleRowSelect('${code}',this.checked)"></td><td class="p-3.5 font-mono text-[11px]" dir="ltr">${code}</td><td class="p-3.5"><div class="font-black">${escapeHTML(c.full_name)}</div><div class="text-[11px] text-gray-400" dir="ltr">${escapeHTML(c.full_name_en)}</div></td><td class="p-3.5">${col3}</td><td class="p-3.5">${col4}</td><td class="p-3.5 text-center">${isR?'<span class="badge-revoked">🚫 ملغاة</span>':'<span class="badge-valid">✓ سارية</span>'}</td><td class="p-3.5"><div class="flex justify-center gap-1 flex-wrap"><button onclick="openQRModal('${code}')" class="bg-black text-white px-2 py-1.5 rounded-lg text-[11px]">QR بشعار</button><button onclick="previewSingleCert('${code}')" class="bg-gray-100 px-2 py-1.5 rounded-lg text-[11px] font-bold text-green-700">📜 شهادة</button><button onclick="shareWhatsApp('${code}')" class="bg-green-600 text-white px-2 py-1.5 rounded-lg text-[11px]">واتساب</button><button onclick="openEditModal('${code}')" class="bg-gray-100 px-2 py-1.5 rounded-lg text-[11px]">تعديل</button><button onclick="toggleSingleStatus('${code}','${isR?"valid":"revoked"}')" class="bg-gray-100 px-2 py-1.5 rounded-lg text-[11px]">${isR?"تفعيل":"إلغاء"}</button></div></td></tr>`; }).join("");
 }
 function toggleRowSelect(code,chk){ if(chk) selectedCodes.add(code); else selectedCodes.delete(code); updateSelectionUI(); }
 function toggleSelectAll(cb){ const s=(currentPage-1)*rowsPerPage; filteredCertificates.slice(s,s+rowsPerPage).forEach(c=>{ if(cb.checked) selectedCodes.add(c.cert_code); else selectedCodes.delete(c.cert_code); }); updateSelectionUI(); renderTable(); }
 function updateSelectionUI(){ const n=selectedCodes.size; $("stat-selected").textContent=n; $("bulk-count").textContent=n; $("bulk-actions-bar").classList.toggle("hidden",n===0); const sp=$("selected-for-print"); if(sp) sp.textContent=n+" شهادة"; }
-function calcGradeLabel(f,t){ if(!f||!t) return ""; const p=(parseFloat(f)/parseFloat(t))*100; if(p>=90) return "ممتاز"; if(p>=80) return "جيد جدا"; if(p>=70) return "جيد"; if(p>=60) return "مقبول"; return "راسب"; }
-function openAddModal(){ if(currentCredits<=0){ alert("🚫 الرصيد نفد - اشحن عشان تواصل"); requestTopUp(); return; } $("modal-title").textContent=isSchool()?"إضافة نتيجة":"إضافة شهادة"; $("edit-cert-id").value=""; ["f-name","f-name-en","f-course","f-branch","f-from","f-to","f-hours","f-class","f-final-grade","f-total-grade","f-grade-label"].forEach(id=>{if($(id))$(id).value=""}); $("f-code").value=generateCertCode(); $("cert-modal").classList.remove("hidden"); }
+function openAddModal(){ if(currentCredits<=0){ alert("🚫 الرصيد نفد - اشحن عشان تواصل"); requestTopUp(); return; } $("modal-title").textContent=isSchool()?"إضافة نتيجة":"إضافة شهادة"; $("edit-cert-id").value=""; ["f-name","f-name-en","f-course","f-branch","f-from","f-to","f-hours","f-class","f-final-grade","f-total-grade","f-grade-label"].forEach(id=>{if($(id))$(id).value=""}); if($("f-total-grade")) $("f-total-grade").value="300"; $("f-code").value=generateCertCode(); $("cert-modal").classList.remove("hidden"); }
 function openEditModal(code){ const c=allCertificates.find(x=>x.cert_code===code); if(!c) return; $("edit-cert-id").value=c.cert_code; $("f-name").value=c.full_name||""; $("f-name-en").value=c.full_name_en||""; if($("f-course"))$("f-course").value=c.course_name||""; if($("f-branch"))$("f-branch").value=c.branch||""; if($("f-from"))$("f-from").value=c.date_from||""; if($("f-to"))$("f-to").value=c.date_to||""; if($("f-hours"))$("f-hours").value=c.hours??""; if($("f-class"))$("f-class").value=c.student_class||""; if($("f-final-grade"))$("f-final-grade").value=c.final_grade||""; if($("f-total-grade"))$("f-total-grade").value=c.total_grade||""; if($("f-grade-label"))$("f-grade-label").value=c.grade_label||""; $("f-code").value=c.cert_code; $("f-code").readOnly=true; $("cert-modal").classList.remove("hidden"); }
 function closeCertModal(){ $("cert-modal").classList.add("hidden"); $("f-code").readOnly=false; }
-async function saveCertificate(e){ e.preventDefault(); if(!$("edit-cert-id").value && currentCredits<=0){ alert("🚫 الرصيد نفد"); requestTopUp(); return; } const old=$("edit-cert-id").value; let p={full_name:$("f-name").value.trim(),full_name_en:$("f-name-en").value.trim()}; if(isSchool()){ p.student_class=$("f-class").value.trim(); p.final_grade=$("f-final-grade").value.trim(); p.total_grade=$("f-total-grade").value.trim(); p.grade_label=calcGradeLabel(p.final_grade,p.total_grade); p.course_name=p.student_class; if(!p.full_name||!p.student_class||!p.final_grade){alert("أدخل الاسم والفصل والدرجة");return} }else{ p.course_name=$("f-course").value.trim(); p.branch=$("f-branch").value.trim(); p.date_from=$("f-from").value||null; p.date_to=$("f-to").value||null; p.hours=$("f-hours").value?Number($("f-hours").value):null; if(!p.full_name||!p.course_name){alert("أدخل الاسم والبرنامج");return} } const btn=$("save-cert-btn"); btn.disabled=true; try{ let r; if(old){ r=await supabaseClient.from("certificates").update(p).eq("org_id",currentOrgSlug).eq("cert_code",old); }else{ p.cert_code=$("f-code").value.trim()||generateCertCode(); p.org_id=currentOrgSlug; p.status="valid"; r=await supabaseClient.from("certificates").insert([p]); if(r.error && r.error.message.includes("CREDIT_EXHAUSTED")){ alert("🚫 الرصيد نفد - اشحن"); requestTopUp(); return; } } if(r.error) throw r.error; closeCertModal(); await fetchCertificates(); await loadOrgCredits(); alert("تم الحفظ - نقص 1 من الرصيد"); }catch(err){ alert("تعذر الحفظ: "+err.message);}finally{ btn.disabled=false; } }
-function downloadExcelTemplate(){ let s,f; if(isSchool()){ s=[{"الاسم_بالعربي":"احمد محمد","الاسم_بالانجليزي":"AHMED","الفصل":"الثامن - أ","الدرجة_النهائية":278,"الدرجة_الكلية":300}]; f="School_Template.xlsx"; }else{ s=[{"الاسم_بالعربي":"اسم المتدرب","الاسم_بالانجليزي":"NAME","البرنامج_التدريبي":"الاسعافات","الفرع":"كوستي","تاريخ_البداية":"2026-01-10","تاريخ_النهاية":"2026-01-15","عدد_الساعات":30}]; f="SONAA_Template.xlsx"; } const ws=XLSX.utils.json_to_sheet(s); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"الشهادات"); XLSX.writeFile(wb,f); }
+async function saveCertificate(e){ e.preventDefault(); if(!$("edit-cert-id").value && currentCredits<=0){ alert("🚫 الرصيد نفد"); requestTopUp(); return; } const old=$("edit-cert-id").value; let p={full_name:$("f-name").value.trim(),full_name_en:$("f-name-en").value.trim()}; if(isSchool()){ p.student_class=$("f-class").value.trim(); p.final_grade=$("f-final-grade").value.trim(); p.total_grade=$("f-total-grade").value.trim()||"300"; p.grade_label=calcGradeLabel(p.final_grade,p.total_grade); p.course_name=p.student_class; if(!p.full_name||!p.student_class||!p.final_grade){alert("أدخل الاسم والفصل والدرجة");return} }else{ p.course_name=$("f-course").value.trim(); p.branch=$("f-branch").value.trim(); p.date_from=$("f-from").value||null; p.date_to=$("f-to").value||null; p.hours=$("f-hours").value?Number($("f-hours").value):null; if(!p.full_name||!p.course_name){alert("أدخل الاسم والبرنامج");return} } const btn=$("save-cert-btn"); btn.disabled=true; try{ let r; if(old){ r=await supabaseClient.from("certificates").update(p).eq("org_id",currentOrgSlug).eq("cert_code",old); }else{ p.cert_code=$("f-code").value.trim()||generateCertCode(); p.org_id=currentOrgSlug; p.status="valid"; r=await supabaseClient.from("certificates").insert([p]); if(r.error && r.error.message.includes("CREDIT_EXHAUSTED")){ alert("🚫 الرصيد نفد - اشحن"); requestTopUp(); return; } } if(r.error) throw r.error; closeCertModal(); await fetchCertificates(); await loadOrgCredits(); alert("تم الحفظ - نقص 1 من الرصيد - التقدير: "+(p.grade_label||"")); }catch(err){ alert("تعذر الحفظ: "+err.message);}finally{ btn.disabled=false; } }
+function downloadExcelTemplate(){ let s,f; if(isSchool()){ s=[{"الاسم_بالعربي":"احمد محمد","الاسم_بالانجليزي":"AHMED","الفصل":"الثامن - أ","الدرجة_النهائية":150,"الدرجة_الكلية":300}]; f="School_Template.xlsx"; }else{ s=[{"الاسم_بالعربي":"اسم المتدرب","الاسم_بالانجليزي":"NAME","البرنامج_التدريبي":"الاسعافات","الفرع":"كوستي","تاريخ_البداية":"2026-01-10","تاريخ_النهاية":"2026-01-15","عدد_الساعات":30}]; f="SONAA_Template.xlsx"; } const ws=XLSX.utils.json_to_sheet(s); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"الشهادات"); XLSX.writeFile(wb,f); }
 function excelDate(v){ if(!v) return null; if(typeof v==="number"){ const d=XLSX.SSF.parse_date_code(v); return d?[d.y,String(d.m).padStart(2,"0"),String(d.d).padStart(2,"0")].join("-"):null; } const s=String(v).trim(); return /^\d{4}-\d{2}-\d{2}$/.test(s)?s:null; }
-async function handleExcelUpload(e){ const file=e.target.files[0]; if(!file) return; try{ const buf=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsArrayBuffer(file); }); const wb=XLSX.read(buf,{type:"array"}); const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]); if(!rows.length) throw new Error("ملف فارغ"); let recs; if(isSchool()){ recs=rows.map(row=>{ const fg=String(row["الدرجة_النهائية"]||"").trim(); const tg=String(row["الدرجة_الكلية"]||"300").trim(); return {cert_code:String(row["الرقم_المرجعي_اختياري"]||"").trim()||generateCertCode(),org_id:currentOrgSlug,full_name:String(row["الاسم_بالعربي"]||"").trim(),full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(),student_class:String(row["الفصل"]||"").trim(),final_grade:fg,total_grade:tg,grade_label:calcGradeLabel(fg,tg),course_name:String(row["الفصل"]||"").trim(),status:"valid"}; }).filter(r=>r.full_name&&r.student_class&&r.final_grade); }else{ recs=rows.map(row=>({cert_code:String(row["الرقم_المرجعي_اختياري"]||"").trim()||generateCertCode(),org_id:currentOrgSlug,full_name:String(row["الاسم_بالعربي"]||"").trim(),full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(),course_name:String(row["البرنامج_التدريبي"]||"").trim(),branch:String(row["الفرع"]||"").trim(),date_from:excelDate(row["تاريخ_البداية"]),date_to:excelDate(row["تاريخ_النهاية"]),hours:row["عدد_الساعات"]?Number(row["عدد_الساعات"]):null,status:"valid"})).filter(r=>r.full_name&&r.course_name); } if(!recs.length) throw new Error("لا سجلات مكتملة"); if(recs.length>currentCredits){ alert(`عندك ${currentCredits} رصيد بس - والملف فيهو ${recs.length} - اشحن اول`); requestTopUp(); return; } $("upload-modal").classList.remove("hidden"); for(let i=0;i<recs.length;i+=100){ const ch=recs.slice(i,i+100); $("upload-status-text").textContent=`رفع ${Math.min(i+100,recs.length)}/${recs.length}`; const {error}=await supabaseClient.from("certificates").insert(ch); if(error) throw error; $("upload-progress-bar").style.width=Math.round(Math.min(i+100,recs.length)/recs.length*100)+"%"; } $("upload-modal").classList.add("hidden"); e.target.value=""; await fetchCertificates(); await loadOrgCredits(); alert(`تم استيراد ${recs.length} - نقص من الرصيد`); }catch(err){ $("upload-modal").classList.add("hidden"); if(String(err.message).includes("CREDIT_EXHAUSTED")){ alert("🚫 الرصيد نفد في النص - اشحن"); requestTopUp(); } else alert("فشل: "+err.message); e.target.value=""; } }
+async function handleExcelUpload(e){ const file=e.target.files[0]; if(!file) return; try{ const buf=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsArrayBuffer(file); }); const wb=XLSX.read(buf,{type:"array"}); const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]); if(!rows.length) throw new Error("ملف فارغ"); let recs; if(isSchool()){ recs=rows.map(row=>{ const fg=String(row["الدرجة_النهائية"]||"").trim(); const tg=String(row["الدرجة_الكلية"]||"300").trim(); return {cert_code:String(row["الرقم_المرجعي_اختياري"]||"").trim()||generateCertCode(),org_id:currentOrgSlug,full_name:String(row["الاسم_بالعربي"]||"").trim(),full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(),student_class:String(row["الفصل"]||"").trim(),final_grade:fg,total_grade:tg,grade_label:calcGradeLabel(fg,tg),course_name:String(row["الفصل"]||"").trim(),status:"valid"}; }).filter(r=>r.full_name&&r.student_class&&r.final_grade); }else{ recs=rows.map(row=>({cert_code:String(row["الرقم_المرجعي_اختياري"]||"").trim()||generateCertCode(),org_id:currentOrgSlug,full_name:String(row["الاسم_بالعربي"]||"").trim(),full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(),course_name:String(row["البرنامج_التدريبي"]||"").trim(),branch:String(row["الفرع"]||"").trim(),date_from:excelDate(row["تاريخ_البداية"]),date_to:excelDate(row["تاريخ_النهاية"]),hours:row["عدد_الساعات"]?Number(row["عدد_الساعات"]):null,status:"valid"})).filter(r=>r.full_name&&r.course_name); } if(!recs.length) throw new Error("لا سجلات مكتملة"); if(recs.length>currentCredits){ alert(`عندك ${currentCredits} رصيد بس - والملف فيهو ${recs.length} - اشحن اول`); requestTopUp(); return; } $("upload-modal").classList.remove("hidden"); for(let i=0;i<recs.length;i+=100){ const ch=recs.slice(i,i+100); $("upload-status-text").textContent=`رفع ${Math.min(i+100,recs.length)}/${recs.length}`; const {error}=await supabaseClient.from("certificates").insert(ch); if(error) throw error; $("upload-progress-bar").style.width=Math.round(Math.min(i+100,recs.length)/recs.length*100)+"%"; } $("upload-modal").classList.add("hidden"); e.target.value=""; await fetchCertificates(); await loadOrgCredits(); alert(`تم استيراد ${recs.length} - التقديرات اتحسبت اوتوماتيك - النص ولفوق ناجح`); }catch(err){ $("upload-modal").classList.add("hidden"); if(String(err.message).includes("CREDIT_EXHAUSTED")){ alert("🚫 الرصيد نفد في النص - اشحن"); requestTopUp(); } else alert("فشل: "+err.message); e.target.value=""; } }
 async function toggleSingleStatus(code,st){ if(!confirm("تأكيد؟")) return; const {error}=await supabaseClient.from("certificates").update({status:st}).eq("org_id",currentOrgSlug).eq("cert_code",code); if(error){alert(error.message);return} await fetchCertificates(); }
 async function bulkUpdateStatus(st){ const codes=[...selectedCodes]; if(!codes.length) return; if(!confirm(`تحديث ${codes.length}?`)) return; const {error}=await supabaseClient.from("certificates").update({status:st}).eq("org_id",currentOrgSlug).in("cert_code",codes); if(error){alert(error.message);return} selectedCodes.clear(); await fetchCertificates(); }
 async function bulkDelete(){ const codes=[...selectedCodes]; if(!codes.length) return; if(!confirm(`حذف ${codes.length}؟`)) return; const {error}=await supabaseClient.from("certificates").delete().eq("org_id",currentOrgSlug).in("cert_code",codes); if(error){alert(error.message);return} selectedCodes.clear(); await fetchCertificates(); }
@@ -365,7 +419,7 @@ async function openQRModal(code){ const c=allCertificates.find(x=>x.cert_code===
 function downloadQRImage(){ if(!currentQRBlob) return; const a=document.createElement("a"); a.href=URL.createObjectURL(currentQRBlob); a.download=`SONAA-QR-${currentQRCodeString}.png`; a.click(); }
 function shareQRWhatsApp(){ window.open(`https://wa.me/?text=${encodeURIComponent("تحقق: "+getVerifyUrl(currentQRCodeString))}`,"_blank"); }
 function shareWhatsApp(code){ const c=allCertificates.find(x=>x.cert_code===code); window.open(`https://wa.me/?text=${encodeURIComponent(`شهادة ${c?.full_name}\n${getVerifyUrl(code)}`)}`,"_blank"); }
-async function downloadFullCertificateLight(){ const cert=currentCertForRender; if(!cert) return; const cv=document.createElement("canvas"); cv.width=1240; cv.height=875; const ctx=cv.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,1240,875); const col=currentOrg.primary_color||"#C8102E"; ctx.fillStyle=col; ctx.fillRect(0,0,1240,130); ctx.fillStyle="#fff"; ctx.textAlign="center"; ctx.font="900 36px Cairo"; ctx.fillText(currentOrg.name_ar||"",620,80); ctx.fillStyle="#111"; ctx.font="900 52px Cairo"; ctx.fillText(cert.full_name||"",620,350); ctx.font="800 32px Cairo"; ctx.fillStyle=col; if(isSchool()){ ctx.fillText(cert.student_class||"",620,430); ctx.font="900 48px Cairo"; ctx.fillText(`${cert.final_grade||""} / ${cert.total_grade||""} - ${cert.grade_label||""}`,620,510); }else{ ctx.fillText(cert.course_name||"",620,430); } const qc=await makeQRCanvas(cert.cert_code); if(qc) ctx.drawImage(qc,980,615,180,180); ctx.font="700 18px monospace"; ctx.fillStyle="#111"; ctx.fillText(cert.cert_code,1070,825); const a=document.createElement("a"); a.href=cv.toDataURL("image/png"); a.download=`CERT-${cert.cert_code}.png`; a.click(); }
+async function downloadFullCertificateLight(){ const cert=currentCertForRender; if(!cert) return; const cv=document.createElement("canvas"); cv.width=1240; cv.height=875; const ctx=cv.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,1240,875); const col=currentOrg.primary_color||"#C8102E"; ctx.fillStyle="#07172f"; ctx.fillRect(0,0,1240,130); ctx.fillStyle="#ead49a"; ctx.textAlign="center"; ctx.font="900 36px Cairo"; ctx.fillText(currentOrg.name_ar||"",620,80); ctx.fillStyle="#111"; ctx.font="900 52px Cairo"; ctx.fillText(cert.full_name||"",620,350); ctx.font="800 32px Cairo"; ctx.fillStyle=col; if(isSchool()){ ctx.fillText(cert.student_class||"",620,430); ctx.font="900 48px Cairo"; ctx.fillText(`${cert.final_grade||""} / ${cert.total_grade||""} - ${cert.grade_label||""}`,620,510); }else{ ctx.fillText(cert.course_name||"",620,430); } const qc=await makeQRCanvas(cert.cert_code); if(qc) ctx.drawImage(qc,980,615,180,180); ctx.font="700 18px monospace"; ctx.fillStyle="#111"; ctx.fillText(cert.cert_code,1070,825); const a=document.createElement("a"); a.href=cv.toDataURL("image/png"); a.download=`CERT-${cert.cert_code}.png`; a.click(); }
 async function downloadAllQRZip(){ const list=selectedCodes.size?allCertificates.filter(c=>selectedCodes.has(c.cert_code)):allCertificates.slice(0,200); if(!list.length){alert("لا يوجد");return} const zip=new JSZip(); const folder=zip.folder("SONAA-QR-CODES"); for(let i=0;i<list.length;i++){ const cert=list[i]; const blob=await drawQR(cert.cert_code); folder.file(`SONAA-QR-${safeFileName(cert.cert_code)}-${i}.png`, blob); } const b=await zip.generateAsync({type:"blob", compression:"DEFLATE"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=`SONAA-QR-${list.length}.zip`; a.click(); }
 
 function getCurrentConfig(){ return {nameX:parseInt($("cfg-nameX")?.value||500),nameY:parseInt($("cfg-nameY")?.value||320),subY:parseInt($("cfg-subY")?.value||380),fontSize:parseInt($("cfg-fontSize")?.value||38),fontColor:$("cfg-fontColor")?.value||"#111827",qrX:parseInt($("cfg-qrX")?.value||830),qrY:parseInt($("cfg-qrY")?.value||480),qrSize:parseInt($("cfg-qrSize")?.value||130),codeY:parseInt($("cfg-codeY")?.value||630)}; }
@@ -382,7 +436,7 @@ async function loadOrgTemplates(){
     renderTemplatesList();
   }catch(e){ allTemplates=[{id:"default",name:"قالب افتراضي",url:"",config:getCurrentConfig()}]; renderTemplatesList(); }
 }
-function renderTemplatesList(){ const box=$("templates-list-studio"); if(!box) return; box.innerHTML=allTemplates.map(t=>`<div class="flex items-center gap-1"><button onclick="chooseTemplate('${t.id}')" class="px-3 py-2 rounded-xl text-xs font-bold border ${t.id===activeTemplateId?'bg-[#C8102E] text-white':'bg-white'}">${escapeHTML(t.name)}</button><button onclick="deleteTemplate('${t.id}')" class="bg-red-50 text-red-600 w-7 h-7 rounded-full text-xs font-black">×</button></div>`).join("")||"<p class='text-xs text-gray-400'>لا توجد قوالب</p>"; }
+function renderTemplatesList(){ const box=$("templates-list-studio"); if(!box) return; box.innerHTML=allTemplates.map(t=>`<div class="flex items-center gap-1"><button onclick="chooseTemplate('${t.id}')" class="px-3 py-2 rounded-xl text-xs font-bold border ${t.id===activeTemplateId?'text-white':'bg-white'}" style="${t.id===activeTemplateId?'background:#C8102E':''}">${escapeHTML(t.name)}</button><button onclick="deleteTemplate('${t.id}')" class="bg-red-50 text-red-600 w-7 h-7 rounded-full text-xs font-black">×</button></div>`).join("")||"<p class='text-xs text-gray-400'>لا توجد قوالب</p>"; }
 function chooseTemplate(id){ const t=allTemplates.find(x=>x.id===id); if(!t) return; activeTemplateId=id; activeTemplateUrl=t.url||""; const c=t.config||{}; if(c.nameX){ $("cfg-nameX").value=c.nameX; $("cfg-nameY").value=c.nameY; $("cfg-fontSize").value=c.fontSize; $("cfg-fontColor").value=c.fontColor; $("cfg-qrX").value=c.qrX; $("cfg-qrY").value=c.qrY; $("cfg-qrSize").value=c.qrSize; if(c.subY) $("cfg-subY").value=c.subY; if(c.codeY) $("cfg-codeY").value=c.codeY; } renderTemplatesList(); }
 function selectPresetTemplate(){ const v=$("preset-templates").value; if(v){ activeTemplateUrl=v; } }
 async function uploadTemplateToSupabase(e){ const f=e.target.files[0]; if(!f) return; if(f.size>800000){ alert("الصورة كبيرة - اختار صورة اقل من 800KB عشان ما تعلق"); return; } const st=$("upload-status"); st.classList.remove("hidden"); st.textContent="جاري تجهيز القالب..."; try{ const du=await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); }); activeTemplateUrl=du; st.textContent="✅ تم تجهيز القالب - دوس حفظ كقالب جديد"; }catch(err){ st.textContent="خطأ: "+err.message; } }
@@ -393,8 +447,8 @@ async function drawCertificateOnCanvas(canvas,cert,url,cfg){
     try{ const bg=new Image(); bg.crossOrigin="anonymous"; await new Promise(res=>{ bg.onload=res; bg.onerror=res; bg.src=url; setTimeout(res,1200); }); if(bg.complete&&bg.naturalWidth) ctx.drawImage(bg,0,0,canvas.width,canvas.height); }catch(e){}
   } else {
     ctx.fillStyle="#F9FAFB"; ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.strokeStyle="#C8102E"; ctx.lineWidth=4; ctx.strokeRect(20,20,960,660);
-    ctx.fillStyle="#C8102E"; ctx.font="900 28px Cairo"; ctx.textAlign="center"; ctx.fillText(currentOrg?.name_ar||"SONAA VERIFY",500,90);
+    ctx.strokeStyle="#d4af62"; ctx.lineWidth=4; ctx.strokeRect(20,20,960,660);
+    ctx.fillStyle="#07172f"; ctx.font="900 28px Cairo"; ctx.textAlign="center"; ctx.fillText(currentOrg?.name_ar||"SONAA VERIFY",500,90);
   }
   ctx.font=`900 ${cfg.fontSize}px Cairo, sans-serif`; ctx.fillStyle=cfg.fontColor; ctx.textAlign="center"; ctx.fillText(cert.full_name||"",cfg.nameX,cfg.nameY);
   const sub=isSchool()?`${cert.student_class||""} - ${cert.final_grade||""}/${cert.total_grade||""} ${cert.grade_label||""}`:(cert.course_name||"");
@@ -420,10 +474,11 @@ function previewSingleCert(code){ const c=allCertificates.find(x=>x.cert_code===
 async function downloadSelectedAsZip(){ const list=selectedCodes.size?allCertificates.filter(c=>selectedCodes.has(c.cert_code)):allCertificates.slice(0,20); if(!list.length){alert("حدد ناس اول");return} const cfg=getCurrentConfig(); const zip=new JSZip(); for(let cert of list){ const cv=document.createElement("canvas"); cv.width=1000; cv.height=700; await drawCertificateOnCanvas(cv,cert,activeTemplateUrl,cfg); zip.file(`${cert.full_name}-${cert.cert_code}.png`,cv.toDataURL("image/png").split(",")[1],{base64:true}); } const b=await zip.generateAsync({type:"blob"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=`SONAA-${currentOrgSlug}-${list.length}-CERTS.zip`; a.click(); }
 async function printSelectedCertificates(){ const list=selectedCodes.size?allCertificates.filter(c=>selectedCodes.has(c.cert_code)):allCertificates.slice(0,20); if(!list.length){alert("حدد ناس اول");return} const cfg=getCurrentConfig(); const w=window.open("","_blank"); w.document.write(`<html dir="rtl"><head><title>طباعة</title><style>@media print{.page{page-break-after:always}} .page{width:1000px;height:700px;margin:0 auto} img{width:100%}</style></head><body>`); for(let cert of list){ const cv=document.createElement("canvas"); cv.width=1000; cv.height=700; await drawCertificateOnCanvas(cv,cert,activeTemplateUrl,cfg); w.document.write(`<div class="page"><img src="${cv.toDataURL("image/png")}"></div>`); } w.document.write(`</body></html>`); w.document.close(); setTimeout(()=>w.print(),900); }
 
-function openOrgsModal(){ $("org-modal").classList.remove("hidden"); }
-async function saveNewOrg(){ const slug=$("new-org-slug").value.trim().toLowerCase(); const nameAr=$("new-org-name").value.trim(); if(!slug||!nameAr){alert("ادخل slug واسم");return} const {error}=await supabaseClient.from("organizations").insert([{slug,name_ar:nameAr,name_en:$("new-org-en").value.trim(),primary_color:$("new-org-color").value,logo_url:$("new-org-logo").value.trim()||null,org_type:$("new-org-type").value,status:"active",credits:50,template_config:{templates:[]}}]); if(error){alert(error.message);return} $("org-modal").classList.add("hidden"); alert("تمت إضافة "+nameAr+" - 50 رصيد مجاني"); location.reload(); }
+function openOrgsModal(){ if(!isSuperAdmin) return; $("org-modal").classList.remove("hidden"); }
+async function saveNewOrg(){ if(!isSuperAdmin) return; const slug=$("new-org-slug").value.trim().toLowerCase(); const nameAr=$("new-org-name").value.trim(); if(!slug||!nameAr){alert("ادخل slug واسم");return} const {error}=await supabaseClient.from("organizations").insert([{slug,name_ar:nameAr,name_en:$("new-org-en").value.trim(),primary_color:$("new-org-color").value,logo_url:$("new-org-logo").value.trim()||null,org_type:$("new-org-type").value,status:"active",credits:50,template_config:{templates:[]}}]); if(error){alert(error.message);return} $("org-modal").classList.add("hidden"); alert("تمت إضافة "+nameAr+" - 50 رصيد مجاني"); location.reload(); }
 
 document.getElementById("f-final-grade")?.addEventListener("input",()=>{ const f=$("f-final-grade").value; const t=$("f-total-grade").value||"300"; if($("f-grade-label")) $("f-grade-label").value=calcGradeLabel(f,t); });
+document.getElementById("f-total-grade")?.addEventListener("input",()=>{ const f=$("f-final-grade").value; const t=$("f-total-grade").value||"300"; if($("f-grade-label")) $("f-grade-label").value=calcGradeLabel(f,t); });
 checkSession();
 </script>
 </body>
