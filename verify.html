@@ -17,7 +17,7 @@ body { font-family: 'Cairo', sans-serif; background: #07172f; }
 .status-revoked { background: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; }
 .spinner { width: 42px; height: 42px; border: 4px solid rgba(212,175,98,.2); border-top-color: #d4af62; border-radius: 50%; animation: spin .8s linear infinite; margin: auto; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.logo-img { max-height: 68px; max-width: 220px; object-fit: contain; }
+.logo-img { max-height: 72px; max-width: 220px; object-fit: contain; }
 #search-btn { background: #07172f !important; }
 .top-badge { background: rgba(212,175,98,.15); color: #ead49a; border:1px solid rgba(212,175,98,.5); }
 .grade-big { color: var(--org-color); }
@@ -26,12 +26,11 @@ body { font-family: 'Cairo', sans-serif; background: #07172f; }
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-<!-- HEADER V2 - شعار SONAA ثابت + شعار الجهة -->
 <header class="border-b no-print sticky top-0 z-30" style="background:#07172f;border-bottom:1px solid rgba(212,175,98,.4)">
   <div class="max-w-[850px] mx-auto px-4 py-2 flex items-center justify-between gap-3">
     <div class="flex items-center gap-3">
-      <!-- شعار SONAA - ثابت - من Drive - شغال 100% -->
-      <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-11 w-auto object-contain" alt="SONAA TECH" onerror="this.src='https://wsrv.nl/?url=drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000'">
+      <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-11 w-auto object-contain" alt="SONAA TECH">
+      <!-- شعار الجهة - بيظهر هنا لو موجود -->
       <img id="header-logo" class="h-10 w-auto object-contain hidden bg-white rounded-lg p-1" alt="org logo">
       <div class="hidden sm:block">
         <div class="font-black text-[13px] text-white leading-none">SONAA <span style="color:#d4af62">VERIFY</span></div>
@@ -59,7 +58,7 @@ body { font-family: 'Cairo', sans-serif; background: #07172f; }
     <p class="text-xs text-gray-500 mt-2 mb-5">اختر المؤسسة واكتب الرقم المرجعي الموجود على الشهادة</p>
     <form id="search-form" class="space-y-3">
       <select id="organization-select" required class="w-full border rounded-xl p-3 bg-white text-sm font-bold"><option value="">جاري تحميل المؤسسات...</option></select>
-      <input id="manual-code-input" placeholder="اكتب الرقم المرجعي هنا (مثال: SCH-2026-...)" required dir="ltr" autocomplete="off" class="w-full border rounded-xl p-3 text-center font-mono">
+      <input id="manual-code-input" placeholder="اكتب الرقم المرجعي هنا" required dir="ltr" autocomplete="off" class="w-full border rounded-xl p-3 text-center font-mono">
       <button id="search-btn" type="submit" class="w-full text-white rounded-xl p-3 font-bold">تحقق الآن</button>
     </form>
     <p class="text-[11px] text-gray-400 mt-4">SONAA VERIFY — Powered by SONAA TECH</p>
@@ -67,9 +66,8 @@ body { font-family: 'Cairo', sans-serif; background: #07172f; }
 
   <div id="card" class="hidden bg-white border rounded-[20px] overflow-hidden shadow-sm">
     <div class="card-header">
-      <!-- شعار الجهة - لو موجود - ولو ما موجود بنخفيهو وبنخلي شعار SONAA -->
       <div class="flex justify-center mb-3">
-        <img id="org-logo" class="logo-img bg-white p-2 rounded-xl hidden" alt="Organization Logo" onerror="this.classList.add('hidden')">
+        <img id="org-logo" class="logo-img bg-white p-2 rounded-xl hidden" alt="Organization Logo">
       </div>
       <div id="org-name" class="text-base font-black">اسم المؤسسة</div>
       <div id="org-name-en" class="text-[11px] opacity-80 mt-0.5" dir="ltr"></div>
@@ -122,11 +120,10 @@ body { font-family: 'Cairo', sans-serif; background: #07172f; }
         <div class="text-left"><div class="text-[11px] text-gray-400 font-bold">حالة المطابقة</div><div id="match-result" class="text-green-700 text-sm font-black"></div></div>
       </div>
 
-      <!-- QR - V2 - شعار SONAA في النص - مضمون -->
-      <div class="flex flex-col items-center justify-center py-4 border-t border-dashed mt-2">
-        <div id="qrcode" class="bg-white p-2 border rounded-xl min-h-[180px] min-w-[180px] flex items-center justify-center"></div>
-        <div class="text-[11px] font-bold text-gray-500 mt-2">امسح للتحقق الفوري • SONAA VERIFY</div>
-        <div id="qr-url" class="text-[9px] text-gray-400 font-mono mt-0.5" dir="ltr"></div>
+      <!-- شلت QR العفن - ما محتاجين ليهو هنا - الزول وصل خلاص -->
+      <div class="flex flex-col items-center justify-center py-3 border-t border-dashed mt-2">
+        <div class="text-[11px] font-bold text-gray-500">SONAA VERIFY • تم التحقق بنجاح عبر الرابط الآمن</div>
+        <div id="qr-url" class="text-[9px] text-gray-400 font-mono mt-1 break-all text-center px-4" dir="ltr"></div>
       </div>
 
       <div class="flex gap-2 no-print pt-2">
@@ -156,15 +153,22 @@ body { font-family: 'Cairo', sans-serif; background: #07172f; }
 const SUPABASE_URL = "https://zepmmkynvabxgsgzskgi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EJvJnFCoPCFxkK-VAmwY_Q_6c4PTyE-";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// ===== الشعار - V2 - رابطين - واحد اساسي وواحد احتياطي - عشان ما يضرب =====
-const SONAA_LOGO_DIRECT = "https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000";
-const SONAA_LOGO_CACHED = "https://wsrv.nl/?url=drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000";
-
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(location.search);
 const code = params.get("c") || params.get("cert_code") || "";
 const selectedSlug = params.get("org") || "";
+
+// ===== ده الحل حق الشعار - بيصلح روابط Drive العادية =====
+function fixLogoUrl(url){
+  if(!url) return "";
+  url = url.trim();
+  // لو رابط Drive عادي file/d/xxx/view -> نحولو thumbnail
+  const m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if(m) return "https://drive.google.com/thumbnail?id="+m[1]+"&sz=w1000";
+  // لو اصلا thumbnail خليهو
+  if(url.includes("drive.google.com/thumbnail")) return url;
+  return url;
+}
 
 function hideAll(){ ["loading","manual-search","card","error"].forEach(id=>$(id).classList.add("hidden")); }
 function showError(m,t="تعذر العثور على الشهادة"){ hideAll(); $("error-title").textContent=t; $("error-message").textContent=m; $("error").classList.remove("hidden"); }
@@ -183,22 +187,21 @@ async function loadOrganizations(){
   sel.innerHTML='<option value="">اختر المؤسسة أو المدرسة</option>';
   (data||[]).forEach(o=>{ const op=document.createElement("option"); op.value=o.slug; op.textContent=o.name_ar; sel.appendChild(op); });
   if(selectedSlug) sel.value=selectedSlug;
-  if(!data || !data.length) throw new Error("لا توجد مؤسسات مفعلة - راجع جدول organizations و status=active");
+  if(!data || !data.length) throw new Error("لا توجد مؤسسات مفعلة");
 }
 
 function applyOrganization(org){
   $("org-name").textContent=org.name_ar||"";
   $("org-name-en").textContent=org.name_en||"";
-  const logo=org.logo_url;
+  const fixedLogo = fixLogoUrl(org.logo_url);
   const color=/^#[0-9A-Fa-f]{6}$/.test(org.primary_color||"")?org.primary_color:"#C8102E";
-  // لو الجهة عندها شعار - نظهرو - لو ما عندها - نخفيهو - شعار SONAA فوق ثابت اصلا
-  if(logo && logo.length>10){
+  if(fixedLogo && fixedLogo.length>10){
     const orgLogo=$("org-logo");
-    orgLogo.src=logo;
+    orgLogo.src=fixedLogo;
     orgLogo.classList.remove("hidden");
-    orgLogo.onerror=()=>{ orgLogo.classList.add("hidden"); };
+    orgLogo.onerror=()=>{ console.log("org logo failed:", fixedLogo); orgLogo.classList.add("hidden"); };
     const hLogo=$("header-logo");
-    hLogo.src=logo;
+    hLogo.src=fixedLogo;
     hLogo.classList.remove("hidden");
     hLogo.onerror=()=>{ hLogo.classList.add("hidden"); };
   } else {
@@ -222,7 +225,6 @@ function displayCertificate(c,org){
     $("final-grade").textContent=c.final_grade||"--";
     $("total-grade-line").textContent=c.total_grade?"من اجمالي "+c.total_grade:"";
     $("grade-label").textContent=c.grade_label||"--";
-    // لو راسب - الخط يبقى احمر
     const isFail=(c.grade_label||"").includes("راسب");
     $("pass-line").textContent=isFail?"✕ نتيجة راسب - غير ناجح":"✓ نتيجة ناجح وموثقة";
     $("pass-line").className=isFail?"text-[11px] text-red-600 font-bold mt-1":"text-[11px] text-green-600 font-bold mt-1";
@@ -232,8 +234,7 @@ function displayCertificate(c,org){
   if(revoked){ $("status-container").innerHTML='<span class="status-badge status-revoked">🚫 شهادة ملغاة وغير سارية</span>'; $("match-result").textContent="✕ غير مطابقة / ملغاة"; $("match-result").className="text-red-700 text-sm font-black"; }
   else { $("status-container").innerHTML='<span class="status-badge status-valid">✓ وثيقة رسمية معتمدة وسارية</span>'; $("match-result").textContent="✓ مطابقة وصحيحة"; $("match-result").className="text-green-700 text-sm font-black"; }
   $("card").classList.remove("hidden");
-  // ولد QR بالشعار بعد ما الكارت يظهر
-  setTimeout(()=>{ makeQR(location.href); }, 100);
+  $("qr-url").textContent = location.href;
 }
 
 async function verifyCertificate(certCode,slug){
@@ -248,9 +249,7 @@ async function verifyCertificate(certCode,slug){
     if(orgErr) throw orgErr;
     if(!org){ showError("المؤسسة غير متاحة حالياً.","المؤسسة غير متاحة"); return; }
     applyOrganization(org); displayCertificate(cert,org);
-  }catch(e){
-    showError("خطأ: "+e.message,"خطأ في الاتصال");
-  }
+  }catch(e){ showError("خطأ: "+e.message,"خطأ في الاتصال"); }
 }
 
 $("search-form").addEventListener("submit",function(e){
@@ -264,92 +263,14 @@ async function initialize(){
   hideAll(); $("loading").classList.remove("hidden");
   const timeoutId=setTimeout(()=>{
     if(!$("loading").classList.contains("hidden")){
-      showError("Supabase ما ردت - اتأكد انك عملت Policies للقراءة في Supabase (SELECT for anon) وانك رفعت الملف الجديد في Vercel","تعذر الاتصال - Timeout");
+      showError("Supabase ما ردت - اتأكد انك عملت Policies للقراءة في Supabase","تعذر الاتصال - Timeout");
     }
   },8000);
   try{
     if(code){ await verifyCertificate(code, selectedSlug||null); clearTimeout(timeoutId); return; }
     await loadOrganizations(); clearTimeout(timeoutId); showManual();
-  }catch(e){
-    clearTimeout(timeoutId);
-    showError("تعذر تحميل المؤسسات: "+e.message+" - راجع Policies في Supabase","تعذر الاتصال");
-  }
+  }catch(e){ clearTimeout(timeoutId); showError("تعذر تحميل المؤسسات: "+e.message,"تعذر الاتصال"); }
 }
-
-// ===== QR بشعار SONAA - V2 - مضمون 100% =====
-function makeQR(text){
-  const box = document.getElementById("qrcode");
-  if(!box) return;
-  box.innerHTML = "";
-  const urlEl=document.getElementById("qr-url");
-  if(urlEl) urlEl.textContent=text;
-  try{
-    new QRCode(box, {
-      text: text,
-      width: 180,
-      height: 180,
-      colorDark: "#07172f",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
-    });
-  }catch(e){ box.innerHTML="<div class='text-xs'>QR error</div>"; return; }
-  setTimeout(()=>{
-    const canvas = box.querySelector("canvas");
-    const imgTag = box.querySelector("img");
-    // qrcodejs بعمل img في بعض المتصفحات و canvas في بعضها - بنتعامل مع الاتنين
-    if(canvas){
-      drawLogoOnCanvas(canvas);
-    } else if(imgTag){
-      // لو طلع img - نحولو لـ canvas
-      const cv=document.createElement("canvas");
-      cv.width=180; cv.height=180;
-      const ctx=cv.getContext("2d");
-      const tmp=new Image();
-      tmp.onload=()=>{
-        ctx.drawImage(tmp,0,0,180,180);
-        box.innerHTML="";
-        box.appendChild(cv);
-        drawLogoOnCanvas(cv);
-      };
-      tmp.src=imgTag.src;
-    }
-  }, 350);
-}
-
-function drawLogoOnCanvas(canvas){
-  const ctx = canvas.getContext("2d");
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  // جرب الرابط المباشر اول - لو فشل جرب الكاش
-  img.onload = ()=>{
-    const size = 44;
-    const cx = canvas.width/2;
-    const cy = canvas.height/2;
-    // خلفية بيضاء دائرية
-    ctx.fillStyle = "#ffffff";
-    ctx.beginPath(); ctx.arc(cx, cy, 30, 0, Math.PI*2); ctx.fill();
-    ctx.strokeStyle="#d4af62"; ctx.lineWidth=2; ctx.stroke();
-    // قص دائري للشعار عشان يطلع نضيف
-    ctx.save();
-    ctx.beginPath(); ctx.arc(cx, cy, 26, 0, Math.PI*2); ctx.clip();
-    ctx.drawImage(img, cx-22, cy-22, 44, 44);
-    ctx.restore();
-  };
-  img.onerror = ()=>{
-    // المحاولة التانية - بالكاش
-    const img2=new Image();
-    img2.crossOrigin="anonymous";
-    img2.onload=()=>{
-      const cx=canvas.width/2, cy=canvas.height/2;
-      ctx.fillStyle="#ffffff"; ctx.beginPath(); ctx.arc(cx,cy,30,0,Math.PI*2); ctx.fill();
-      ctx.drawImage(img2,cx-22,cy-22,44,44);
-    };
-    img2.src=SONAA_LOGO_CACHED;
-    console.log("Direct logo failed - trying cached");
-  };
-  img.src=SONAA_LOGO_DIRECT;
-}
-
 initialize();
 </script>
 </body>
