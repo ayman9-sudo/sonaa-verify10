@@ -13,26 +13,40 @@
 <style>
 :root{--org-color:#d4af62;--navy:#07172f}
 body{font-family:'Cairo',sans-serif;background:#F1F5F9;color:#0F172A}
-.school-only{display:none} body[data-org-type="school"] .school-only{display:block} body[data-org-type="school"] .hilal-only{display:none!important}
+.school-only{display:none}
+body[data-org-type="school"] .school-only{display:block}
+body[data-org-type="school"] .hilal-only{display:none!important}
 .badge-valid{background:#dcfce7;color:#166534;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:800;border:1px solid #bbf7d0}
 .badge-revoked{background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:800;border:1px solid #fecaca}
-input,select{outline:none;transition:all .2s} input:focus,select:focus{border-color:#d4af62;box-shadow:0 0 0 3px rgba(212,175,98,0.18)}
+input,select{outline:none;transition:all .2s}
+input:focus,select:focus{border-color:#d4af62;box-shadow:0 0 0 3px rgba(212,175,98,0.18)}
 .tab-btn{transition:all .25s ease;border-bottom:3px solid transparent}
 .tab-btn.active{border-bottom-color:#d4af62;color:#07172f;background:#ffffff;font-weight:900;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.logo-img{max-height:52px;object-fit:contain}
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-<!-- LOGIN -->
+<!-- ================= LOGIN ================= -->
 <div id="login-screen" class="flex-1 flex items-center justify-center p-4" style="background:radial-gradient(circle at top,#0d2344,#07172f)">
   <div class="text-center max-w-md w-full p-8 sm:p-10 rounded-3xl shadow-2xl border" style="background:#0a1d38;border-color:rgba(212,175,98,.45)">
-    <div class="w-[210px] mx-auto mb-4"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-full"></div>
-    <div class="inline-block text-[11px] font-black px-3.5 py-1 rounded-full mb-3" style="background:rgba(212,175,98,.15);color:#d4af62;border:1px solid rgba(212,175,98,.4)">SONAA TECH • SUDAN DIGITAL VERIFICATION</div>
+    <div class="w-[210px] mx-auto mb-4">
+      <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-full">
+    </div>
+    <div class="inline-block text-[11px] font-black px-3.5 py-1 rounded-full mb-3" style="background:rgba(212,175,98,.15);color:#d4af62;border:1px solid rgba(212,175,98,.4)">
+      SONAA TECH • SUDAN DIGITAL VERIFICATION
+    </div>
     <h1 class="text-2xl font-black text-white">SONAA VERIFY</h1>
     <p class="text-xs font-semibold mt-1 mb-6 text-slate-400">المنصة الموحدة لإصدار وتوثيق الشهادات والنتائج الرقمية</p>
     <form onsubmit="handleLogin(event)" class="space-y-4 text-right">
-      <div><label class="block text-xs font-bold mb-1.5 text-slate-300">البريد الإلكتروني الرسمي</label><input id="login-email" type="email" required dir="ltr" class="w-full p-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm" placeholder="admin@organization.sd"></div>
-      <div><label class="block text-xs font-bold mb-1.5 text-slate-300">كلمة المرور</label><input id="login-password" type="password" required dir="ltr" class="w-full p-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm" placeholder="••••••••"></div>
+      <div>
+        <label class="block text-xs font-bold mb-1.5 text-slate-300">البريد الإلكتروني الرسمي</label>
+        <input id="login-email" type="email" required dir="ltr" class="w-full p-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm" placeholder="admin@organization.sd">
+      </div>
+      <div>
+        <label class="block text-xs font-bold mb-1.5 text-slate-300">كلمة المرور</label>
+        <input id="login-password" type="password" required dir="ltr" class="w-full p-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white text-sm" placeholder="••••••••">
+      </div>
       <div id="login-error" class="hidden text-xs font-bold text-red-400 bg-red-950/60 border border-red-800 p-3 rounded-xl text-center"></div>
       <button id="login-btn" class="w-full py-3.5 rounded-xl font-black text-sm shadow-lg" style="background:#d4af62;color:#07172f">دخول إلى لوحة الإدارة</button>
     </form>
@@ -40,14 +54,19 @@ input,select{outline:none;transition:all .2s} input:focus,select:focus{border-co
   </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- ================= DASHBOARD ================= -->
 <div id="dashboard-screen" class="hidden flex-1 flex flex-col">
 <header class="sticky top-0 z-30 shadow-md" style="background:#07172f;border-bottom:1px solid rgba(212,175,98,.35)">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3" dir="ltr">
-    <div class="w-[175px] sm:w-[200px]"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-full"></div>
+    <div class="w-[175px] sm:w-[200px]">
+      <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-full">
+    </div>
     <div class="flex items-center gap-3" dir="rtl">
       <div class="hidden md:block text-left border-l border-slate-700 pl-4">
-        <div class="flex items-center justify-end gap-2"><span id="org-badge-header" class="text-[10px] font-black px-2.5 py-0.5 rounded-md" style="background:#d4af62;color:#07172f">ORG</span><h1 id="dash-org-name" class="text-sm font-black text-white">--</h1></div>
+        <div class="flex items-center justify-end gap-2">
+          <span id="org-badge-header" class="text-[10px] font-black px-2.5 py-0.5 rounded-md" style="background:#d4af62;color:#07172f">ORG</span>
+          <h1 id="dash-org-name" class="text-sm font-black text-white">--</h1>
+        </div>
         <p id="dash-org-type" class="text-[11px] font-bold text-slate-400 mt-0.5"></p>
       </div>
       <a href="verify.html" target="_blank" class="px-3.5 py-2 rounded-xl text-xs font-bold text-white" style="background:#0d2344;border:1px solid rgba(212,175,98,.4)">🌐 بوابة التحقق</a>
@@ -56,22 +75,39 @@ input,select{outline:none;transition:all .2s} input:focus,select:focus{border-co
   </div>
   <div id="super-admin-bar" class="hidden text-white px-4 py-2 border-t border-slate-800" style="background:#040d1c">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs font-bold">
-      <div class="flex items-center gap-2"><span class="text-amber-400">👑 الإدارة العليا:</span><select id="org-switcher" onchange="switchOrg(this.value)" class="bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-1.5 text-xs font-bold"></select></div>
-      <div class="flex items-center gap-2"><button onclick="openOrgsModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-600 text-white">+ تأسيس جهة جديدة</button><button onclick="switchTab('requests')" class="px-3 py-1.5 rounded-lg font-black" style="background:#d4af62;color:#07172f">📥 طلبات الانضمام</button></div>
+      <div class="flex items-center gap-2">
+        <span class="text-amber-400">👑 الإدارة العليا (Super Admin):</span>
+        <select id="org-switcher" onchange="switchOrg(this.value)" class="bg-slate-800 text-white border border-slate-600 rounded-lg px-3 py-1.5 text-xs font-bold"></select>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openOrgsModal()" class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-600 text-white">+ تأسيس جهة جديدة</button>
+        <button onclick="switchTab('requests')" class="px-3 py-1.5 rounded-lg font-black" style="background:#d4af62;color:#07172f">📥 طلبات الانضمام (SONAA-REQ)</button>
+      </div>
     </div>
   </div>
 </header>
 
 <main class="max-w-7xl w-full mx-auto px-4 py-6 space-y-6 flex-1">
+
+  <!-- CREDITS + STATS -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
     <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between relative overflow-hidden">
       <div class="absolute top-0 right-0 w-1.5 h-full" style="background:#d4af62"></div>
       <div class="flex justify-between items-start gap-2">
-        <div><span class="text-xs font-bold text-slate-400">رصيد التوثيق المتاح - <span id="credit-org-name" class="text-slate-600"></span></span>
-        <div class="flex items-baseline gap-2 mt-1"><span id="org-credits" class="text-3xl font-black text-slate-900">--</span><span class="text-xs font-bold text-slate-500">شهادة متبقية</span><span id="credits-used" class="text-[11px] font-bold bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full mr-1"></span></div></div>
-        <div class="flex flex-col gap-1.5"><button onclick="requestTopUp()" class="px-3.5 py-2 rounded-xl text-xs font-black text-white" style="background:#07172f">💳 شحن الرصيد</button><button id="super-charge-btn" onclick="openChargeModal()" class="hidden px-3 py-1.5 rounded-xl text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300">👑 شحن مباشر</button></div>
+        <div>
+          <span class="text-xs font-bold text-slate-400">رصيد التوثيق المتاح - <span id="credit-org-name" class="text-slate-600"></span></span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="org-credits" class="text-3xl font-black text-slate-900">--</span>
+            <span class="text-xs font-bold text-slate-500">شهادة متبقية</span>
+            <span id="credits-used" class="text-[11px] font-bold bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full mr-1"></span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <button onclick="requestTopUp()" class="px-3.5 py-2 rounded-xl text-xs font-black text-white" style="background:#07172f">💳 شحن الرصيد</button>
+          <button id="super-charge-btn" onclick="openChargeModal()" class="hidden px-3 py-1.5 rounded-xl text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300">👑 شحن مباشر</button>
+        </div>
       </div>
-      <p class="text-[11px] text-slate-400 font-semibold mt-3 pt-2.5 border-t border-slate-100">50 شهادة مجانية عند التأسيس • التحقق العام متاح دائماً للجمهور مجاناً</p>
+      <p class="text-[11px] text-slate-400 font-semibold mt-3 pt-2.5 border-t border-slate-100">50 شهادة مجانية عند التأسيس • التحقق العام متاح دائماً للجمهور مجاناً • 0.50$ بعد الرصيد المجاني</p>
     </div>
     <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-3">
       <div class="bg-white p-4 rounded-2xl border border-slate-200"><div class="text-xs text-slate-400 font-bold">إجمالي الشهادات</div><div id="stat-total" class="text-2xl font-black text-slate-800 mt-1">0</div></div>
@@ -81,6 +117,7 @@ input,select{outline:none;transition:all .2s} input:focus,select:focus{border-co
     </div>
   </div>
 
+  <!-- TABS -->
   <div class="bg-slate-200/80 p-1.5 rounded-2xl flex flex-wrap gap-1 border border-slate-200">
     <button id="tab-btn-certs" onclick="switchTab('certs')" class="tab-btn active flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-slate-600">📋 إدارة الشهادات والنتائج</button>
     <button id="tab-btn-studio" onclick="switchTab('studio')" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-slate-600">🎨 استوديو تصميم القالب والـ QR</button>
@@ -94,16 +131,31 @@ input,select{outline:none;transition:all .2s} input:focus,select:focus{border-co
         <button onclick="openAddModal()" class="text-white px-4 py-2.5 rounded-xl text-xs font-black" style="background:#07172f">➕ إصدار شهادة فردية</button>
         <label class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer">📊 استيراد Excel (+500)<input type="file" id="excel-upload" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleExcelUpload(event)"></label>
         <button onclick="downloadExcelTemplate()" class="bg-slate-100 px-3.5 py-2.5 rounded-xl text-xs font-bold">📥 نموذج Excel</button>
-        <button onclick="downloadAllQRZip()" class="bg-slate-800 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold">📦 QR ZIP</button>
+        <button onclick="downloadAllQRZip()" class="bg-slate-800 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold">📦 QR ZIP - بشعار SONAA</button>
       </div>
       <div class="w-full sm:w-72"><input id="search-input" oninput="filterTable()" placeholder="🔍 ابحث بالاسم، الرقم، الفصل..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold"></div>
     </div>
     <div id="bulk-actions-bar" class="hidden bg-amber-50 border border-amber-300 p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3">
       <div class="text-xs font-black text-amber-950">تم تحديد <span id="bulk-count" class="bg-amber-200 px-2 py-0.5 rounded-md">0</span> شهادة</div>
-      <div class="flex gap-2 flex-wrap"><button onclick="printSelectedCertificates()" class="bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🖨️ طباعة A4</button><button onclick="downloadSelectedAsZip()" class="bg-slate-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold">📦 ZIP</button><button onclick="bulkShareLinks()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🔗 روابط</button><button onclick="bulkUpdateStatus('valid')" class="bg-blue-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">✅ تفعيل</button><button onclick="bulkUpdateStatus('revoked')" class="bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🚫 إلغاء</button><button onclick="bulkDelete()" class="bg-rose-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🗑️ حذف</button></div>
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="printSelectedCertificates()" class="bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🖨️ طباعة A4</button>
+        <button onclick="downloadSelectedAsZip()" class="bg-slate-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold">📦 شهادات ZIP</button>
+        <button onclick="bulkShareLinks()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🔗 روابط</button>
+        <button onclick="bulkUpdateStatus('valid')" class="bg-blue-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">✅ تفعيل</button>
+        <button onclick="bulkUpdateStatus('revoked')" class="bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🚫 إلغاء</button>
+        <button onclick="bulkDelete()" class="bg-rose-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">🗑️ حذف</button>
+      </div>
     </div>
     <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
-      <div class="overflow-x-auto"><table class="w-full text-right"><thead><tr class="bg-slate-50 border-b text-xs font-black text-slate-600"><th class="p-3.5 w-10 text-center"><input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)"></th><th class="p-3.5">الرقم المرجعي</th><th class="p-3.5">الاسم الكامل</th><th class="p-3.5 hilal-only">البرنامج</th><th class="p-3.5 hilal-only">الفرع</th><th class="p-3.5 school-only">الفصل</th><th class="p-3.5 school-only">الدرجة والتقدير</th><th class="p-3.5 text-center">الحالة</th><th class="p-3.5 text-center">إجراءات</th></tr></thead><tbody id="certificates-tbody" class="divide-y text-sm"><tr><td colspan="8" class="p-10 text-center text-slate-400 font-bold">جاري تحميل السجلات...</td></tr></tbody></table></div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right">
+          <thead><tr class="bg-slate-50 border-b text-xs font-black text-slate-600">
+            <th class="p-3.5 w-10 text-center"><input type="checkbox" id="select-all-checkbox" onchange="toggleSelectAll(this)"></th>
+            <th class="p-3.5">الرقم المرجعي</th><th class="p-3.5">الاسم الكامل</th><th class="p-3.5 hilal-only">البرنامج</th><th class="p-3.5 hilal-only">الفرع</th><th class="p-3.5 school-only">الفصل</th><th class="p-3.5 school-only">الدرجة والتقدير</th><th class="p-3.5 text-center">الحالة</th><th class="p-3.5 text-center">إجراءات</th>
+          </tr></thead>
+          <tbody id="certificates-tbody" class="divide-y text-sm"><tr><td colspan="8" class="p-10 text-center text-slate-400 font-bold">جاري تحميل السجلات...</td></tr></tbody>
+        </table>
+      </div>
       <div class="bg-slate-50 px-4 py-3 border-t flex justify-between text-xs font-bold text-slate-600"><div id="pagination-info"></div><div class="flex gap-2"><button onclick="changePage(-1)" class="bg-white border px-3.5 py-1.5 rounded-xl">السابق</button><button onclick="changePage(1)" class="bg-white border px-3.5 py-1.5 rounded-xl">التالي</button></div></div>
     </div>
   </div>
@@ -111,15 +163,32 @@ input,select{outline:none;transition:all .2s} input:focus,select:focus{border-co
   <!-- TAB STUDIO -->
   <div id="tab-studio" class="hidden bg-white rounded-2xl border border-slate-200 p-5 space-y-5">
     <div class="flex flex-wrap justify-between items-center border-b pb-4 gap-3">
-      <div><h2 class="font-black text-base">🎨 استوديو قوالب - <span id="studio-org-name" style="color:#d4af62"></span></h2><p class="text-xs text-slate-500 font-semibold mt-0.5">ارفع تصميمك، ثم اسحب بالماوس فوق المعاينة لتحريك الاسم والـ QR</p></div>
-      <div class="flex gap-2 items-center"><span class="text-xs font-bold text-slate-500">المحدد: <b id="selected-for-print" class="text-slate-900">0</b></span><button onclick="downloadSelectedAsZip()" class="bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold">📦 ZIP</button><button onclick="printSelectedCertificates()" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">🖨️ طباعة A4</button></div>
+      <div>
+        <h2 class="font-black text-base">🎨 استوديو قوالب - <span id="studio-org-name" style="color:#b45309"></span></h2>
+        <p class="text-xs text-slate-500 font-semibold mt-0.5">ارفع تصميمك، ثم اسحب بالماوس فوق المعاينة لتحريك الاسم والـ QR - كل جهة قوالبها براها</p>
+      </div>
+      <div class="flex gap-2 items-center">
+        <span class="text-xs font-bold text-slate-500">المحدد: <b id="selected-for-print" class="text-slate-900">0</b></span>
+        <button onclick="downloadSelectedAsZip()" class="bg-slate-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold">📦 شهادات ZIP</button>
+        <button onclick="printSelectedCertificates()" class="bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold">🖨️ طباعة A4</button>
+      </div>
     </div>
     <div class="bg-slate-50 p-4 rounded-2xl border space-y-3">
-      <div class="flex flex-wrap items-center justify-between gap-2"><span class="text-xs font-black text-slate-700">القوالب المعتمدة:</span><div id="templates-list-studio" class="flex flex-wrap gap-2"></div></div>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <span class="text-xs font-black text-slate-700">القوالب المعتمدة للمؤسسة:</span>
+        <div id="templates-list-studio" class="flex flex-wrap gap-2"></div>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-2 border-t">
-        <select id="preset-templates" onchange="selectPresetTemplate()" class="p-2.5 bg-white border rounded-xl text-xs font-bold"><option value="">-- قالب افتراضي --</option><option value="https://placehold.co/1000x700/FFFDF7/07172f/png?text=SONAA+GOLDEN">ذهبي رسمي</option><option value="https://placehold.co/1000x700/F8FAFC/0F172A/png?text=SONAA+MODERN">عصري أبيض</option></select>
+        <select id="preset-templates" onchange="selectPresetTemplate()" class="p-2.5 bg-white border rounded-xl text-xs font-bold">
+          <option value="">-- قالب افتراضي --</option>
+          <option value="https://placehold.co/1000x700/FFFDF7/07172f/png?text=SONAA+GOLDEN">ذهبي رسمي</option>
+          <option value="https://placehold.co/1000x700/F8FAFC/0F172A/png?text=SONAA+MODERN">عصري أبيض</option>
+        </select>
         <label class="bg-white border px-3 py-2.5 rounded-xl text-xs font-black text-center cursor-pointer">📤 رفع قالب (اقل من 800KB)<input type="file" id="custom-template-file" accept="image/*" onchange="uploadTemplateToSupabase(event)" class="hidden"></label>
-        <div class="flex gap-1.5"><input id="new-template-name" placeholder="اسم القالب - 2026" class="flex-1 p-2.5 bg-white border rounded-xl text-xs"><button onclick="saveCurrentAsNewTemplate()" class="px-4 py-2.5 rounded-xl text-xs font-black text-white" style="background:#07172f">حفظ قالب</button></div>
+        <div class="flex gap-1.5">
+          <input id="new-template-name" placeholder="اسم القالب - 2026" class="flex-1 p-2.5 bg-white border rounded-xl text-xs">
+          <button onclick="saveCurrentAsNewTemplate()" class="px-4 py-2.5 rounded-xl text-xs font-black text-white" style="background:#07172f">حفظ قالب</button>
+        </div>
       </div>
       <p id="upload-status" class="text-xs text-blue-600 font-bold hidden"></p>
     </div>
@@ -161,8 +230,14 @@ input,select{outline:none;transition:all .2s} input:focus,select:focus{border-co
   <!-- TAB REQUESTS V5 -->
   <div id="tab-requests" class="hidden space-y-4">
     <div id="requests-admin" class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-      <div class="flex flex-wrap justify-between items-center gap-2"><h2 class="font-black text-slate-900">📥 طلبات تأسيس المؤسسات - فواتير + اتفاقيات</h2>
-        <div class="flex gap-1 text-[11px] font-bold flex-wrap"><button onclick="filterReq('all')" class="px-3 py-1.5 rounded-full bg-slate-900 text-white">الكل</button><button onclick="filterReq('PAYMENT CONFIRMED - PENDING SETUP')" class="px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">مدفوع - قيد التأسيس</button><button onclick="filterReq('نشط')" class="px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">نشط</button><button onclick="loadAdminRequests()" class="px-3 py-1.5 rounded-full" style="background:#d4af62;color:#07172f">تحديث</button></div>
+      <div class="flex flex-wrap justify-between items-center gap-2">
+        <h2 class="font-black text-slate-900">📥 طلبات تأسيس المؤسسات - فواتير + اتفاقيات</h2>
+        <div class="flex gap-1 text-[11px] font-bold flex-wrap">
+          <button onclick="filterReq('all')" class="px-3 py-1.5 rounded-full bg-slate-900 text-white">الكل</button>
+          <button onclick="filterReq('PAYMENT CONFIRMED - PENDING SETUP')" class="px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">مدفوع - قيد التأسيس</button>
+          <button onclick="filterReq('نشط')" class="px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">نشط</button>
+          <button onclick="loadAdminRequests()" class="px-3 py-1.5 rounded-full" style="background:#d4af62;color:#07172f">تحديث</button>
+        </div>
       </div>
       <div id="adminRequestsList" class="mt-4 space-y-3 text-sm"></div>
     </div>
@@ -173,109 +248,990 @@ input,select{outline:none;transition:all .2s} input:focus,select:focus{border-co
 </div>
 
 <!-- MODALS -->
-<div id="cert-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-lg w-full rounded-3xl overflow-hidden max-h-[90vh] overflow-y-auto shadow-2xl"><div class="text-white px-6 py-4 flex justify-between items-center" style="background:#07172f"><h3 id="modal-title" class="font-black">إضافة شهادة</h3><button onclick="closeCertModal()" class="text-2xl">×</button></div><form onsubmit="saveCertificate(event)" class="p-6 space-y-3"><input type="hidden" id="edit-cert-id"><div><label class="block text-xs font-bold mb-1">الاسم بالعربي *</label><input id="f-name" required class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">الاسم بالإنجليزي</label><input id="f-name-en" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm"></div><div class="hilal-only space-y-3"><div><label class="block text-xs font-bold mb-1">البرنامج *</label><input id="f-course" class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">الفرع</label><input id="f-branch" class="w-full p-2.5 border rounded-xl text-sm"></div><div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">من</label><input id="f-from" type="date" class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">إلى</label><input id="f-to" type="date" class="w-full p-2.5 border rounded-xl text-sm"></div></div><div><label class="block text-xs font-bold mb-1">الساعات</label><input id="f-hours" type="number" class="w-full p-2.5 border rounded-xl text-sm"></div></div><div class="school-only space-y-3"><div><label class="block text-xs font-bold mb-1">الفصل *</label><input id="f-class" class="w-full p-2.5 border rounded-xl text-sm"></div><div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">الدرجة النهائية *</label><input id="f-final-grade" type="number" class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">الكلية</label><input id="f-total-grade" type="number" value="300" class="w-full p-2.5 border rounded-xl text-sm"></div></div><div><label class="block text-xs font-bold mb-1">التقدير - اوتوماتيك</label><input id="f-grade-label" readonly class="w-full p-2.5 border rounded-xl text-sm bg-slate-50 font-black"></div></div><div><label class="block text-xs font-bold mb-1">الرقم المرجعي</label><input id="f-code" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm font-mono bg-slate-50"></div><button id="save-cert-btn" class="w-full text-white py-3 rounded-xl font-bold" style="background:#07172f">حفظ - حينقص 1 من الرصيد</button></form></div></div>
+<div id="cert-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-lg w-full rounded-3xl overflow-hidden max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div class="text-white px-6 py-4 flex justify-between items-center" style="background:#07172f"><h3 id="modal-title" class="font-black">إضافة شهادة</h3><button onclick="closeCertModal()" class="text-2xl">×</button></div>
+    <form onsubmit="saveCertificate(event)" class="p-6 space-y-3">
+      <input type="hidden" id="edit-cert-id">
+      <div><label class="block text-xs font-bold mb-1">الاسم بالعربي *</label><input id="f-name" required class="w-full p-2.5 border rounded-xl text-sm"></div>
+      <div><label class="block text-xs font-bold mb-1">الاسم بالإنجليزي</label><input id="f-name-en" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm"></div>
+      <div class="hilal-only space-y-3">
+        <div><label class="block text-xs font-bold mb-1">البرنامج *</label><input id="f-course" class="w-full p-2.5 border rounded-xl text-sm"></div>
+        <div><label class="block text-xs font-bold mb-1">الفرع</label><input id="f-branch" class="w-full p-2.5 border rounded-xl text-sm"></div>
+        <div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">من</label><input id="f-from" type="date" class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">إلى</label><input id="f-to" type="date" class="w-full p-2.5 border rounded-xl text-sm"></div></div>
+        <div><label class="block text-xs font-bold mb-1">الساعات</label><input id="f-hours" type="number" class="w-full p-2.5 border rounded-xl text-sm"></div>
+      </div>
+      <div class="school-only space-y-3">
+        <div><label class="block text-xs font-bold mb-1">الفصل *</label><input id="f-class" class="w-full p-2.5 border rounded-xl text-sm"></div>
+        <div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-bold mb-1">الدرجة النهائية *</label><input id="f-final-grade" type="number" class="w-full p-2.5 border rounded-xl text-sm"></div><div><label class="block text-xs font-bold mb-1">الكلية</label><input id="f-total-grade" type="number" value="300" class="w-full p-2.5 border rounded-xl text-sm"></div></div>
+        <div><label class="block text-xs font-bold mb-1">التقدير - اوتوماتيك</label><input id="f-grade-label" readonly class="w-full p-2.5 border rounded-xl text-sm bg-slate-50 font-black"></div>
+        <p class="text-[11px] font-bold text-slate-500">50% ولفوق = ناجح • 90+ ممتاز • 80+ جيد جدا • 65+ جيد • 50+ مقبول • اقل من 50 راسب</p>
+      </div>
+      <div><label class="block text-xs font-bold mb-1">الرقم المرجعي</label><input id="f-code" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm font-mono bg-slate-50"></div>
+      <button id="save-cert-btn" class="w-full text-white py-3 rounded-xl font-bold" style="background:#07172f">حفظ - حينقص 1 من الرصيد</button>
+    </form>
+  </div>
+</div>
 
-<div id="org-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl"><h3 class="font-black mb-4">جهة جديدة - 50 رصيد مجاني</h3><div class="space-y-3"><select id="new-org-type" class="w-full p-2.5 border rounded-xl text-sm"><option value="hilal">هلال / تدريب</option><option value="school">مدرسة</option><option value="general">عامة</option></select><input id="new-org-slug" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="slug انجليزي"><input id="new-org-name" class="w-full p-2.5 border rounded-xl text-sm" placeholder="اسم الجهة بالعربي"><input id="new-org-en" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="English name"><input id="new-org-color" type="color" value="#0F766E" class="w-full h-10 border rounded-xl"><input id="new-org-logo" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="رابط الشعار"></div><div class="flex gap-2 mt-5"><button onclick="saveNewOrg()" class="flex-1 text-white py-2.5 rounded-xl font-bold" style="background:#07172f">حفظ الجهة</button><button onclick="document.getElementById('org-modal').classList.add('hidden')" class="flex-1 bg-slate-100 py-2.5 rounded-xl font-bold">إلغاء</button></div></div></div>
+<div id="org-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl">
+    <h3 class="font-black mb-4">جهة جديدة - 50 رصيد مجاني</h3>
+    <div class="space-y-3">
+      <select id="new-org-type" class="w-full p-2.5 border rounded-xl text-sm"><option value="hilal">هلال / تدريب</option><option value="school">مدرسة</option><option value="general">عامة</option></select>
+      <input id="new-org-slug" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="slug انجليزي">
+      <input id="new-org-name" class="w-full p-2.5 border rounded-xl text-sm" placeholder="اسم الجهة بالعربي">
+      <input id="new-org-en" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="English name">
+      <input id="new-org-color" type="color" value="#0F766E" class="w-full h-10 border rounded-xl">
+      <input id="new-org-logo" dir="ltr" class="w-full p-2.5 border rounded-xl text-sm" placeholder="رابط الشعار">
+    </div>
+    <div class="flex gap-2 mt-5"><button onclick="saveNewOrg()" class="flex-1 text-white py-2.5 rounded-xl font-bold" style="background:#07172f">حفظ الجهة</button><button onclick="document.getElementById('org-modal').classList.add('hidden')" class="flex-1 bg-slate-100 py-2.5 rounded-xl font-bold">إلغاء</button></div>
+  </div>
+</div>
 
-<div id="charge-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl"><h3 class="font-black mb-1">👑 شحن رصيد - سوبر ادمن</h3><p class="text-[11px] text-slate-500 font-bold mb-3">ما بظهر للمدارس - انت بس</p><h3 class="font-bold text-sm mb-3">لـ <span id="charge-org-name"></span></h3><label class="text-xs font-bold">عدد الشهادات</label><input id="charge-amount" type="number" value="100" class="w-full p-2.5 border rounded-xl text-sm mb-3"><div class="flex gap-2"><button onclick="doCharge()" class="flex-1 text-white py-2.5 rounded-xl font-bold" style="background:#07172f">شحن</button><button onclick="document.getElementById('charge-modal').classList.add('hidden')" class="flex-1 bg-slate-100 py-2.5 rounded-xl font-bold">إلغاء</button></div></div></div>
+<div id="charge-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl">
+    <h3 class="font-black mb-1">👑 شحن رصيد - سوبر ادمن</h3>
+    <p class="text-[11px] text-slate-500 font-bold mb-3">ما بظهر للمدارس - انت بس</p>
+    <h3 class="font-bold text-sm mb-3">لـ <span id="charge-org-name"></span></h3>
+    <label class="text-xs font-bold">عدد الشهادات</label>
+    <input id="charge-amount" type="number" value="100" class="w-full p-2.5 border rounded-xl text-sm mb-3">
+    <div class="flex gap-2"><button onclick="doCharge()" class="flex-1 text-white py-2.5 rounded-xl font-bold" style="background:#07172f">شحن</button><button onclick="document.getElementById('charge-modal').classList.add('hidden')" class="flex-1 bg-slate-100 py-2.5 rounded-xl font-bold">إلغاء</button></div>
+  </div>
+</div>
 
-<div id="qr-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-sm w-full rounded-3xl p-5 text-center shadow-2xl"><div class="border rounded-2xl overflow-hidden mb-3"><div class="text-white p-4" style="background:#07172f"><div class="text-[11px] opacity-90" id="qr-org-name">--</div><div class="text-xl font-black" id="qr-student-name"></div><div class="text-sm" id="qr-course-name"></div></div><div class="py-4 flex justify-center"><div id="qrcode-box"></div></div><div class="text-xs font-mono font-bold pb-2" id="qr-code-text"></div><div class="text-[11px] text-slate-400 font-bold mb-2">SONAA VERIFY - QR بشعار SONAA</div></div><div class="grid grid-cols-2 gap-2"><button onclick="downloadQRImage()" class="text-white py-2.5 rounded-xl font-bold text-xs" style="background:#07172f">PNG - بشعار</button><button onclick="shareQRWhatsApp()" class="bg-emerald-600 text-white py-2.5 rounded-xl font-bold text-xs">واتساب</button></div><button onclick="downloadFullCertificateLight()" class="w-full mt-2 py-3 rounded-xl font-black text-xs" style="background:#d4af62;color:#07172f">⬇️ شهادة A4 كاملة</button><button onclick="document.getElementById('qr-modal').classList.add('hidden')" class="w-full mt-2 bg-slate-100 py-2.5 rounded-xl font-bold text-xs">إغلاق</button></div></div>
+<div id="qr-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-sm w-full rounded-3xl p-5 text-center shadow-2xl">
+    <div class="border rounded-2xl overflow-hidden mb-3">
+      <div class="text-white p-4" style="background:#07172f"><div class="text-[11px] opacity-90" id="qr-org-name">--</div><div class="text-xl font-black" id="qr-student-name"></div><div class="text-sm" id="qr-course-name"></div></div>
+      <div class="py-4 flex justify-center"><div id="qrcode-box"></div></div>
+      <div class="text-xs font-mono font-bold pb-2" id="qr-code-text"></div>
+      <div class="text-[11px] text-slate-400 font-bold mb-2">SONAA VERIFY - QR بشعار SONAA</div>
+    </div>
+    <div class="grid grid-cols-2 gap-2">
+      <button onclick="downloadQRImage()" class="text-white py-2.5 rounded-xl font-bold text-xs" style="background:#07172f">PNG - بشعار</button>
+      <button onclick="shareQRWhatsApp()" class="bg-emerald-600 text-white py-2.5 rounded-xl font-bold text-xs">واتساب</button>
+    </div>
+    <button onclick="downloadFullCertificateLight()" class="w-full mt-2 py-3 rounded-xl font-black text-xs" style="background:#d4af62;color:#07172f">⬇️ شهادة A4 كاملة</button>
+    <button onclick="document.getElementById('qr-modal').classList.add('hidden')" class="w-full mt-2 bg-slate-100 py-2.5 rounded-xl font-bold text-xs">إغلاق</button>
+  </div>
+</div>
 
-<div id="proof-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-lg w-full rounded-3xl p-6 shadow-2xl max-h-[85vh] overflow-y-auto"><h3 class="font-black text-base mb-3">📄 إشعار الدفع + الاتفاقية</h3><div id="proofContent" class="space-y-3 text-sm"></div><button onclick="document.getElementById('proof-modal').classList.add('hidden')" class="w-full mt-4 bg-slate-100 py-2.5 rounded-xl font-bold text-xs">إغلاق</button></div></div>
+<div id="proof-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-lg w-full rounded-3xl p-6 shadow-2xl max-h-[85vh] overflow-y-auto">
+    <h3 class="font-black text-base mb-3">📄 إشعار الدفع + الاتفاقية</h3>
+    <div id="proofContent" class="space-y-3 text-sm"></div>
+    <button onclick="document.getElementById('proof-modal').classList.add('hidden')" class="w-full mt-4 bg-slate-100 py-2.5 rounded-xl font-bold text-xs">إغلاق</button>
+  </div>
+</div>
 
-<div id="upload-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4"><div class="bg-white max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl"><h3 class="font-black">جاري الاستيراد...</h3><div id="upload-status-text" class="text-xs font-bold text-slate-500"></div><div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div id="upload-progress-bar" class="h-full w-0 transition-all" style="background:#d4af62"></div></div></div></div>
+<div id="upload-modal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+  <div class="bg-white max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl">
+    <h3 class="font-black">جاري الاستيراد...</h3>
+    <div id="upload-status-text" class="text-xs font-bold text-slate-500"></div>
+    <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div id="upload-progress-bar" class="h-full w-0 transition-all" style="background:#d4af62"></div></div>
+  </div>
+</div>
 
 <script>
+// ================= CONFIG =================
 const SUPABASE_URL = "https://zepmmkynvabxgsgzskgi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EJvJnFCoPCFxkK-VAmwY_Q_6c4PTyE-";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const SONAA_LOGO = "https://wsrv.nl/?url=drive.google.com/thumbnail?id=1_XQzvYMYERhHD1ZFtHThoq-y1cB5RFMv&sz=w1000";
 const MY_WHATSAPP = "249914391371";
-let allCertificates=[], filteredCertificates=[], selectedCodes=new Set();
-let currentPage=1; const rowsPerPage=50;
-let currentQRCodeString="", currentCertForRender=null, currentOrgId=null, currentOrgSlug=null, currentOrg=null, currentUser=null;
-let isSuperAdmin=false, allOrgs=[];
-let activeTemplateUrl="", allTemplates=[], activeTemplateId=null;
-let currentPreviewStudent="أيمن مرتضى الشيخ", currentPreviewCode="SRCS-2026-SAMPLE";
-let currentQRBlob=null, currentCredits=50, isRendering=false, qrCache={}, isDragging=false;
-let reqFilter='all', allRequestsCache=[];
-const $=id=>document.getElementById(id);
-function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
-function generateCertCode(){const y=new Date().getFullYear();const r=Math.random().toString(36).slice(2,10).toUpperCase();const p=(currentOrgSlug||"SONAA").toUpperCase().replace(/[^A-Z0-9]/g,"");return `${p}-${y}-${r}`}
-function getVerifyBaseUrl(){return new URL("verify.html", location.href).href}
-function getVerifyUrl(code){const u=new URL(getVerifyBaseUrl());u.searchParams.set("org",currentOrgSlug);u.searchParams.set("c",code);return u.href}
-function setMessage(id,m){const el=$(id);if(el){el.textContent=m;el.classList.remove("hidden")}}
-function isSchool(){return currentOrg?.org_type==='school'}
+
+// ================= STATE =================
+let allCertificates = [];
+let filteredCertificates = [];
+let selectedCodes = new Set();
+let currentPage = 1;
+const rowsPerPage = 50;
+let currentQRCodeString = "";
+let currentCertForRender = null;
+let currentOrgId = null;
+let currentOrgSlug = null;
+let currentOrg = null;
+let currentUser = null;
+let isSuperAdmin = false;
+let allOrgs = [];
+let activeTemplateUrl = "";
+let allTemplates = [];
+let activeTemplateId = null;
+let currentPreviewStudent = "أيمن مرتضى الشيخ";
+let currentPreviewCode = "SRCS-2026-SAMPLE";
+let currentQRBlob = null;
+let currentCredits = 50;
+let isRendering = false;
+let qrCache = {};
+let isDragging = false;
+let reqFilter = 'all';
+let allRequestsCache = [];
+
+const $ = id => document.getElementById(id);
+
+// ================= HELPERS =================
+function escapeHTML(v){
+  return String(v ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+function generateCertCode(){
+  const y = new Date().getFullYear();
+  const r = Math.random().toString(36).slice(2,10).toUpperCase();
+  const p = (currentOrgSlug || "SONAA").toUpperCase().replace(/[^A-Z0-9]/g,"");
+  return `${p}-${y}-${r}`;
+}
+function getVerifyBaseUrl(){ return new URL("verify.html", location.href).href; }
+function getVerifyUrl(code){
+  const u = new URL(getVerifyBaseUrl());
+  u.searchParams.set("org", currentOrgSlug);
+  u.searchParams.set("c", code);
+  return u.href;
+}
+function setMessage(id,m){
+  const el = $(id);
+  if(el){ el.textContent = m; el.classList.remove("hidden"); }
+}
+function isSchool(){ return currentOrg?.org_type === 'school'; }
 function safeFileName(v){ return String(v).replace(/[^a-zA-Z0-9_-]/g,"_").slice(0,80); }
-function calcGradeLabel(f,t){ if(!f||!t) return ""; const per=(parseFloat(f)/parseFloat(t))*100; if(isNaN(per)) return ""; if(per>=90) return "ممتاز"; if(per>=80) return "جيد جداً"; if(per>=65) return "جيد"; if(per>=50) return "مقبول - ناجح"; return "راسب"; }
-function switchTab(tab){ ['certs','studio','requests'].forEach(t=>{ const el=$("tab-"+t), btn=$("tab-btn-"+t); if(el) el.classList.toggle("hidden", t!==tab); if(btn) btn.classList.toggle("active", t===tab); }); if(tab==='studio') renderPreviewCert(); if(tab==='requests') loadAdminRequests(); }
-// REQUESTS V5
-async function loadAdminRequests(){ if(!isSuperAdmin) return; const {data}=await supabaseClient.from("org_requests").select("*").order("created_at",{ascending:false}).limit(50); allRequestsCache=data||[]; renderAdminRequests(); }
-function renderAdminRequests(){ const box=$("adminRequestsList"); if(!box) return; let list=allRequestsCache; if(reqFilter!=='all') list=list.filter(r=>r.status===reqFilter); if(!list.length){ box.innerHTML=`<div class='text-slate-400 text-xs p-6 text-center font-bold'>لا توجد طلبات - ${escapeHTML(reqFilter)}</div>`; return; } box.innerHTML=list.map(r=>`<div class="p-4 rounded-2xl border flex flex-wrap justify-between items-center gap-3 bg-slate-50/50"><div class="flex-1 min-w-[240px] space-y-1"><div class="font-black text-slate-900">${escapeHTML(r.org_name)} <span class="font-mono text-[11px] bg-slate-200 px-2 py-0.5 rounded text-slate-700">${escapeHTML(r.request_no||"")} | ${escapeHTML(r.invoice_no||"")}</span></div><div class="text-xs text-slate-500 font-semibold">${escapeHTML(r.manager_name||"")} - ${escapeHTML(r.phone||"")} - ${escapeHTML(r.org_state||"")} ${escapeHTML(r.org_city||"")} - ${escapeHTML(r.org_type||"")} - ${r.invoice_amount||0}$ - ${escapeHTML(r.pay_method||"")}</div><div class="text-[11px] font-bold text-slate-700">الحالة: <span class="text-amber-700">${escapeHTML(r.status||"")}</span> | اتفاقية: ${escapeHTML(r.agreement_no||"")} (${escapeHTML(r.contract_signed_by||"")}) ${r.otp_verified?"• OTP ✓":""}</div></div><div class="flex gap-1.5 flex-wrap"><button onclick="confirmPayment('${r.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold">تأكيد دفع + تأسيس</button><button onclick="viewProof('${r.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-slate-900 text-white font-bold">إشعار + اتفاقية</button><button onclick="approveOrg('${r.id}')" class="text-xs px-3 py-1.5 rounded-xl text-white font-black" style="background:#07172f">تأسيس + 100 رصيد</button></div></div>`).join(""); }
-function filterReq(s){ reqFilter=s; renderAdminRequests(); }
-async function confirmPayment(id){ if(!confirm("تأكيد استلام المبلغ وبدء التأسيس؟")) return; await supabaseClient.from("org_requests").update({status:"قيد التأسيس",payment_status:"مؤكد"}).eq("id",id); loadAdminRequests(); }
-async function viewProof(id){ const r=allRequestsCache.find(x=>x.id==id); const box=$("proofContent"); if(!r){ alert("افتح الطلب في Supabase"); return; } let html=`<div class="p-3 bg-slate-50 rounded-xl">مؤسسة: <b>${escapeHTML(r.org_name)}</b> - ${escapeHTML(r.request_no)} - فاتورة ${escapeHTML(r.invoice_no)} - ${r.invoice_amount}$ - ${escapeHTML(r.pay_method)} - عملية ${escapeHTML(r.pay_txn)}</div><div class="p-3 bg-slate-50 rounded-xl">اتفاقية: ${escapeHTML(r.agreement_no)} ${escapeHTML(r.agreement_version)} - وقع: ${escapeHTML(r.contract_signed_by)} - ${escapeHTML(r.agreement_accepted_at||"")}</div>`; if(r.pay_proof_url) html+=`<div><div class="font-bold mb-1">إشعار الدفع:</div>${r.pay_proof_url.startsWith("data:")?`<img src="${r.pay_proof_url}" class="max-w-full rounded-xl border">`:`<a href="${r.pay_proof_url}" target="_blank" class="text-blue-600 underline font-bold">فتح الإشعار</a>`}</div>`; if(r.logo_url) html+=`<div><div class="font-bold mb-1">الشعار:</div><img src="${r.logo_url}" class="h-16 rounded border p-1"></div>`; if(r.sample_url) html+=`<div><div class="font-bold mb-1">القالب:</div>${r.sample_url.startsWith("data:")?`<img src="${r.sample_url}" class="max-w-full rounded-xl border">`:`<a href="${r.sample_url}" target="_blank" class="text-blue-600 underline font-bold">فتح القالب</a>`}</div>`; box.innerHTML=html; $("proof-modal").classList.remove("hidden"); }
-async function approveOrg(id){ if(!isSuperAdmin) return; const {data}=await supabaseClient.from("org_requests").select("*").eq("id",id).single(); if(!data) return; const slug=(data.slug||data.org_name||"org").toLowerCase().replace(/[^a-z0-9]/g,"-").slice(0,30)+"-"+Date.now().toString().slice(-4); const {error}=await supabaseClient.from("organizations").insert([{slug:slug,name_ar:data.org_name,name_en:data.slug||data.org_name,logo_url:data.logo_url||null,org_type:data.org_type==="مدرسة"?"school":"hilal",status:"active",credits:100,template_config:{templates:[]}}]); if(error){ alert(error.message); return; } await supabaseClient.from("org_requests").update({status:"نشط",credits_approved:100}).eq("id",id); alert("تم تأسيس "+data.org_name+" - 100 رصيد - slug: "+slug); loadAdminRequests(); }
-async function drawQR(code){ if(qrCache[code]) return qrCache[code]; const qr = new QRCodeStyling({width:600,height:600,type:"canvas",data:getVerifyUrl(code),[STRIPPED]
-  const blob = await qr.getRawData("png"); qrCache[code]=blob; if(Object.keys(qrCache).length>30) qrCache={}; return blob; }
-async function makeQRCanvas(code){ const blob = await drawQR(code); const img=new Image(); const url=URL.createObjectURL(blob); await new Promise(res=>{ img.onload=res; img.onerror=res; img.src=url; }); const cv=document.createElement("canvas"); cv.width=200; cv.height=200; cv.getContext("2d").drawImage(img,0,0,200,200); return cv; }
-async function checkSession(){ try{ const {data,error}=await supabaseClient.auth.getSession(); if(error||!data.session){ showLogin(); return; } currentUser=data.session.user; await loadUserProfile(); }catch(e){ showLogin(); } }
-function showLogin(){ $("login-screen").classList.remove("hidden"); $("dashboard-screen").classList.add("hidden"); }
-async function loadUserProfile(){ try{ const {data:profile,[STRIPPED] supabaseClient.from("admin_users").select("org_id, role, is_active, is_super_admin").eq("user_id",currentUser.id).maybeSingle(); if(error) throw error; if(!profile) throw new Error("لا يوجد سجل صلاحيات"); if(profile.is_active!==true) throw new Error("الحساب غير مفعّل"); isSuperAdmin=!!profile.is_super_admin||profile.role==="super_admin"; if(isSuperAdmin){ const {data:orgs}=await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, org_type, status").order("created_at",{ascending:true}); allOrgs=orgs||[]; } let slug=profile.org_id; if(!slug&&allOrgs.length) slug=allOrgs[0].slug; if(!slug) throw new Error("الحساب غير مربوط بمؤسسة"); const {data:org,[STRIPPED] supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, org_type, template_url, template_config, status").eq("slug",slug).maybeSingle(); if(oe) throw oe; if(!org) throw new Error("المؤسسة غير موجودة"); currentOrgId=org.id; currentOrgSlug=org.slug; currentOrg=org; applyOrganizationBranding(); $("login-screen").classList.add("hidden"); $("dashboard-screen").classList.remove("hidden"); if(isSuperAdmin){ $("super-admin-bar").classList.remove("hidden"); $("tab-btn-requests").classList.remove("hidden"); $("org-switcher").innerHTML=allOrgs.map(o=>`<option value="${o.slug}" ${o.slug===currentOrgSlug?"selected":""}>${escapeHTML(o.name_ar)} (${o.slug})</option>`).join(""); $("org-badge-header").textContent="SUPER ADMIN - "+currentOrgSlug.toUpperCase(); $("super-charge-btn").classList.remove("hidden"); loadAdminRequests(); } else { $("super-charge-btn").classList.add("hidden"); $("tab-btn-requests").classList.add("hidden"); } await fetchCertificates(); await loadOrgTemplates(); await loadOrgCredits(); drawEmptyCanvas(); }catch(e){ console.error(e); $("dashboard-screen").classList.add("hidden"); $("login-screen").classList.remove("hidden"); setMessage("login-error",e.message); } }
-async function switchOrg(slug){ const {data:org}=await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, org_type, template_url, template_config, status").eq("slug",slug).maybeSingle(); if(!org) return; currentOrgId=org.id; currentOrgSlug=org.slug; currentOrg=org; applyOrganizationBranding(); $("org-badge-header").textContent="SUPER ADMIN - "+slug.toUpperCase(); qrCache={}; await fetchCertificates(); await loadOrgTemplates(); await loadOrgCredits(); drawEmptyCanvas(); }
-function applyOrganizationBranding(){ document.body.dataset.orgType=currentOrg.org_type||'general'; $("dash-org-name").textContent=currentOrg.name_ar||currentOrg.slug; $("dash-org-type").textContent=isSchool()?"🏫 مدرسة / مؤسسة تعليمية":"🚑 تدريب / منظمة"; if(!isSuperAdmin) $("org-badge-header").textContent=currentOrg.slug.toUpperCase(); const color=/^#[0-9A-Fa-f]{6}$/.test(currentOrg.primary_color||"")?currentOrg.primary_color:"#d4af62"; document.documentElement.style.setProperty("--org-color",color); const st=$("studio-org-name"); if(st) st.textContent=currentOrg.name_ar; }
-async function handleLogin(e){ e.preventDefault(); const btn=$("login-btn"); btn.disabled=true; btn.textContent="جاري التحقق..."; try{ const {data,error}=await supabaseClient.auth.signInWithPassword({email:$("login-email").value.trim(),password:$("login-password").value}); if(error) throw error; currentUser=data.user; await loadUserProfile(); }catch(err){ await supabaseClient.auth.signOut(); setMessage("login-error","فشل: "+err.message); }finally{ btn.disabled=false; btn.textContent="دخول إلى لوحة الإدارة"; } }
+function calcGradeLabel(f,t){
+  if(!f || !t) return "";
+  const per = (parseFloat(f)/parseFloat(t))*100;
+  if(isNaN(per)) return "";
+  if(per>=90) return "ممتاز";
+  if(per>=80) return "جيد جداً";
+  if(per>=65) return "جيد";
+  if(per>=50) return "مقبول - ناجح";
+  return "راسب";
+}
+
+// ================= TABS =================
+function switchTab(tab){
+  ['certs','studio','requests'].forEach(t=>{
+    const el = $("tab-"+t);
+    const btn = $("tab-btn-"+t);
+    if(el) el.classList.toggle("hidden", t!==tab);
+    if(btn) btn.classList.toggle("active", t===tab);
+  });
+  if(tab==='studio') renderPreviewCert();
+  if(tab==='requests') loadAdminRequests();
+}
+
+// ================= REQUESTS V5 - SUPER ADMIN ONLY =================
+async function loadAdminRequests(){
+  if(!isSuperAdmin) return;
+  const {data} = await supabaseClient.from("org_requests").select("*").order("created_at",{ascending:false}).limit(50);
+  allRequestsCache = data || [];
+  renderAdminRequests();
+}
+function renderAdminRequests(){
+  const box = $("adminRequestsList");
+  if(!box) return;
+  let list = allRequestsCache;
+  if(reqFilter !== 'all') list = list.filter(r => r.status === reqFilter);
+  if(!list.length){
+    box.innerHTML = `<div class='text-slate-400 text-xs p-6 text-center font-bold'>لا توجد طلبات - ${escapeHTML(reqFilter)}</div>`;
+    return;
+  }
+  box.innerHTML = list.map(r => `
+    <div class="p-4 rounded-2xl border border-slate-200 flex flex-wrap justify-between items-center gap-3 bg-slate-50/50">
+      <div class="flex-1 min-w-[240px] space-y-1">
+        <div class="font-black text-slate-900">${escapeHTML(r.org_name)} <span class="font-mono text-[11px] bg-slate-200 px-2 py-0.5 rounded text-slate-700">${escapeHTML(r.request_no||"")} | ${escapeHTML(r.invoice_no||"")}</span></div>
+        <div class="text-xs text-slate-500 font-semibold">${escapeHTML(r.manager_name||"")} - ${escapeHTML(r.phone||"")} - ${escapeHTML(r.org_state||"")} ${escapeHTML(r.org_city||"")} - ${escapeHTML(r.org_type||"")} - ${r.invoice_amount||0}$ - ${escapeHTML(r.pay_method||"")}</div>
+        <div class="text-[11px] font-bold text-slate-700">الحالة: <span class="text-amber-700">${escapeHTML(r.status||"")}</span> | اتفاقية: ${escapeHTML(r.agreement_no||"")} (${escapeHTML(r.contract_signed_by||"")}) ${r.otp_verified?"• OTP ✓":""}</div>
+      </div>
+      <div class="flex gap-1.5 flex-wrap">
+        <button onclick="confirmPayment('${r.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold">تأكيد دفع + تأسيس</button>
+        <button onclick="viewProof('${r.id}')" class="text-xs px-3 py-1.5 rounded-xl bg-slate-900 text-white font-bold">إشعار + اتفاقية</button>
+        <button onclick="approveOrg('${r.id}')" class="text-xs px-3 py-1.5 rounded-xl text-white font-black" style="background:#07172f">تأسيس + 100 رصيد</button>
+      </div>
+    </div>
+  `).join("");
+}
+function filterReq(s){ reqFilter = s; renderAdminRequests(); }
+async function confirmPayment(id){
+  if(!confirm("تأكيد استلام المبلغ وبدء التأسيس؟")) return;
+  await supabaseClient.from("org_requests").update({status:"قيد التأسيس",payment_status:"مؤكد"}).eq("id",id);
+  loadAdminRequests();
+}
+async function viewProof(id){
+  const r = allRequestsCache.find(x => x.id == id);
+  const box = $("proofContent");
+  if(!r){ alert("افتح الطلب في Supabase - عمود pay_proof_url"); return; }
+  let html = `<div class="p-3 bg-slate-50 rounded-xl">مؤسسة: <b>${escapeHTML(r.org_name)}</b> - ${escapeHTML(r.request_no)} - فاتورة ${escapeHTML(r.invoice_no)} - ${r.invoice_amount}$ - ${escapeHTML(r.pay_method)} - عملية ${escapeHTML(r.pay_txn)}</div>`;
+  html += `<div class="p-3 bg-slate-50 rounded-xl">اتفاقية: ${escapeHTML(r.agreement_no)} ${escapeHTML(r.agreement_version)} - وقع: ${escapeHTML(r.contract_signed_by)} - ${escapeHTML(r.agreement_accepted_at||"")}</div>`;
+  if(r.pay_proof_url) html += `<div><div class="font-bold mb-1">إشعار الدفع:</div>${r.pay_proof_url.startsWith("data:")?`<img src="${r.pay_proof_url}" class="max-w-full rounded-xl border">`:`<a href="${r.pay_proof_url}" target="_blank" class="text-blue-600 underline font-bold">فتح الإشعار</a>`}</div>`;
+  if(r.logo_url) html += `<div><div class="font-bold mb-1">الشعار:</div><img src="${r.logo_url}" class="h-16 rounded border p-1"></div>`;
+  if(r.sample_url) html += `<div><div class="font-bold mb-1">القالب المرفق:</div>${r.sample_url.startsWith("data:")?`<img src="${r.sample_url}" class="max-w-full rounded-xl border">`:`<a href="${r.sample_url}" target="_blank" class="text-blue-600 underline font-bold">فتح القالب</a>`}</div>`;
+  box.innerHTML = html;
+  $("proof-modal").classList.remove("hidden");
+}
+async function approveOrg(id){
+  if(!isSuperAdmin) return;
+  const {data} = await supabaseClient.from("org_requests").select("*").eq("id",id).single();
+  if(!data) return;
+  const slug = (data.slug||data.org_name||"org").toLowerCase().replace(/[^a-z0-9]/g,"-").slice(0,30)+"-"+Date.now().toString().slice(-4);
+  const {error} = await supabaseClient.from("organizations").insert([{slug:slug,name_ar:data.org_name,name_en:data.slug||data.org_name,logo_url:data.logo_url||null,org_type:data.org_type==="مدرسة"?"school":"hilal",status:"active",credits:100,template_config:{templates:[]}}]);
+  if(error){ alert(error.message); return; }
+  await supabaseClient.from("org_requests").update({status:"نشط",credits_approved:100}).eq("id",id);
+  alert("تم تأسيس "+data.org_name+" - 100 رصيد - slug: "+slug);
+  loadAdminRequests();
+}
+
+// ================= QR WITH SONAA LOGO =================
+async function drawQR(code){
+  if(qrCache[code]) return qrCache[code];
+  const qr = new QRCodeStyling({
+    width:600,
+    height:600,
+    type:"canvas",
+    data:getVerifyUrl(code),
+    image: SONAA_LOGO,
+    dotsOptions:{ color:"#07172f", type:"rounded" },
+    backgroundOptions:{ color:"#ffffff" },
+    cornersSquareOptions:{ color:"#07172f", type:"extra-rounded" },
+    cornersDotOptions:{ color:"#d4af62", type:"dot" },
+    imageOptions:{ crossOrigin:"anonymous", margin:8, imageSize:0.42 }
+  });
+  const blob = await qr.getRawData("png");
+  qrCache[code]=blob;
+  if(Object.keys(qrCache).length>30) qrCache={};
+  return blob;
+}
+async function makeQRCanvas(code){
+  const blob = await drawQR(code);
+  const img = new Image();
+  const url = URL.createObjectURL(blob);
+  await new Promise(res=>{ img.onload=res; img.onerror=res; img.src=url; });
+  const cv = document.createElement("canvas");
+  cv.width=200; cv.height=200;
+  cv.getContext("2d").drawImage(img,0,0,200,200);
+  return cv;
+}
+
+// ================= AUTH =================
+async function checkSession(){
+  try{
+    const {data,error} = await supabaseClient.auth.getSession();
+    if(error||!data.session){ showLogin(); return; }
+    currentUser = data.session.user;
+    await loadUserProfile();
+  }catch(e){ showLogin(); }
+}
+function showLogin(){
+  $("login-screen").classList.remove("hidden");
+  $("dashboard-screen").classList.add("hidden");
+}
+async function loadUserProfile(){
+  try{
+    const {data:profile, error} = await supabaseClient.from("admin_users").select("org_id, role, is_active, is_super_admin").eq("user_id",currentUser.id).maybeSingle();
+    if(error) throw error;
+    if(!profile) throw new Error("لا يوجد سجل صلاحيات");
+    if(profile.is_active!==true) throw new Error("الحساب غير مفعّل");
+    isSuperAdmin = !!profile.is_super_admin || profile.role==="super_admin";
+    if(isSuperAdmin){
+      const {data:orgs} = await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, org_type, status").order("created_at",{ascending:true});
+      allOrgs = orgs||[];
+    }
+    let slug = profile.org_id;
+    if(!slug && allOrgs.length) slug = allOrgs[0].slug;
+    if(!slug) throw new Error("الحساب غير مربوط بمؤسسة");
+    const {data:org, error:oe} = await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, org_type, template_url, template_config, status").eq("slug",slug).maybeSingle();
+    if(oe) throw oe;
+    if(!org) throw new Error("المؤسسة غير موجودة");
+    currentOrgId = org.id; currentOrgSlug = org.slug; currentOrg = org;
+    applyOrganizationBranding();
+    $("login-screen").classList.add("hidden");
+    $("dashboard-screen").classList.remove("hidden");
+    if(isSuperAdmin){
+      $("super-admin-bar").classList.remove("hidden");
+      $("tab-btn-requests").classList.remove("hidden");
+      $("org-switcher").innerHTML = allOrgs.map(o=>`<option value="${o.slug}" ${o.slug===currentOrgSlug?"selected":""}>${escapeHTML(o.name_ar)} (${o.slug})</option>`).join("");
+      $("org-badge-header").textContent = "SUPER ADMIN - "+currentOrgSlug.toUpperCase();
+      $("super-charge-btn").classList.remove("hidden");
+      loadAdminRequests();
+    } else {
+      $("super-charge-btn").classList.add("hidden");
+      $("tab-btn-requests").classList.add("hidden");
+    }
+    await fetchCertificates();
+    await loadOrgTemplates();
+    await loadOrgCredits();
+    drawEmptyCanvas();
+  }catch(e){
+    console.error(e);
+    $("dashboard-screen").classList.add("hidden");
+    $("login-screen").classList.remove("hidden");
+    setMessage("login-error", e.message);
+  }
+}
+async function switchOrg(slug){
+  const {data:org} = await supabaseClient.from("organizations").select("id, slug, name_ar, name_en, logo_url, primary_color, org_type, template_url, template_config, status").eq("slug",slug).maybeSingle();
+  if(!org) return;
+  currentOrgId = org.id; currentOrgSlug = org.slug; currentOrg = org;
+  applyOrganizationBranding();
+  $("org-badge-header").textContent = "SUPER ADMIN - "+slug.toUpperCase();
+  qrCache = {};
+  await fetchCertificates();
+  await loadOrgTemplates();
+  await loadOrgCredits();
+  drawEmptyCanvas();
+}
+function applyOrganizationBranding(){
+  document.body.dataset.orgType = currentOrg.org_type || 'general';
+  $("dash-org-name").textContent = currentOrg.name_ar || currentOrg.slug;
+  $("dash-org-type").textContent = isSchool() ? "🏫 مدرسة / مؤسسة تعليمية" : "🚑 تدريب / منظمة";
+  if(!isSuperAdmin) $("org-badge-header").textContent = currentOrg.slug.toUpperCase();
+  const color = /^#[0-9A-Fa-f]{6}$/.test(currentOrg.primary_color||"") ? currentOrg.primary_color : "#d4af62";
+  document.documentElement.style.setProperty("--org-color", color);
+  const st = $("studio-org-name");
+  if(st) st.textContent = currentOrg.name_ar;
+}
+async function handleLogin(e){
+  e.preventDefault();
+  const btn = $("login-btn");
+  btn.disabled = true; btn.textContent = "جاري التحقق...";
+  try{
+    const {data,error} = await supabaseClient.auth.signInWithPassword({email:$("login-email").value.trim(), password:$("login-password").value});
+    if(error) throw error;
+    currentUser = data.user;
+    await loadUserProfile();
+  }catch(err){
+    await supabaseClient.auth.signOut();
+    setMessage("login-error","فشل: "+err.message);
+  }finally{
+    btn.disabled = false; btn.textContent = "دخول إلى لوحة الإدارة";
+  }
+}
 async function handleLogout(){ await supabaseClient.auth.signOut(); location.reload(); }
-async function loadOrgCredits(){ try{ const {data}=await supabaseClient.from("organizations").select("credits, credits_used, name_ar").eq("slug",currentOrgSlug).single(); if(!data) return; currentCredits=data.credits??50; $("org-credits").textContent=currentCredits; $("credit-org-name").textContent=data.name_ar||""; $("credits-used").textContent=`استخدمت ${data.credits_used||0}`; }catch(e){ $("org-credits").textContent="50"; currentCredits=50; } }
-function requestTopUp(){ const msg=`السلام عليكم فريق SONAA TECH، نرغب في شحن رصيد شهادات لـ (${currentOrg?.name_ar||currentOrgSlug}) - Slug: ${currentOrgSlug}. الرصيد الحالي: ${currentCredits} شهادة.`; window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank"); }
-function openChargeModal(){ if(!isSuperAdmin){ alert("الشحن المباشر للسوبر ادمن فقط"); return; } $("charge-org-name").textContent=currentOrg?.name_ar; $("charge-modal").classList.remove("hidden"); }
-async function doCharge(){ if(!isSuperAdmin) return; const amt=parseInt($("charge-amount").value); if(!amt||amt<=0) return alert("ادخل عدد صحيح"); const {error}=await supabaseClient.from("organizations").update({credits: currentCredits + amt}).eq("slug",currentOrgSlug); if(error) alert(error.message); else { alert(`تم شحن ${amt} لـ ${currentOrgSlug}`); $("charge-modal").classList.add("hidden"); await loadOrgCredits(); } }
-async function fetchCertificates(){ if(!currentOrgSlug) return; const tb=$("certificates-tbody"); tb.innerHTML=`<tr><td colspan="8" class="p-8 text-center text-slate-400">جاري التحميل...</td></tr>`; try{ const {data,error}=await supabaseClient.from("certificates").select("*").eq("org_id",currentOrgSlug).order("created_at",{ascending:false}).limit(5000); if(error) throw error; allCertificates=data||[]; selectedCodes.clear(); updateStats(); filterTable(); }catch(e){ tb.innerHTML=`<tr><td colspan="8" class="p-8 text-center text-red-600">${escapeHTML(e.message)}</td></tr>`; } }
-function updateStats(){ const t=allCertificates.length; const r=allCertificates.filter(c=>c.status==="revoked").length; $("stat-total").textContent=t; $("stat-valid").textContent=t-r; $("stat-revoked").textContent=r; updateSelectionUI(); }
-function filterTable(){ const q=$("search-input").value.toLowerCase().trim(); filteredCertificates=!q?[...allCertificates]:allCertificates.filter(c=>[c.full_name,c.full_name_en,c.cert_code,c.course_name,c.branch,c.student_class].some(v=>String(v||"").toLowerCase().includes(q))); currentPage=1; renderTable(); }
+
+// ================= CREDITS =================
+async function loadOrgCredits(){
+  try{
+    const {data} = await supabaseClient.from("organizations").select("credits, credits_used, name_ar").eq("slug",currentOrgSlug).single();
+    if(!data) return;
+    currentCredits = data.credits ?? 50;
+    $("org-credits").textContent = currentCredits;
+    $("credit-org-name").textContent = data.name_ar || "";
+    $("credits-used").textContent = `استخدمت ${data.credits_used||0}`;
+  }catch(e){
+    $("org-credits").textContent = "50";
+    currentCredits = 50;
+  }
+}
+function requestTopUp(){
+  const msg = `السلام عليكم فريق SONAA TECH، نرغب في شحن رصيد شهادات لـ (${currentOrg?.name_ar||currentOrgSlug}) - Slug: ${currentOrgSlug}. الرصيد الحالي: ${currentCredits} شهادة. كم سعر باقة 100 و 500؟`;
+  window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank");
+}
+function openChargeModal(){
+  if(!isSuperAdmin){ alert("الشحن المباشر للسوبر ادمن فقط"); return; }
+  $("charge-org-name").textContent = currentOrg?.name_ar;
+  $("charge-modal").classList.remove("hidden");
+}
+async function doCharge(){
+  if(!isSuperAdmin) return;
+  const amt = parseInt($("charge-amount").value);
+  if(!amt || amt<=0) return alert("ادخل عدد صحيح");
+  const {error} = await supabaseClient.from("organizations").update({credits: currentCredits + amt}).eq("slug",currentOrgSlug);
+  if(error) alert(error.message);
+  else { alert(`تم شحن ${amt} لـ ${currentOrgSlug}`); $("charge-modal").classList.add("hidden"); await loadOrgCredits(); }
+}
+
+// ================= CERTIFICATES CRUD =================
+async function fetchCertificates(){
+  if(!currentOrgSlug) return;
+  const tb = $("certificates-tbody");
+  tb.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-slate-400">جاري التحميل...</td></tr>`;
+  try{
+    const {data,error} = await supabaseClient.from("certificates").select("*").eq("org_id",currentOrgSlug).order("created_at",{ascending:false}).limit(5000);
+    if(error) throw error;
+    allCertificates = data||[];
+    selectedCodes.clear();
+    updateStats();
+    filterTable();
+  }catch(e){
+    tb.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-600">${escapeHTML(e.message)}</td></tr>`;
+  }
+}
+function updateStats(){
+  const t = allCertificates.length;
+  const r = allCertificates.filter(c=>c.status==="revoked").length;
+  $("stat-total").textContent = t;
+  $("stat-valid").textContent = t-r;
+  $("stat-revoked").textContent = r;
+  updateSelectionUI();
+}
+function filterTable(){
+  const q = $("search-input").value.toLowerCase().trim();
+  filteredCertificates = !q ? [...allCertificates] : allCertificates.filter(c=>[c.full_name,c.full_name_en,c.cert_code,c.course_name,c.branch,c.student_class].some(v=>String(v||"").toLowerCase().includes(q)));
+  currentPage = 1;
+  renderTable();
+}
 function changePage(d){ currentPage+=d; renderTable(); }
-function renderTable(){ const tb=$("certificates-tbody"); const total=filteredCertificates.length; const tp=Math.max(1,Math.ceil(total/rowsPerPage)); currentPage=Math.min(Math.max(1,currentPage),tp); const start=(currentPage-1)*rowsPerPage; const page=filteredCertificates.slice(start,start+rowsPerPage); $("pagination-info").textContent=`عرض ${total?start+1:0} إلى ${Math.min(start+rowsPerPage,total)} من ${total}`; if(!page.length){ tb.innerHTML=`<tr><td colspan="8" class="p-8 text-center text-slate-400 font-bold">لا توجد شهادات</td></tr>`; return; } tb.innerHTML=page.map(c=>{ const code=escapeHTML(c.cert_code); const isR=c.status==="revoked"; const chk=selectedCodes.has(c.cert_code)?"checked":""; const col3=isSchool()?escapeHTML(c.student_class||"--"):escapeHTML(c.course_name||"--"); const col4=isSchool()?`<b class="text-slate-900">${escapeHTML(c.final_grade||"--")} / ${escapeHTML(c.total_grade||"")}</b> <span class="text-[11px] font-black ${c.grade_label==='راسب'?'text-rose-600':'text-emerald-700'}">${escapeHTML(c.grade_label||"")}</span>` :escapeHTML(c.branch||"--"); return `<tr class="hover:bg-slate-50"><td class="p-3.5 text-center"><input type="checkbox" ${chk} onchange="toggleRowSelect('${code}',this.checked)"></td><td class="p-3.5 font-mono text-[11px] text-slate-600" dir="ltr">${code}</td><td class="p-3.5"><div class="font-black text-slate-900">${escapeHTML(c.full_name)}</div><div class="text-[11px] text-slate-400" dir="ltr">${escapeHTML(c.full_name_en)}</div></td><td class="p-3.5 text-xs font-bold text-slate-700">${col3}</td><td class="p-3.5 text-xs text-slate-600">${col4}</td><td class="p-3.5 text-center">${isR?'<span class="badge-revoked">🚫 ملغاة</span>':'<span class="badge-valid">✓ سارية</span>'}</td><td class="p-3.5"><div class="flex justify-center gap-1 flex-wrap"><button onclick="openQRModal('${code}')" class="bg-slate-900 text-white px-2.5 py-1.5 rounded-lg text-[11px] font-bold">QR بشعار</button><button onclick="previewSingleCert('${code}')" class="bg-amber-100 text-amber-900 px-2.5 py-1.5 rounded-lg text-[11px] font-bold">📜 شهادة</button><button onclick="shareWhatsApp('${code}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-lg text-[11px] font-bold">واتساب</button><button onclick="openEditModal('${code}')" class="bg-slate-100 px-2.5 py-1.5 rounded-lg text-[11px] font-bold">تعديل</button><button onclick="toggleSingleStatus('${code}','${isR?"valid":"revoked"}')" class="bg-slate-100 px-2.5 py-1.5 rounded-lg text-[11px] font-bold">${isR?"تفعيل":"إلغاء"}</button></div></td></tr>`; }).join(""); }
+function renderTable(){
+  const tb = $("certificates-tbody");
+  const total = filteredCertificates.length;
+  const tp = Math.max(1, Math.ceil(total/rowsPerPage));
+  currentPage = Math.min(Math.max(1,currentPage), tp);
+  const start = (currentPage-1)*rowsPerPage;
+  const page = filteredCertificates.slice(start, start+rowsPerPage);
+  $("pagination-info").textContent = `عرض ${total?start+1:0} إلى ${Math.min(start+rowsPerPage,total)} من ${total}`;
+  if(!page.length){
+    tb.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-slate-400 font-bold">لا توجد شهادات</td></tr>`;
+    return;
+  }
+  tb.innerHTML = page.map(c=>{
+    const code = escapeHTML(c.cert_code);
+    const isR = c.status==="revoked";
+    const chk = selectedCodes.has(c.cert_code) ? "checked" : "";
+    const col3 = isSchool() ? escapeHTML(c.student_class||"--") : escapeHTML(c.course_name||"--");
+    const col4 = isSchool() ? `<b class="text-slate-900">${escapeHTML(c.final_grade||"--")} / ${escapeHTML(c.total_grade||"")}</b> <span class="text-[11px] font-black ${c.grade_label==='راسب'?'text-rose-600':'text-emerald-700'}">${escapeHTML(c.grade_label||"")}</span>` : escapeHTML(c.branch||"--");
+    return `<tr class="hover:bg-slate-50">
+      <td class="p-3.5 text-center"><input type="checkbox" ${chk} onchange="toggleRowSelect('${code}',this.checked)"></td>
+      <td class="p-3.5 font-mono text-[11px] text-slate-600" dir="ltr">${code}</td>
+      <td class="p-3.5"><div class="font-black text-slate-900">${escapeHTML(c.full_name)}</div><div class="text-[11px] text-slate-400" dir="ltr">${escapeHTML(c.full_name_en)}</div></td>
+      <td class="p-3.5 text-xs font-bold text-slate-700">${col3}</td>
+      <td class="p-3.5 text-xs text-slate-600">${col4}</td>
+      <td class="p-3.5 text-center">${isR?'<span class="badge-revoked">🚫 ملغاة</span>':'<span class="badge-valid">✓ سارية</span>'}</td>
+      <td class="p-3.5"><div class="flex justify-center gap-1 flex-wrap">
+        <button onclick="openQRModal('${code}')" class="bg-slate-900 text-white px-2.5 py-1.5 rounded-lg text-[11px] font-bold">QR بشعار</button>
+        <button onclick="previewSingleCert('${code}')" class="bg-amber-100 text-amber-900 px-2.5 py-1.5 rounded-lg text-[11px] font-bold">📜 شهادة</button>
+        <button onclick="shareWhatsApp('${code}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-lg text-[11px] font-bold">واتساب</button>
+        <button onclick="openEditModal('${code}')" class="bg-slate-100 px-2.5 py-1.5 rounded-lg text-[11px] font-bold">تعديل</button>
+        <button onclick="toggleSingleStatus('${code}','${isR?"valid":"revoked"}')" class="bg-slate-100 px-2.5 py-1.5 rounded-lg text-[11px] font-bold">${isR?"تفعيل":"إلغاء"}</button>
+      </div></td>
+    </tr>`;
+  }).join("");
+}
 function toggleRowSelect(code,chk){ if(chk) selectedCodes.add(code); else selectedCodes.delete(code); updateSelectionUI(); }
-function toggleSelectAll(cb){ const s=(currentPage-1)*rowsPerPage; filteredCertificates.slice(s,s+rowsPerPage).forEach(c=>{ if(cb.checked) selectedCodes.add(c.cert_code); else selectedCodes.delete(c.cert_code); }); updateSelectionUI(); renderTable(); }
-function updateSelectionUI(){ const n=selectedCodes.size; $("stat-selected").textContent=n; $("bulk-count").textContent=n; $("bulk-actions-bar").classList.toggle("hidden",n===0); const sp=$("selected-for-print"); if(sp) sp.textContent=n+" شهادة"; }
-function openAddModal(){ if(currentCredits<=0){ alert("🚫 الرصيد نفد"); requestTopUp(); return; } $("modal-title").textContent="إصدار شهادة فردية"; $("edit-cert-id").value=""; $("f-name").value=""; $("f-name-en").value=""; if($("f-course"))$("f-course").value=""; if($("f-branch"))$("f-branch").value=""; if($("f-from"))$("f-from").value=""; if($("f-to"))$("f-to").value=""; if($("f-hours"))$("f-hours").value=""; if($("f-class"))$("f-class").value=""; if($("f-final-grade"))$("f-final-grade").value=""; if($("f-total-grade"))$("f-total-grade").value="300"; if($("f-grade-label"))$("f-grade-label").value=""; $("f-code").value=generateCertCode(); $("f-code").readOnly=false; $("cert-modal").classList.remove("hidden"); }
-function openEditModal(code){ const c=allCertificates.find(x=>x.cert_code===code); if(!c) return; $("modal-title").textContent="تعديل بيانات الشهادة"; $("edit-cert-id").value=c.cert_code; $("f-name").value=c.full_name||""; $("f-name-en").value=c.full_name_en||""; if($("f-course"))$("f-course").value=c.course_name||""; if($("f-branch"))$("f-branch").value=c.branch||""; if($("f-from"))$("f-from").value=c.date_from||""; if($("f-to"))$("f-to").value=c.date_to||""; if($("f-hours"))$("f-hours").value=c.hours??""; if($("f-class"))$("f-class").value=c.student_class||""; if($("f-final-grade"))$("f-final-grade").value=c.final_grade||""; if($("f-total-grade"))$("f-total-grade").value=c.total_grade||"300"; if($("f-grade-label"))$("f-grade-label").value=c.grade_label||""; $("f-code").value=c.cert_code; $("f-code").readOnly=true; $("cert-modal").classList.remove("hidden"); }
-function closeCertModal(){ $("cert-modal").classList.add("hidden"); $("f-code").readOnly=false; }
-async function saveCertificate(e){ e.preventDefault(); if(!$("edit-cert-id").value && currentCredits<=0){ alert("🚫 الرصيد نفد"); requestTopUp(); return; } const old=$("edit-cert-id").value; let p={full_name:$("f-name").value.trim(),full_name_en:$("f-name-en").value.trim()}; if(isSchool()){ p.student_class=$("f-class").value.trim(); p.final_grade=$("f-final-grade").value.trim(); p.total_grade=$("f-total-grade").value.trim()||"300"; p.grade_label=calcGradeLabel(p.final_grade,p.total_grade); p.course_name=p.student_class; if(!p.full_name||!p.student_class||!p.final_grade){alert("أدخل الاسم والفصل والدرجة");return} }else{ p.course_name=$("f-course").value.trim(); p.branch=$("f-branch").value.trim(); p.date_from=$("f-from").value||null; p.date_to=$("f-to").value||null; p.hours=$("f-hours").value?Number($("f-hours").value):null; if(!p.full_name||!p.course_name){alert("أدخل الاسم والبرنامج");return} } const btn=$("save-cert-btn"); btn.disabled=true; try{ let r; if(old){ r=await supabaseClient.from("certificates").update(p).eq("org_id",currentOrgSlug).eq("cert_code",old); }else{ p.cert_code=$("f-code").value.trim()||generateCertCode(); p.org_id=currentOrgSlug; p.status="valid"; r=await supabaseClient.from("certificates").insert([p]); if(r.error && r.error.message.includes("CREDIT_EXHAUSTED")){ alert("🚫 الرصيد نفد - اشحن"); requestTopUp(); return; } } if(r.error) throw r.error; closeCertModal(); await fetchCertificates(); await loadOrgCredits(); alert("تم الحفظ بنجاح" + (p.grade_label ? " - التقدير: " + p.grade_label : "")); }catch(err){ alert("تعذر الحفظ: "+err.message); }finally{ btn.disabled=false; } }
-function downloadExcelTemplate(){ let s,f; if(isSchool()){ s=[{"الاسم_بالعربي":"احمد محمد","الاسم_بالانجليزي":"AHMED","الفصل":"الثامن - أ","الدرجة_النهائية":150,"الدرجة_الكلية":300}]; f="School_Template.xlsx"; }else{ s=[{"الاسم_بالعربي":"اسم المتدرب","الاسم_بالانجليزي":"NAME","البرنامج_التدريبي":"الاسعافات","الفرع":"كوستي","تاريخ_البداية":"2026-01-10","تاريخ_النهاية":"2026-01-15","عدد_الساعات":30}]; f="SONAA_Template.xlsx"; } const ws=XLSX.utils.json_to_sheet(s); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"الشهادات"); XLSX.writeFile(wb,f); }
-function excelDate(v){ if(!v) return null; if(typeof v==="number"){ const d=XLSX.SSF.parse_date_code(v); return d?[d.y,String(d.m).padStart(2,"0"),String(d.d).padStart(2,"0")].join("-"):null; } const s=String(v).trim(); return /^\d{4}-\d{2}-\d{2}$/.test(s)?s:null; }
-async function handleExcelUpload(e){ const file=e.target.files[0]; if(!file) return; try{ const buf=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsArrayBuffer(file); }); const wb=XLSX.read(buf,{type:"array"}); const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]); if(!rows.length) throw new Error("ملف فارغ"); let recs; if(isSchool()){ recs=rows.map(row=>{ const fg=String(row["الدرجة_النهائية"]||"").trim(); const tg=String(row["الدرجة_الكلية"]||"300").trim(); return {cert_code:String(row["الرقم_المرجعي_اختياري"]||"").trim()||generateCertCode(),org_id:currentOrgSlug,full_name:String(row["الاسم_بالعربي"]||"").trim(),full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(),student_class:String(row["الفصل"]||"").trim(),final_grade:fg,total_grade:tg,grade_label:calcGradeLabel(fg,tg),course_name:String(row["الفصل"]||"").trim(),status:"valid"}; }).filter(r=>r.full_name&&r.student_class&&r.final_grade); }else{ recs=rows.map(row=>({cert_code:String(row["الرقم_المرجعي_اختياري"]||"").trim()||generateCertCode(),org_id:currentOrgSlug,full_name:String(row["الاسم_بالعربي"]||"").trim(),full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(),course_name:String(row["البرنامج_التدريبي"]||"").trim(),branch:String(row["الفرع"]||"").trim(),date_from:excelDate(row["تاريخ_البداية"]),date_to:excelDate(row["تاريخ_النهاية"]),hours:row["عدد_الساعات"]?Number(row["عدد_الساعات"]):null,status:"valid"})).filter(r=>r.full_name&&r.course_name); } if(!recs.length) throw new Error("لا سجلات مكتملة"); if(recs.length>currentCredits){ alert(`عندك ${currentCredits} رصيد بس - والملف فيهو ${recs.length} - اشحن اول`); requestTopUp(); return; } $("upload-modal").classList.remove("hidden"); for(let i=0;i<recs.length;i+=100){ const ch=recs.slice(i,i+100); $("upload-status-text").textContent=`رفع ${Math.min(i+100,recs.length)}/${recs.length}`; const {error}=await supabaseClient.from("certificates").insert(ch); if(error) throw error; $("upload-progress-bar").style.width=Math.round(Math.min(i+100,recs.length)/recs.length*100)+"%"; } $("upload-modal").classList.add("hidden"); e.target.value=""; await fetchCertificates(); await loadOrgCredits(); alert(`تم استيراد ${recs.length}`); }catch(err){ $("upload-modal").classList.add("hidden"); if(String(err.message).includes("CREDIT_EXHAUSTED")){ alert("🚫 الرصيد نفد"); requestTopUp(); } else alert("فشل: "+err.message); e.target.value=""; } }
-async function toggleSingleStatus(code,st){ if(!confirm("تأكيد؟")) return; const {error}=await supabaseClient.from("certificates").update({status:st}).eq("org_id",currentOrgSlug).eq("cert_code",code); if(error){alert(error.message);return} await fetchCertificates(); }
-async function bulkUpdateStatus(st){ const codes=[...selectedCodes]; if(!codes.length) return; if(!confirm(`تحديث ${codes.length}?`)) return; const {error}=await supabaseClient.from("certificates").update({status:st}).eq("org_id",currentOrgSlug).in("cert_code",codes); if(error){alert(error.message);return} selectedCodes.clear(); await fetchCertificates(); }
-async function bulkDelete(){ const codes=[...selectedCodes]; if(!codes.length) return; if(!confirm(`حذف ${codes.length}؟`)) return; const {error}=await supabaseClient.from("certificates").delete().eq("org_id",currentOrgSlug).in("cert_code",codes); if(error){alert(error.message);return} selectedCodes.clear(); await fetchCertificates(); }
-function bulkShareLinks(){ const l=[...selectedCodes].map(c=>getVerifyUrl(c)).join("\n"); navigator.clipboard.writeText(l).then(()=>alert("تم النسخ")); }
-async function openQRModal(code){ const c=allCertificates.find(x=>x.cert_code===code); if(!c) return; currentCertForRender=c; currentQRCodeString=code; $("qr-student-name").textContent=c.full_name||""; $("qr-course-name").textContent=isSchool()?`${c.student_class||""} - ${c.final_grade||""}/${c.total_grade||""} ${c.grade_label||""}`:c.course_name||""; $("qr-org-name").textContent=currentOrg.name_ar||""; $("qr-code-text").textContent=code; const box=$("qrcode-box"); box.innerHTML="جاري توليد QR..."; try{ const blob=await drawQR(code); currentQRBlob=blob; box.innerHTML=`<img src="${URL.createObjectURL(blob)}" class="w-[170px] h-[170px]">`; }catch(e){ box.textContent="خطأ: "+e.message; } $("qr-modal").classList.remove("hidden"); }
-function downloadQRImage(){ if(!currentQRBlob) return; const a=document.createElement("a"); a.href=URL.createObjectURL(currentQRBlob); a.download=`SONAA-QR-${currentQRCodeString}.png`; a.click(); }
+function toggleSelectAll(cb){
+  const s = (currentPage-1)*rowsPerPage;
+  filteredCertificates.slice(s,s+rowsPerPage).forEach(c=>{ if(cb.checked) selectedCodes.add(c.cert_code); else selectedCodes.delete(c.cert_code); });
+  updateSelectionUI(); renderTable();
+}
+function updateSelectionUI(){
+  const n = selectedCodes.size;
+  $("stat-selected").textContent = n;
+  $("bulk-count").textContent = n;
+  $("bulk-actions-bar").classList.toggle("hidden", n===0);
+  const sp = $("selected-for-print");
+  if(sp) sp.textContent = n+" شهادة";
+}
+function openAddModal(){
+  if(currentCredits<=0){ alert("🚫 الرصيد نفد"); requestTopUp(); return; }
+  $("modal-title").textContent = "إصدار شهادة فردية";
+  $("edit-cert-id").value = "";
+  $("f-name").value = ""; $("f-name-en").value = "";
+  if($("f-course")) $("f-course").value = "";
+  if($("f-branch")) $("f-branch").value = "";
+  if($("f-from")) $("f-from").value = "";
+  if($("f-to")) $("f-to").value = "";
+  if($("f-hours")) $("f-hours").value = "";
+  if($("f-class")) $("f-class").value = "";
+  if($("f-final-grade")) $("f-final-grade").value = "";
+  if($("f-total-grade")) $("f-total-grade").value = "300";
+  if($("f-grade-label")) $("f-grade-label").value = "";
+  $("f-code").value = generateCertCode();
+  $("f-code").readOnly = false;
+  $("cert-modal").classList.remove("hidden");
+}
+function openEditModal(code){
+  const c = allCertificates.find(x=>x.cert_code===code);
+  if(!c) return;
+  $("modal-title").textContent = "تعديل بيانات الشهادة";
+  $("edit-cert-id").value = c.cert_code;
+  $("f-name").value = c.full_name||"";
+  $("f-name-en").value = c.full_name_en||"";
+  if($("f-course")) $("f-course").value = c.course_name||"";
+  if($("f-branch")) $("f-branch").value = c.branch||"";
+  if($("f-from")) $("f-from").value = c.date_from||"";
+  if($("f-to")) $("f-to").value = c.date_to||"";
+  if($("f-hours")) $("f-hours").value = c.hours??"";
+  if($("f-class")) $("f-class").value = c.student_class||"";
+  if($("f-final-grade")) $("f-final-grade").value = c.final_grade||"";
+  if($("f-total-grade")) $("f-total-grade").value = c.total_grade||"300";
+  if($("f-grade-label")) $("f-grade-label").value = c.grade_label||"";
+  $("f-code").value = c.cert_code;
+  $("f-code").readOnly = true;
+  $("cert-modal").classList.remove("hidden");
+}
+function closeCertModal(){ $("cert-modal").classList.add("hidden"); $("f-code").readOnly = false; }
+async function saveCertificate(e){
+  e.preventDefault();
+  if(!$("edit-cert-id").value && currentCredits<=0){ alert("🚫 الرصيد نفد"); requestTopUp(); return; }
+  const old = $("edit-cert-id").value;
+  let p = {full_name:$("f-name").value.trim(), full_name_en:$("f-name-en").value.trim()};
+  if(isSchool()){
+    p.student_class = $("f-class").value.trim();
+    p.final_grade = $("f-final-grade").value.trim();
+    p.total_grade = $("f-total-grade").value.trim()||"300";
+    p.grade_label = calcGradeLabel(p.final_grade, p.total_grade);
+    p.course_name = p.student_class;
+    if(!p.full_name||!p.student_class||!p.final_grade){ alert("أدخل الاسم والفصل والدرجة"); return; }
+  } else {
+    p.course_name = $("f-course").value.trim();
+    p.branch = $("f-branch").value.trim();
+    p.date_from = $("f-from").value||null;
+    p.date_to = $("f-to").value||null;
+    p.hours = $("f-hours").value?Number($("f-hours").value):null;
+    if(!p.full_name||!p.course_name){ alert("أدخل الاسم والبرنامج"); return; }
+  }
+  const btn = $("save-cert-btn");
+  btn.disabled = true;
+  try{
+    let r;
+    if(old){
+      r = await supabaseClient.from("certificates").update(p).eq("org_id",currentOrgSlug).eq("cert_code",old);
+    } else {
+      p.cert_code = $("f-code").value.trim()||generateCertCode();
+      p.org_id = currentOrgSlug;
+      p.status = "valid";
+      r = await supabaseClient.from("certificates").insert([p]);
+      if(r.error && r.error.message.includes("CREDIT_EXHAUSTED")){ alert("🚫 الرصيد نفد - اشحن"); requestTopUp(); return; }
+    }
+    if(r.error) throw r.error;
+    closeCertModal();
+    await fetchCertificates();
+    await loadOrgCredits();
+    alert("تم الحفظ بنجاح" + (p.grade_label ? " - التقدير: " + p.grade_label : ""));
+  }catch(err){ alert("تعذر الحفظ: "+err.message); }
+  finally{ btn.disabled = false; }
+}
+
+// ================= EXCEL =================
+function downloadExcelTemplate(){
+  let s,f;
+  if(isSchool()){
+    s=[{"الاسم_بالعربي":"احمد محمد","الاسم_بالانجليزي":"AHMED","الفصل":"الثامن - أ","الدرجة_النهائية":150,"الدرجة_الكلية":300}];
+    f="School_Template.xlsx";
+  } else {
+    s=[{"الاسم_بالعربي":"اسم المتدرب","الاسم_بالانجليزي":"NAME","البرنامج_التدريبي":"الاسعافات","الفرع":"كوستي","تاريخ_البداية":"2026-01-10","تاريخ_النهاية":"2026-01-15","عدد_الساعات":30}];
+    f="SONAA_Template.xlsx";
+  }
+  const ws = XLSX.utils.json_to_sheet(s);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"الشهادات");
+  XLSX.writeFile(wb,f);
+}
+function excelDate(v){
+  if(!v) return null;
+  if(typeof v==="number"){
+    const d = XLSX.SSF.parse_date_code(v);
+    return d?[d.y,String(d.m).padStart(2,"0"),String(d.d).padStart(2,"0")].join("-"):null;
+  }
+  const s = String(v).trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(s)?s:null;
+}
+async function handleExcelUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  try{
+    const buf = await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsArrayBuffer(file); });
+    const wb = XLSX.read(buf,{type:"array"});
+    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+    if(!rows.length) throw new Error("ملف فارغ");
+    let recs;
+    if(isSchool()){
+      recs = rows.map(row=>{
+        const fg = String(row["الدرجة_النهائية"]||"").trim();
+        const tg = String(row["الدرجة_الكلية"]||"300").trim();
+        return {cert_code:String(row["الرقم_المرجعي_اختياري"]||"").trim()||generateCertCode(),org_id:currentOrgSlug,full_name:String(row["الاسم_بالعربي"]||"").trim(),full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(),student_class:String(row["الفصل"]||"").trim(),final_grade:fg,total_grade:tg,grade_label:calcGradeLabel(fg,tg),course_name:String(row["الفصل"]||"").trim(),status:"valid"};
+      }).filter(r=>r.full_name&&r.student_class&&r.final_grade);
+    } else {
+      recs = rows.map(row=>({cert_code:String(row["الرقم_المرجعي_اختياري"]||"").trim()||generateCertCode(),org_id:currentOrgSlug,full_name:String(row["الاسم_بالعربي"]||"").trim(),full_name_en:String(row["الاسم_بالانجليزي"]||"").trim(),course_name:String(row["البرنامج_التدريبي"]||"").trim(),branch:String(row["الفرع"]||"").trim(),date_from:excelDate(row["تاريخ_البداية"]),date_to:excelDate(row["تاريخ_النهاية"]),hours:row["عدد_الساعات"]?Number(row["عدد_الساعات"]):null,status:"valid"})).filter(r=>r.full_name&&r.course_name);
+    }
+    if(!recs.length) throw new Error("لا سجلات مكتملة");
+    if(recs.length>currentCredits){ alert(`عندك ${currentCredits} رصيد بس - والملف فيهو ${recs.length} - اشحن اول`); requestTopUp(); return; }
+    $("upload-modal").classList.remove("hidden");
+    for(let i=0;i<recs.length;i+=100){
+      const ch = recs.slice(i,i+100);
+      $("upload-status-text").textContent = `رفع ${Math.min(i+100,recs.length)}/${recs.length}`;
+      const {error} = await supabaseClient.from("certificates").insert(ch);
+      if(error) throw error;
+      $("upload-progress-bar").style.width = Math.round(Math.min(i+100,recs.length)/recs.length*100)+"%";
+    }
+    $("upload-modal").classList.add("hidden");
+    e.target.value = "";
+    await fetchCertificates();
+    await loadOrgCredits();
+    alert(`تم استيراد ${recs.length} - التقديرات اتحسبت اوتوماتيك`);
+  }catch(err){
+    $("upload-modal").classList.add("hidden");
+    if(String(err.message).includes("CREDIT_EXHAUSTED")){ alert("🚫 الرصيد نفد في النص - اشحن"); requestTopUp(); }
+    else alert("فشل: "+err.message);
+    e.target.value = "";
+  }
+}
+async function toggleSingleStatus(code,st){
+  if(!confirm("تأكيد؟")) return;
+  const {error} = await supabaseClient.from("certificates").update({status:st}).eq("org_id",currentOrgSlug).eq("cert_code",code);
+  if(error){ alert(error.message); return; }
+  await fetchCertificates();
+}
+async function bulkUpdateStatus(st){
+  const codes = [...selectedCodes];
+  if(!codes.length) return;
+  if(!confirm(`تحديث ${codes.length}?`)) return;
+  const {error} = await supabaseClient.from("certificates").update({status:st}).eq("org_id",currentOrgSlug).in("cert_code",codes);
+  if(error){ alert(error.message); return; }
+  selectedCodes.clear();
+  await fetchCertificates();
+}
+async function bulkDelete(){
+  const codes = [...selectedCodes];
+  if(!codes.length) return;
+  if(!confirm(`حذف ${codes.length}؟`)) return;
+  const {error} = await supabaseClient.from("certificates").delete().eq("org_id",currentOrgSlug).in("cert_code",codes);
+  if(error){ alert(error.message); return; }
+  selectedCodes.clear();
+  await fetchCertificates();
+}
+function bulkShareLinks(){
+  const l = [...selectedCodes].map(c=>getVerifyUrl(c)).join("\n");
+  navigator.clipboard.writeText(l).then(()=>alert("تم النسخ"));
+}
+
+// ================= QR MODAL =================
+async function openQRModal(code){
+  const c = allCertificates.find(x=>x.cert_code===code);
+  if(!c) return;
+  currentCertForRender = c;
+  currentQRCodeString = code;
+  $("qr-student-name").textContent = c.full_name||"";
+  $("qr-course-name").textContent = isSchool()?`${c.student_class||""} - ${c.final_grade||""}/${c.total_grade||""} ${c.grade_label||""}`:c.course_name||"";
+  $("qr-org-name").textContent = currentOrg.name_ar||"";
+  $("qr-code-text").textContent = code;
+  const box = $("qrcode-box");
+  box.innerHTML = "جاري توليد QR...";
+  try{
+    const blob = await drawQR(code);
+    currentQRBlob = blob;
+    box.innerHTML = `<img src="${URL.createObjectURL(blob)}" class="w-[170px] h-[170px]">`;
+  }catch(e){ box.textContent = "خطأ: "+e.message; }
+  $("qr-modal").classList.remove("hidden");
+}
+function downloadQRImage(){
+  if(!currentQRBlob) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(currentQRBlob);
+  a.download = `SONAA-QR-${currentQRCodeString}.png`;
+  a.click();
+}
 function shareQRWhatsApp(){ window.open(`https://wa.me/?text=${encodeURIComponent("تحقق: "+getVerifyUrl(currentQRCodeString))}`,"_blank"); }
-function shareWhatsApp(code){ const c=allCertificates.find(x=>x.cert_code===code); window.open(`https://wa.me/?text=${encodeURIComponent(`شهادة ${c?.full_name}\n${getVerifyUrl(code)}`)}`,"_blank"); }
-async function downloadFullCertificateLight(){ const cert=currentCertForRender; if(!cert) return; const cv=document.createElement("canvas"); cv.width=1240; cv.height=875; const ctx=cv.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,1240,875); const col=currentOrg.primary_color||"#d4af62"; ctx.fillStyle="#07172f"; ctx.fillRect(0,0,1240,130); ctx.fillStyle="#ead49a"; ctx.textAlign="center"; ctx.font="900 36px Cairo"; ctx.fillText(currentOrg.name_ar||"",620,80); ctx.fillStyle="#111"; ctx.font="900 52px Cairo"; ctx.fillText(cert.full_name||"",620,350); ctx.font="800 32px Cairo"; ctx.fillStyle=col; if(isSchool()){ ctx.fillText(cert.student_class||"",620,430); ctx.font="900 48px Cairo"; ctx.fillText(`${cert.final_grade||""} / ${cert.total_grade||""} - ${cert.grade_label||""}`,620,510); }else{ ctx.fillText(cert.course_name||"",620,430); } const qc=await makeQRCanvas(cert.cert_code); if(qc) ctx.drawImage(qc,980,615,180,180); ctx.font="700 18px monospace"; ctx.fillStyle="#111"; ctx.fillText(cert.cert_code,1070,825); const a=document.createElement("a"); a.href=cv.toDataURL("image/png"); a.download=`CERT-${cert.cert_code}.png`; a.click(); }
-async function downloadAllQRZip(){ const list=selectedCodes.size?allCertificates.filter(c=>selectedCodes.has(c.cert_code)):allCertificates.slice(0,200); if(!list.length){alert("لا يوجد");return} const zip=new JSZip(); const folder=zip.folder("SONAA-QR-CODES"); for(let i=0;i<list.length;i++){ const cert=list[i]; const blob=await drawQR(cert.cert_code); folder.file(`SONAA-QR-${safeFileName(cert.cert_code)}-${i}.png`, blob); } const b=await zip.generateAsync({type:"blob", compression:"DEFLATE"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=`SONAA-QR-${list.length}.zip`; a.click(); }
-function getCurrentConfig(){ return {nameX:parseInt($("cfg-nameX")?.value||500),nameY:parseInt($("cfg-nameY")?.value||320),subY:parseInt($("cfg-subY")?.value||380),fontSize:parseInt($("cfg-fontSize")?.value||38),fontColor:$("cfg-fontColor")?.value||"#111827",qrX:parseInt($("cfg-qrX")?.value||830),qrY:parseInt($("cfg-qrY")?.value||480),qrSize:parseInt($("cfg-qrSize")?.value||130),codeY:parseInt($("cfg-codeY")?.value||630)}; }
-function drawEmptyCanvas(){ const cv=$("cert-canvas"); if(!cv) return; const ctx=cv.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,1000,700); ctx.strokeStyle="#e2e8f0"; ctx.strokeRect(20,20,960,660); ctx.fillStyle="#94a3b8"; ctx.font="700 20px Cairo"; ctx.textAlign="center"; ctx.fillText("دوس 'تحديث المعاينة' لعرض الشهادة",500,350); }
-async function loadOrgTemplates(){ try{ const {data}=await supabaseClient.from("organizations").select("template_url, template_config").eq("slug",currentOrgSlug).single(); if(data?.template_url && data.template_url.length<50000) activeTemplateUrl=data.template_url; else activeTemplateUrl=""; let cfgs=data?.template_config||{}; if(Array.isArray(cfgs.templates) && cfgs.templates.length){ allTemplates=cfgs.templates.filter(t=>!t.url || t.url.length<50000); } else if(cfgs.nameX){ allTemplates=[{id:"default",name:"القالب الافتراضي",url:activeTemplateUrl,config:cfgs}]; } else { allTemplates=[{id:"default",name:"القالب الافتراضي",url:activeTemplateUrl,config:getCurrentConfig()}]; } if(!activeTemplateId) activeTemplateId=allTemplates[0].id; const active=allTemplates.find(t=>t.id===activeTemplateId)||allTemplates[0]; if(active){ activeTemplateUrl=active.url||""; const c=active.config||getCurrentConfig(); if(c.nameX){ $("cfg-nameX").value=c.nameX; $("cfg-nameY").value=c.nameY; $("cfg-fontSize").value=c.fontSize; $("cfg-fontColor").value=c.fontColor; $("cfg-qrX").value=c.qrX; $("cfg-qrY").value=c.qrY; $("cfg-qrSize").value=c.qrSize; if(c.subY) $("cfg-subY").value=c.subY; if(c.codeY) $("cfg-codeY").value=c.codeY; } } renderTemplatesList(); }catch(e){ allTemplates=[{id:"default",name:"قالب افتراضي",url:"",config:getCurrentConfig()}]; renderTemplatesList(); } }
-function renderTemplatesList(){ const box=$("templates-list-studio"); if(!box) return; box.innerHTML=allTemplates.map(t=>`<div class="flex items-center gap-1 bg-white border rounded-xl p-1 ${t.id===activeTemplateId?'border-amber-500 ring-2 ring-amber-200':'border-slate-200'}"><button onclick="chooseTemplate('${t.id}')" class="px-2.5 py-1 text-xs font-black ${t.id===activeTemplateId?'text-slate-900':'text-slate-500'}">${escapeHTML(t.name)}</button><button onclick="deleteTemplate('${t.id}')" class="text-rose-500 w-6 h-6 rounded-lg text-xs font-black">×</button></div>`).join("")||"<p class='text-xs text-slate-400'>لا توجد قوالب</p>"; }
-function chooseTemplate(id){ const t=allTemplates.find(x=>x.id===id); if(!t) return; activeTemplateId=id; activeTemplateUrl=t.url||""; const c=t.config||{}; if(c.nameX){ $("cfg-nameX").value=c.nameX; $("cfg-nameY").value=c.nameY; $("cfg-fontSize").value=c.fontSize; $("cfg-fontColor").value=c.fontColor; $("cfg-qrX").value=c.qrX; $("cfg-qrY").value=c.qrY; $("cfg-qrSize").value=c.qrSize; if(c.subY) $("cfg-subY").value=c.subY; if(c.codeY) $("cfg-codeY").value=c.codeY; } renderTemplatesList(); renderPreviewCert(); }
-function selectPresetTemplate(){ const v=$("preset-templates").value; if(v){ activeTemplateUrl=v; renderPreviewCert(); } }
-async function uploadTemplateToSupabase(e){ const f=e.target.files[0]; if(!f) return; if(f.size>800000){ alert("الصورة كبيرة - اختار صورة اقل من 800KB"); return; } const st=$("upload-status"); st.classList.remove("hidden"); st.textContent="جاري تجهيز القالب..."; try{ const du=await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); }); activeTemplateUrl=du; st.textContent="✅ تم تجهيز القالب - دوس حفظ كقالب"; renderPreviewCert(); }catch(err){ st.textContent="خطأ: "+err.message; } }
-function pickPositionOnCanvas(e){ const cv=$("cert-canvas"); const rc=cv.getBoundingClientRect(); const x=Math.round((e.clientX-rc.left)*(cv.width/rc.width)); const y=Math.round((e.clientY-rc.top)*(cv.height/rc.height)); const tg=document.querySelector('input[name="clickTarget"]:checked')?.value; if(tg==='name'){ $("cfg-nameX").value=x; $("cfg-nameY").value=y; $("cfg-subY").value=y+60; }else{ $("cfg-qrX").value=x; $("cfg-qrY").value=y; $("cfg-codeY").value=y+parseInt($("cfg-qrSize").value||130)+25; } renderPreviewCert(); }
-async function drawCertificateOnCanvas(canvas,cert,url,cfg){ const ctx=canvas.getContext("2d"); ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="#fff"; ctx.fillRect(0,0,canvas.width,canvas.height); if(url){ try{ const bg=new Image(); bg.crossOrigin="anonymous"; await new Promise(res=>{ bg.onload=res; bg.onerror=res; bg.src=url; setTimeout(res,1200); }); if(bg.complete&&bg.naturalWidth) ctx.drawImage(bg,0,0,canvas.width,canvas.height); }catch(e){} } else { ctx.fillStyle="#FFFDF9"; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.strokeStyle="#d4af62"; ctx.lineWidth=8; ctx.strokeRect(20,20,960,660); ctx.fillStyle="#07172f"; ctx.font="900 28px Cairo"; ctx.textAlign="center"; ctx.fillText(currentOrg?.name_ar||"SONAA VERIFY",500,90); } ctx.font=`900 ${cfg.fontSize}px Cairo, sans-serif`; ctx.fillStyle=cfg.fontColor; ctx.textAlign="center"; ctx.fillText(cert.full_name||"",cfg.nameX,cfg.nameY); const sub=isSchool()?`${cert.student_class||""} - ${cert.final_grade||""}/${cert.total_grade||""} ${cert.grade_label||""}`:(cert.course_name||""); if(sub){ ctx.font=`700 ${Math.max(20,cfg.fontSize-12)}px Cairo`; ctx.fillText(sub,cfg.nameX,cfg.subY||cfg.nameY+60); } try{ const qc=await makeQRCanvas(cert.cert_code); if(qc) ctx.drawImage(qc,cfg.qrX,cfg.qrY,cfg.qrSize,cfg.qrSize); }catch(e){} ctx.font=`700 16px monospace`; ctx.fillStyle="#111"; ctx.textAlign="center"; ctx.fillText(cert.cert_code,cfg.qrX+cfg.qrSize/2,cfg.codeY||cfg.qrY+cfg.qrSize+25); return canvas; }
-async function renderPreviewCert(n,c){ if(isRendering) return; isRendering=true; try{ if(n) currentPreviewStudent=n; if(c) currentPreviewCode=c; const fake={full_name:currentPreviewStudent,cert_code:currentPreviewCode,student_class:"الصف الثامن - أ",final_grade:"278",total_grade:"300",grade_label:"ممتاز",course_name:"الإسعافات الأولية"}; const cv=$("cert-canvas"); if(cv) await drawCertificateOnCanvas(cv,fake,activeTemplateUrl,getCurrentConfig()); }finally{ isRendering=false; } }
-async function saveCurrentAsNewTemplate(){ const name=$("new-template-name").value.trim()||"قالب "+(allTemplates.length+1); const cfg=getCurrentConfig(); const id="tpl_"+Date.now(); if(activeTemplateUrl.length>50000){ alert("القالب تقيل - ارفع صورة اصغر"); return; } allTemplates.push({id,name,url:activeTemplateUrl,config:cfg}); activeTemplateId=id; const {error}=await supabaseClient.from("organizations").update({template_url:activeTemplateUrl,template_config:{templates:allTemplates,...cfg}}).eq("slug",currentOrgSlug); if(error) alert("خطأ: "+error.message); else { alert("✅ اتحفظ قالب "+name); $("new-template-name").value=""; renderTemplatesList(); } }
-async function saveTemplateSettings(){ const cfg=getCurrentConfig(); const t=allTemplates.find(x=>x.id===activeTemplateId); if(t){ t.url=activeTemplateUrl; t.config=cfg; } const {error}=await supabaseClient.from("organizations").update({template_url:activeTemplateUrl,template_config:{templates:allTemplates,...cfg}}).eq("slug",currentOrgSlug); if(error) alert("خطأ: "+error.message); else alert("✅ اتحفظت احداثيات القالب"); renderTemplatesList(); }
-async function deleteTemplate(id){ if(!confirm("حذف القالب ده؟")) return; allTemplates=allTemplates.filter(t=>t.id!==id); if(activeTemplateId===id) activeTemplateId=allTemplates[0]?.id||null; const {error}=await supabaseClient.from("organizations").update({template_config:{templates:allTemplates,...getCurrentConfig()}}).eq("slug",currentOrgSlug); if(error) alert(error.message); else renderTemplatesList(); }
-function previewSingleCert(code){ const c=allCertificates.find(x=>x.cert_code===code); if(!c) return; switchTab('studio'); renderPreviewCert(c.full_name,c.cert_code); }
-async function downloadSelectedAsZip(){ const list=selectedCodes.size?allCertificates.filter(c=>selectedCodes.has(c.cert_code)):allCertificates.slice(0,20); if(!list.length){alert("حدد ناس اول");return} const cfg=getCurrentConfig(); const zip=new JSZip(); for(let cert of list){ const cv=document.createElement("canvas"); cv.width=1000; cv.height=700; await drawCertificateOnCanvas(cv,cert,activeTemplateUrl,cfg); zip.file(`${safeFileName(cert.full_name)}-${safeFileName(cert.cert_code)}.png`,cv.toDataURL("image/png").split(",")[1],{base64:true}); } const b=await zip.generateAsync({type:"blob"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=`SONAA-${currentOrgSlug}-${list.length}-CERTS.zip`; a.click(); }
-async function printSelectedCertificates(){ const list=selectedCodes.size?allCertificates.filter(c=>selectedCodes.has(c.cert_code)):allCertificates.slice(0,20); if(!list.length){alert("حدد ناس اول");return} const cfg=getCurrentConfig(); const w=window.open("","_blank"); w.document.write(`<html dir="rtl"><head><title>طباعة</title><style>@media print{.page{page-break-after:always}} .page{width:1000px;height:700px;margin:0 auto} img{width:100%}</style></head><body>`); for(let cert of list){ const cv=document.createElement("canvas"); cv.width=1000; cv.height=700; await drawCertificateOnCanvas(cv,cert,activeTemplateUrl,cfg); w.document.write(`<div class="page"><img src="${cv.toDataURL("image/png")}"></div>`); } w.document.write(`</body></html>`); w.document.close(); setTimeout(()=>w.print(),900); }
+function shareWhatsApp(code){
+  const c = allCertificates.find(x=>x.cert_code===code);
+  window.open(`https://wa.me/?text=${encodeURIComponent(`شهادة ${c?.full_name}\n${getVerifyUrl(code)}`)}`,"_blank");
+}
+async function downloadFullCertificateLight(){
+  const cert = currentCertForRender;
+  if(!cert) return;
+  const cv = document.createElement("canvas");
+  cv.width = 1240; cv.height = 875;
+  const ctx = cv.getContext("2d");
+  ctx.fillStyle = "#fff"; ctx.fillRect(0,0,1240,875);
+  const col = currentOrg.primary_color||"#d4af62";
+  ctx.fillStyle = "#07172f"; ctx.fillRect(0,0,1240,130);
+  ctx.fillStyle = "#ead49a"; ctx.textAlign = "center"; ctx.font = "900 36px Cairo"; ctx.fillText(currentOrg.name_ar||"",620,80);
+  ctx.fillStyle = "#111"; ctx.font = "900 52px Cairo"; ctx.fillText(cert.full_name||"",620,350);
+  ctx.font = "800 32px Cairo"; ctx.fillStyle = col;
+  if(isSchool()){ ctx.fillText(cert.student_class||"",620,430); ctx.font = "900 48px Cairo"; ctx.fillText(`${cert.final_grade||""} / ${cert.total_grade||""} - ${cert.grade_label||""}`,620,510); }
+  else{ ctx.fillText(cert.course_name||"",620,430); }
+  const qc = await makeQRCanvas(cert.cert_code);
+  if(qc) ctx.drawImage(qc,980,615,180,180);
+  ctx.font = "700 18px monospace"; ctx.fillStyle = "#111"; ctx.fillText(cert.cert_code,1070,825);
+  const a = document.createElement("a");
+  a.href = cv.toDataURL("image/png");
+  a.download = `CERT-${cert.cert_code}.png`;
+  a.click();
+}
+async function downloadAllQRZip(){
+  const list = selectedCodes.size ? allCertificates.filter(c=>selectedCodes.has(c.cert_code)) : allCertificates.slice(0,200);
+  if(!list.length){ alert("لا يوجد"); return; }
+  const zip = new JSZip();
+  const folder = zip.folder("SONAA-QR-CODES");
+  for(let i=0;i<list.length;i++){
+    const cert = list[i];
+    const blob = await drawQR(cert.cert_code);
+    folder.file(`SONAA-QR-${safeFileName(cert.cert_code)}-${i}.png`, blob);
+  }
+  const b = await zip.generateAsync({type:"blob", compression:"DEFLATE"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(b);
+  a.download = `SONAA-QR-${list.length}.zip`;
+  a.click();
+}
+
+// ================= STUDIO =================
+function getCurrentConfig(){
+  return {
+    nameX:parseInt($("cfg-nameX")?.value||500),
+    nameY:parseInt($("cfg-nameY")?.value||320),
+    subY:parseInt($("cfg-subY")?.value||380),
+    fontSize:parseInt($("cfg-fontSize")?.value||38),
+    fontColor:$("cfg-fontColor")?.value||"#111827",
+    qrX:parseInt($("cfg-qrX")?.value||830),
+    qrY:parseInt($("cfg-qrY")?.value||480),
+    qrSize:parseInt($("cfg-qrSize")?.value||130),
+    codeY:parseInt($("cfg-codeY")?.value||630)
+  };
+}
+function drawEmptyCanvas(){
+  const cv = $("cert-canvas");
+  if(!cv) return;
+  const ctx = cv.getContext("2d");
+  ctx.fillStyle = "#fff"; ctx.fillRect(0,0,1000,700);
+  ctx.strokeStyle = "#e2e8f0"; ctx.strokeRect(20,20,960,660);
+  ctx.fillStyle = "#94a3b8"; ctx.font = "700 20px Cairo"; ctx.textAlign = "center";
+  ctx.fillText("دوس 'تحديث المعاينة' لعرض الشهادة",500,350);
+}
+async function loadOrgTemplates(){
+  try{
+    const {data} = await supabaseClient.from("organizations").select("template_url, template_config").eq("slug",currentOrgSlug).single();
+    if(data?.template_url && data.template_url.length<50000) activeTemplateUrl = data.template_url;
+    else activeTemplateUrl = "";
+    let cfgs = data?.template_config||{};
+    if(Array.isArray(cfgs.templates) && cfgs.templates.length){
+      allTemplates = cfgs.templates.filter(t=>!t.url || t.url.length<50000);
+    } else if(cfgs.nameX){
+      allTemplates = [{id:"default",name:"القالب الافتراضي",url:activeTemplateUrl,config:cfgs}];
+    } else {
+      allTemplates = [{id:"default",name:"القالب الافتراضي",url:activeTemplateUrl,config:getCurrentConfig()}];
+    }
+    if(!activeTemplateId) activeTemplateId = allTemplates[0].id;
+    const active = allTemplates.find(t=>t.id===activeTemplateId)||allTemplates[0];
+    if(active){
+      activeTemplateUrl = active.url||"";
+      const c = active.config||getCurrentConfig();
+      if(c.nameX){
+        $("cfg-nameX").value = c.nameX;
+        $("cfg-nameY").value = c.nameY;
+        $("cfg-fontSize").value = c.fontSize;
+        $("cfg-fontColor").value = c.fontColor;
+        $("cfg-qrX").value = c.qrX;
+        $("cfg-qrY").value = c.qrY;
+        $("cfg-qrSize").value = c.qrSize;
+        if(c.subY) $("cfg-subY").value = c.subY;
+        if(c.codeY) $("cfg-codeY").value = c.codeY;
+      }
+    }
+    renderTemplatesList();
+  }catch(e){
+    allTemplates = [{id:"default",name:"قالب افتراضي",url:"",config:getCurrentConfig()}];
+    renderTemplatesList();
+  }
+}
+function renderTemplatesList(){
+  const box = $("templates-list-studio");
+  if(!box) return;
+  box.innerHTML = allTemplates.map(t=>`
+    <div class="flex items-center gap-1 bg-white border rounded-xl p-1 ${t.id===activeTemplateId?'border-amber-500 ring-2 ring-amber-200':'border-slate-200'}">
+      <button onclick="chooseTemplate('${t.id}')" class="px-2.5 py-1 text-xs font-black ${t.id===activeTemplateId?'text-slate-900':'text-slate-500'}">${escapeHTML(t.name)}</button>
+      <button onclick="deleteTemplate('${t.id}')" class="text-rose-500 w-6 h-6 rounded-lg text-xs font-black">×</button>
+    </div>
+  `).join("") || "<p class='text-xs text-slate-400'>لا توجد قوالب</p>";
+}
+function chooseTemplate(id){
+  const t = allTemplates.find(x=>x.id===id);
+  if(!t) return;
+  activeTemplateId = id;
+  activeTemplateUrl = t.url||"";
+  const c = t.config||{};
+  if(c.nameX){
+    $("cfg-nameX").value = c.nameX;
+    $("cfg-nameY").value = c.nameY;
+    $("cfg-fontSize").value = c.fontSize;
+    $("cfg-fontColor").value = c.fontColor;
+    $("cfg-qrX").value = c.qrX;
+    $("cfg-qrY").value = c.qrY;
+    $("cfg-qrSize").value = c.qrSize;
+    if(c.subY) $("cfg-subY").value = c.subY;
+    if(c.codeY) $("cfg-codeY").value = c.codeY;
+  }
+  renderTemplatesList();
+  renderPreviewCert();
+}
+function selectPresetTemplate(){
+  const v = $("preset-templates").value;
+  if(v){ activeTemplateUrl = v; renderPreviewCert(); }
+}
+async function uploadTemplateToSupabase(e){
+  const f = e.target.files[0];
+  if(!f) return;
+  if(f.size>800000){ alert("الصورة كبيرة - اختار صورة اقل من 800KB"); return; }
+  const st = $("upload-status");
+  st.classList.remove("hidden");
+  st.textContent = "جاري تجهيز القالب...";
+  try{
+    const du = await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); });
+    activeTemplateUrl = du;
+    st.textContent = "✅ تم تجهيز القالب - دوس حفظ كقالب";
+    renderPreviewCert();
+  }catch(err){ st.textContent = "خطأ: "+err.message; }
+}
+function pickPositionOnCanvas(e){
+  const cv = $("cert-canvas");
+  const rc = cv.getBoundingClientRect();
+  const x = Math.round((e.clientX-rc.left)*(cv.width/rc.width));
+  const y = Math.round((e.clientY-rc.top)*(cv.height/rc.height));
+  const tg = document.querySelector('input[name="clickTarget"]:checked')?.value;
+  if(tg==='name'){
+    $("cfg-nameX").value = x;
+    $("cfg-nameY").value = y;
+    $("cfg-subY").value = y+60;
+  } else {
+    $("cfg-qrX").value = x;
+    $("cfg-qrY").value = y;
+    $("cfg-codeY").value = y+parseInt($("cfg-qrSize").value||130)+25;
+  }
+  renderPreviewCert();
+}
+async function drawCertificateOnCanvas(canvas,cert,url,cfg){
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#fff"; ctx.fillRect(0,0,canvas.width,canvas.height);
+  if(url){
+    try{
+      const bg = new Image();
+      bg.crossOrigin = "anonymous";
+      await new Promise(res=>{ bg.onload=res; bg.onerror=res; bg.src=url; setTimeout(res,1200); });
+      if(bg.complete && bg.naturalWidth) ctx.drawImage(bg,0,0,canvas.width,canvas.height);
+    }catch(e){}
+  } else {
+    ctx.fillStyle = "#FFFDF9"; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle = "#d4af62"; ctx.lineWidth = 8; ctx.strokeRect(20,20,960,660);
+    ctx.fillStyle = "#07172f"; ctx.font = "900 28px Cairo"; ctx.textAlign = "center";
+    ctx.fillText(currentOrg?.name_ar||"SONAA VERIFY",500,90);
+  }
+  ctx.font = `900 ${cfg.fontSize}px Cairo, sans-serif`;
+  ctx.fillStyle = cfg.fontColor;
+  ctx.textAlign = "center";
+  ctx.fillText(cert.full_name||"", cfg.nameX, cfg.nameY);
+  const sub = isSchool() ? `${cert.student_class||""} - ${cert.final_grade||""}/${cert.total_grade||""} ${cert.grade_label||""}` : (cert.course_name||"");
+  if(sub){
+    ctx.font = `700 ${Math.max(20,cfg.fontSize-12)}px Cairo`;
+    ctx.fillText(sub, cfg.nameX, cfg.subY||cfg.nameY+60);
+  }
+  try{
+    const qc = await makeQRCanvas(cert.cert_code);
+    if(qc) ctx.drawImage(qc, cfg.qrX, cfg.qrY, cfg.qrSize, cfg.qrSize);
+  }catch(e){}
+  ctx.font = `700 16px monospace`;
+  ctx.fillStyle = "#111";
+  ctx.textAlign = "center";
+  ctx.fillText(cert.cert_code, cfg.qrX+cfg.qrSize/2, cfg.codeY||cfg.qrY+cfg.qrSize+25);
+  return canvas;
+}
+async function renderPreviewCert(n,c){
+  if(isRendering) return;
+  isRendering = true;
+  try{
+    if(n) currentPreviewStudent = n;
+    if(c) currentPreviewCode = c;
+    const fake = {full_name:currentPreviewStudent, cert_code:currentPreviewCode, student_class:"الصف الثامن - أ", final_grade:"278", total_grade:"300", grade_label:"ممتاز", course_name:"الإسعافات الأولية"};
+    const cv = $("cert-canvas");
+    if(cv) await drawCertificateOnCanvas(cv, fake, activeTemplateUrl, getCurrentConfig());
+  }finally{ isRendering = false; }
+}
+async function saveCurrentAsNewTemplate(){
+  const name = $("new-template-name").value.trim()||"قالب "+(allTemplates.length+1);
+  const cfg = getCurrentConfig();
+  const id = "tpl_"+Date.now();
+  if(activeTemplateUrl.length>50000){ alert("القالب تقيل - ارفع صورة اصغر"); return; }
+  allTemplates.push({id,name,url:activeTemplateUrl,config:cfg});
+  activeTemplateId = id;
+  const {error} = await supabaseClient.from("organizations").update({template_url:activeTemplateUrl,template_config:{templates:allTemplates,...cfg}}).eq("slug",currentOrgSlug);
+  if(error) alert("خطأ: "+error.message);
+  else { alert("✅ اتحفظ قالب "+name); $("new-template-name").value=""; renderTemplatesList(); }
+}
+async function saveTemplateSettings(){
+  const cfg = getCurrentConfig();
+  const t = allTemplates.find(x=>x.id===activeTemplateId);
+  if(t){ t.url = activeTemplateUrl; t.config = cfg; }
+  const {error} = await supabaseClient.from("organizations").update({template_url:activeTemplateUrl,template_config:{templates:allTemplates,...cfg}}).eq("slug",currentOrgSlug);
+  if(error) alert("خطأ: "+error.message);
+  else alert("✅ اتحفظت احداثيات القالب");
+  renderTemplatesList();
+}
+async function deleteTemplate(id){
+  if(!confirm("حذف القالب ده؟")) return;
+  allTemplates = allTemplates.filter(t=>t.id!==id);
+  if(activeTemplateId===id) activeTemplateId = allTemplates[0]?.id||null;
+  const {error} = await supabaseClient.from("organizations").update({template_config:{templates:allTemplates,...getCurrentConfig()}}).eq("slug",currentOrgSlug);
+  if(error) alert(error.message);
+  else renderTemplatesList();
+}
+function previewSingleCert(code){
+  const c = allCertificates.find(x=>x.cert_code===code);
+  if(!c) return;
+  switchTab('studio');
+  renderPreviewCert(c.full_name, c.cert_code);
+}
+async function downloadSelectedAsZip(){
+  const list = selectedCodes.size ? allCertificates.filter(c=>selectedCodes.has(c.cert_code)) : allCertificates.slice(0,20);
+  if(!list.length){ alert("حدد ناس اول"); return; }
+  const cfg = getCurrentConfig();
+  const zip = new JSZip();
+  for(let cert of list){
+    const cv = document.createElement("canvas");
+    cv.width = 1000; cv.height = 700;
+    await drawCertificateOnCanvas(cv, cert, activeTemplateUrl, cfg);
+    zip.file(`${safeFileName(cert.full_name)}-${safeFileName(cert.cert_code)}.png`, cv.toDataURL("image/png").split(",")[1], {base64:true});
+  }
+  const b = await zip.generateAsync({type:"blob"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(b);
+  a.download = `SONAA-${currentOrgSlug}-${list.length}-CERTS.zip`;
+  a.click();
+}
+async function printSelectedCertificates(){
+  const list = selectedCodes.size ? allCertificates.filter(c=>selectedCodes.has(c.cert_code)) : allCertificates.slice(0,20);
+  if(!list.length){ alert("حدد ناس اول"); return; }
+  const cfg = getCurrentConfig();
+  const w = window.open("","_blank");
+  w.document.write(`<html dir="rtl"><head><title>طباعة</title><style>@media print{.page{page-break-after:always}} .page{width:1000px;height:700px;margin:0 auto} img{width:100%}</style></head><body>`);
+  for(let cert of list){
+    const cv = document.createElement("canvas");
+    cv.width = 1000; cv.height = 700;
+    await drawCertificateOnCanvas(cv, cert, activeTemplateUrl, cfg);
+    w.document.write(`<div class="page"><img src="${cv.toDataURL("image/png")}"></div>`);
+  }
+  w.document.write(`</body></html>`);
+  w.document.close();
+  setTimeout(()=>w.print(),900);
+}
 function openOrgsModal(){ if(!isSuperAdmin) return; $("org-modal").classList.remove("hidden"); }
-async function saveNewOrg(){ if(!isSuperAdmin) return; const slug=$("new-org-slug").value.trim().toLowerCase(); const nameAr=$("new-org-name").value.trim(); if(!slug||!nameAr){alert("ادخل slug واسم");return} const {error}=await supabaseClient.from("organizations").insert([{slug,name_ar:nameAr,name_en:$("new-org-en").value.trim(),primary_color:$("new-org-color").value,logo_url:$("new-org-logo").value.trim()||null,org_type:$("new-org-type").value,status:"active",credits:50,template_config:{templates:[]}}]); if(error){alert(error.message);return} $("org-modal").classList.add("hidden"); alert("تمت إضافة "+nameAr+" - 50 رصيد مجاني"); location.reload(); }
-document.getElementById("f-final-grade")?.addEventListener("input",()=>{ const f=$("f-final-grade").value; const t=$("f-total-grade").value||"300"; if($("f-grade-label")) $("f-grade-label").value=calcGradeLabel(f,t); });
-document.getElementById("f-total-grade")?.addEventListener("input",()=>{ const f=$("f-final-grade").value; const t=$("f-total-grade").value||"300"; if($("f-grade-label")) $("f-grade-label").value=calcGradeLabel(f,t); });
-const _cv=$("cert-canvas"); if(_cv){ _cv.addEventListener("mousedown",e=>{isDragging=true; pickPositionOnCanvas(e);}); window.addEventListener("mousemove",e=>{ if(isDragging) pickPositionOnCanvas(e); }); window.addEventListener("mouseup",()=>isDragging=false); _cv.addEventListener("touchstart",e=>{isDragging=true; pickPositionOnCanvas(e.touches[0]);}); _cv.addEventListener("touchmove",e=>{ if(isDragging){ e.preventDefault(); pickPositionOnCanvas(e.touches[0]); }},{passive:false}); _cv.addEventListener("touchend",()=>isDragging=false); }
+async function saveNewOrg(){
+  if(!isSuperAdmin) return;
+  const slug = $("new-org-slug").value.trim().toLowerCase();
+  const nameAr = $("new-org-name").value.trim();
+  if(!slug||!nameAr){ alert("ادخل slug واسم"); return; }
+  const {error} = await supabaseClient.from("organizations").insert([{slug,name_ar:nameAr,name_en:$("new-org-en").value.trim(),primary_color:$("new-org-color").value,logo_url:$("new-org-logo").value.trim()||null,org_type:$("new-org-type").value,status:"active",credits:50,template_config:{templates:[]}}]);
+  if(error){ alert(error.message); return; }
+  $("org-modal").classList.add("hidden");
+  alert("تمت إضافة "+nameAr+" - 50 رصيد مجاني");
+  location.reload();
+}
+
+// ================= LISTENERS =================
+document.getElementById("f-final-grade")?.addEventListener("input",()=>{
+  const f = $("f-final-grade").value;
+  const t = $("f-total-grade").value||"300";
+  if($("f-grade-label")) $("f-grade-label").value = calcGradeLabel(f,t);
+});
+document.getElementById("f-total-grade")?.addEventListener("input",()=>{
+  const f = $("f-final-grade").value;
+  const t = $("f-total-grade").value||"300";
+  if($("f-grade-label")) $("f-grade-label").value = calcGradeLabel(f,t);
+});
+
+const _cv = $("cert-canvas");
+if(_cv){
+  _cv.addEventListener("mousedown", e=>{ isDragging=true; pickPositionOnCanvas(e); });
+  window.addEventListener("mousemove", e=>{ if(isDragging) pickPositionOnCanvas(e); });
+  window.addEventListener("mouseup", ()=> isDragging=false);
+  _cv.addEventListener("touchstart", e=>{ isDragging=true; pickPositionOnCanvas(e.touches[0]); });
+  _cv.addEventListener("touchmove", e=>{ if(isDragging){ e.preventDefault(); pickPositionOnCanvas(e.touches[0]); } }, {passive:false});
+  _cv.addEventListener("touchend", ()=> isDragging=false);
+}
+
 checkSession();
 </script>
 </body>
