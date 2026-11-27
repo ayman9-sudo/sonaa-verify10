@@ -1,25 +1,142 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>تتبع طلبك | SONAA</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"><style>body{font-family:'Cairo';background:#07172f;color:white}input{color:#111 !important}</style></head>
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>تتبع طلبك | SONAA TECH</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet"><style>body{font-family:'Cairo';background:#07172f;color:white}</style></head>
 <body>
-<div class="text-center py-2 text-[12px] font-black" style="background:#d4af62;color:#07172f">SONAA TECH • تتبع طلبك</div>
-<header class="py-3 text-center" style="border-bottom:1px solid rgba(212,175,98,.35)"><a href="index.html"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-12 mx-auto"></a></header>
-<main class="max-w-md mx-auto px-4 py-8">
-<div class="p-6 rounded-2xl" style="background:#0a1d38;border:1px solid rgba(212,175,98,.55)">
-<h1 class="font-black text-center">تتبع حالة طلبك</h1><p class="text-xs text-center mt-1" style="color:#aab6c8">اكتب رقم الطلب ورقم الهاتف - بدون ما تتصل بينا</p>
-<input id="reqNo" placeholder="SONAA-REQ-000125" class="w-full p-3 border rounded-xl mt-4 text-center font-mono">
-<input id="phone" placeholder="رقم الهاتف" class="w-full p-3 border rounded-xl mt-3 text-center">
-<button onclick="track()" class="w-full py-3 rounded-xl font-black mt-3" style="background:#d4af62;color:#07172f">تتبع</button>
-<div id="res" class="mt-4"></div>
-</div></main>
+<div class="text-center py-2 text-[12px] font-black" style="background:#d4af62;color:#07172f">SONAA TECH • تتبع طلب تأسيس مؤسستك • فاتورة + دفع + اتفاقية + تأسيس</div>
+<header class="sticky top-0 z-50 py-2" style="background:rgba(7,23,47,.98);border-bottom:1px solid rgba(212,175,98,.35)"><div class="max-w-7xl mx-auto px-4 flex items-center justify-between"><a href="index.html"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-12"></a><a href="join.html" class="text-xs font-black px-3 py-1.5 rounded-full" style="background:#d4af62;color:#07172f">طلب جديد</a></div></header>
+
+<main class="max-w-xl mx-auto px-4 py-6">
+<div class="p-5 rounded-2xl" style="background:#0a1d38;border:1px solid rgba(212,175,98,.55)">
+<h1 class="font-black text-center text-xl">📦 تتبع طلبك</h1>
+<p class="text-center text-xs font-bold mt-1" style="color:#aab6c8">اكتب رقم الطلب - مثال: SONAA-REQ-2026-125</p>
+<form id="trackForm" class="flex gap-2 mt-4">
+<input id="reqInput" placeholder="SONAA-REQ-2026-..." class="flex-1 p-3.5 border rounded-xl text-black font-mono text-sm" dir="ltr">
+<button class="px-5 py-3 rounded-xl font-black text-sm" style="background:#d4af62;color:#07172f">تتبع</button>
+</form>
+
+<div id="loading" class="hidden text-center py-6 text-sm font-bold" style="color:#aab6c8">جاري البحث...</div>
+<div id="errorBox" class="hidden mt-4 p-4 rounded-xl text-center text-sm font-bold" style="background:#FEF2F2;color:#B91C1C">⚠️ ما لقينا طلب بالرقم ده - تأكد من الرقم - مثال: SONAA-REQ-2026-125</div>
+
+<div id="result" class="hidden mt-4 space-y-3">
+<!-- كارت المؤسسة -->
+<div class="p-4 rounded-xl bg-white text-black">
+<div class="flex justify-between items-start gap-2"><div><div id="rOrg" class="font-black text-lg">--</div><div id="rType" class="text-xs text-gray-500">--</div></div><span id="rStatus" class="text-[11px] font-black px-2 py-1 rounded-full bg-yellow-100 text-yellow-800 whitespace-nowrap">--</span></div>
+<div class="grid grid-cols-2 gap-2 mt-3 text-xs"><div>👤 المدير: <b id="rManager">--</b></div><div>📍 <span id="rLocation">--</span></div><div>📱 <span id="rPhone">--</span></div><div>🔗 <span id="rSlug" class="font-mono">--</span></div></div>
+</div>
+
+<!-- خطوات التأسيس -->
+<div class="p-4 rounded-xl" style="background:#07172f;border:1px solid rgba(212,175,98,.4)">
+<div class="font-black text-sm mb-3" style="color:#ead49a">🛠️ مراحل التأسيس</div>
+<div id="timeline" class="space-y-2 text-sm font-bold"></div>
+</div>
+
+<!-- الفاتورة -->
+<div class="p-4 rounded-xl bg-white text-black">
+<div class="flex justify-between font-black text-sm"><span>🧾 فاتورة التأسيس</span><span id="rInvNo" class="font-mono text-xs">--</span></div>
+<table class="w-full text-xs mt-2">
+<tr class="border-b"><td class="py-1.5">الباقة</td><td class="text-left font-bold" id="rPkg">--</td></tr>
+<tr class="border-b"><td class="py-1.5">المبلغ</td><td class="text-left font-black" id="rAmount">--</td></tr>
+<tr class="border-b"><td class="py-1.5">طريقة الدفع</td><td class="text-left font-bold" id="rPayMethod">--</td></tr>
+<tr class="border-b"><td class="py-1.5">رقم العملية</td><td class="text-left font-mono" id="rPayTxn">--</td></tr>
+<tr><td class="py-1.5">حالة الدفع</td><td class="text-left font-black" id="rPayStatus">--</td></tr>
+</table>
+<div id="payProofWrap" class="hidden mt-3"><div class="text-[11px] font-bold text-gray-500">اشعار الدفع المرفوع:</div><img id="rPayProof" class="w-full rounded-lg border mt-1 max-h-[220px] object-contain bg-gray-50"></div>
+</div>
+
+<!-- الاتفاقية -->
+<div class="p-4 rounded-xl" style="background:rgba(212,175,98,.1);border:1px solid rgba(212,175,98,.5)">
+<div class="font-black text-sm">📜 الاتفاقية الالكترونية</div>
+<div class="text-xs font-bold mt-2 space-y-1" style="color:#aab6c8">
+<div>رقم الاتفاقية: <span id="rAgrNo" class="font-mono text-white">--</span> - الإصدار: <span id="rAgrVer" class="text-white">v1.2</span></div>
+<div>وقّع بواسطة: <span id="rSignedBy" class="text-white">--</span></div>
+<div>تاريخ الموافقة: <span id="rAgrDate" class="text-white">--</span></div>
+<div>تأكيد البريد OTP: <span id="rOtp">--</span></div>
+<div class="text-[11px]">نص الاتفاقية محفوظ في سجل SONAA TECH - يشمل حماية البيانات وعدم بيعها وحدود المسؤولية.</div>
+</div>
+</div>
+
+<div class="flex gap-2">
+<a id="waBtn" class="flex-1 text-center py-3 rounded-xl font-black text-sm text-white" style="background:#25D366">💬 استفسر واتساب</a>
+<a href="join.html" class="flex-1 text-center py-3 rounded-xl font-black text-sm bg-white text-black">طلب جديد</a>
+</div>
+</div>
+</div>
+
+<div class="mt-4 p-4 rounded-xl text-center text-xs font-bold" style="background:#0a1d38;border:1px solid rgba(212,175,98,.3);color:#aab6c8">
+حالات الطلب: <br>
+<span class="text-yellow-300">بانتظار تأكيد الدفع</span> → <span class="text-blue-300">PAYMENT CONFIRMED - PENDING SETUP</span> → <span class="text-purple-300">قيد التأسيس</span> → <span class="text-green-400">نشط ACTIVE</span>
+</div>
+</main>
+
 <script>
-const SUPABASE_URL="https://bjznlnuljvqubscjymjx.supabase.co";const SUPABASE_KEY="sb_publishable_k1Q9BX9gRhHl4Lq9vpOmgQ_-JrZ5pQ6";const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const stages=["جديد","قيد المراجعة","مقبول مبدئياً","بانتظار الدفع","مدفوع","قيد التجهيز","نشط","مرفوض"];
-async function track(){const no=document.getElementById("reqNo").value.trim();const ph=document.getElementById("phone").value.trim();if(!no||!ph){document.getElementById("res").innerHTML="<div class='text-center text-red-300 font-bold text-sm'>اكتب الرقمين</div>";return;}
-const {data}=await sb.from("org_requests").select("*").eq("request_no",no).eq("phone",ph).maybeSingle();
-if(!data){document.getElementById("res").innerHTML="<div class='text-center p-4 rounded-xl bg-red-500/10 border border-red-400 text-red-200 font-bold text-sm'>ما لقينا طلب بالبيانات دي - اتأكد من الرقم والتلفون</div>";return;}
-const idx=stages.indexOf(data.status);
-let html=`<div class="text-center"><div class="font-black">${data.org_name}</div><div class="text-xs" style="color:#aab6c8">${data.org_type} - ${data.org_state} ${data.org_city}</div><div class="mt-3 font-black px-3 py-2 rounded-full text-sm inline-block" style="background:#d4af62;color:#07172f">${data.status}</div></div><div class="mt-4 space-y-2">`;
-stages.forEach((s,i)=>{const done=i<=idx;html+=`<div class="flex items-center gap-2 text-xs font-bold"><div class="w-6 h-6 rounded-full flex items-center justify-center ${done?'text-black':''}" style="background:${done?'#d4af62':'#1e293b'}">${done?'✓':i+1}</div><span style="color:${done?'white':'#64748b'}">${s}</span></div>`});
-html+=`</div><div class="mt-4 p-3 rounded-xl text-xs font-bold text-center" style="background:#07172f">فاتورة: ${data.invoice_amount||0} - رصيد معتمد: ${data.credits_approved||0} شهادة</div>`;
-document.getElementById("res").innerHTML=html;}
-const p=new URLSearchParams(location.search);if(p.get("req")){document.getElementById("reqNo").value=p.get("req");}
-</script></body></html>
+const SUPABASE_URL="https://bjznlnuljvqubscjymjx.supabase.co";
+const SUPABASE_KEY="sb_publishable_k1Q9BX9gRhHl4Lq9vpOmgQ_-JrZ5pQ6";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+async function doTrack(reqNo){
+  document.getElementById("loading").classList.remove("hidden");
+  document.getElementById("errorBox").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  const {data,error}=await supabaseClient.from("org_requests").select("*").eq("request_no",reqNo.trim()).maybeSingle();
+  document.getElementById("loading").classList.add("hidden");
+  if(error||!data){ document.getElementById("errorBox").classList.remove("hidden"); return; }
+
+  document.getElementById("rOrg").textContent=data.org_name||"--";
+  document.getElementById("rType").textContent=(data.org_type||"")+" - "+(data.org_country||"السودان");
+  document.getElementById("rManager").textContent=(data.manager_name||"")+(data.manager_role?" - "+data.manager_role:"");
+  document.getElementById("rLocation").textContent=(data.org_state||"")+" - "+(data.org_city||"");
+  document.getElementById("rPhone").textContent=data.phone||"--";
+  document.getElementById("rSlug").textContent=data.slug||"--";
+  document.getElementById("rStatus").textContent=data.status||"قيد المراجعة";
+  
+  // الوان الحالة
+  const st=data.status||"";
+  const badge=document.getElementById("rStatus");
+  if(st.includes("نشط")||st==="ACTIVE"){ badge.className="text-[11px] font-black px-2 py-1 rounded-full bg-green-100 text-green-800 whitespace-nowrap"; }
+  else if(st.includes("PAYMENT CONFIRMED")){ badge.className="text-[11px] font-black px-2 py-1 rounded-full bg-blue-100 text-blue-800 whitespace-nowrap"; }
+  else if(st.includes("قيد التأسيس")){ badge.className="text-[11px] font-black px-2 py-1 rounded-full bg-purple-100 text-purple-800 whitespace-nowrap"; }
+  else { badge.className="text-[11px] font-black px-2 py-1 rounded-full bg-yellow-100 text-yellow-800 whitespace-nowrap"; }
+
+  // Timeline
+  const steps=[
+    {label:"1. تقديم الطلب + بيانات المؤسسة", done:true},
+    {label:"2. الفاتورة "+(data.invoice_no||""), done:!!data.invoice_no},
+    {label:"3. الدفع "+(data.pay_method||"")+" - "+(data.pay_txn||"")+" - "+(data.payment_status||"بانتظار مراجعة"), done:!!data.pay_txn},
+    {label:"4. الاتفاقية "+(data.agreement_no||"")+" "+(data.agreement_version||"")+" - موافقة "+(data.contract_signed_by||""), done:!!data.agreement_no},
+    {label:"5. التأسيس - لوحة + قالب + QR", done:st.includes("قيد التأسيس")||st.includes("نشط")},
+    {label:"6. التفعيل - ACTIVE", done:st.includes("نشط")||st==="ACTIVE"},
+  ];
+  document.getElementById("timeline").innerHTML=steps.map(s=>`<div class="flex gap-2 items-center"><span>${s.done?"✅":"⏳"}</span><span class="${s.done?"text-white":""}" style="color:${s.done?"white":"#8492a7"}">${s.label}</span></div>`).join("");
+
+  // فاتورة
+  document.getElementById("rInvNo").textContent=data.invoice_no||"--";
+  document.getElementById("rPkg").textContent=data.setup_package||"تأسيس احترافي";
+  document.getElementById("rAmount").textContent=(data.invoice_amount||50)+"$ - USD";
+  document.getElementById("rPayMethod").textContent=data.pay_method||"--";
+  document.getElementById("rPayTxn").textContent=data.pay_txn||"--";
+  document.getElementById("rPayStatus").textContent=data.payment_status||"بانتظار مراجعة مالية";
+  document.getElementById("rPayStatus").style.color=(data.payment_status||"").includes("مؤكد")?"#16a34a":"#d97706";
+  if(data.pay_proof_url && data.pay_proof_url.length>20){
+    document.getElementById("payProofWrap").classList.remove("hidden");
+    document.getElementById("rPayProof").src=data.pay_proof_url;
+  } else {
+    document.getElementById("payProofWrap").classList.add("hidden");
+  }
+
+  // اتفاقية
+  document.getElementById("rAgrNo").textContent=data.agreement_no||"--";
+  document.getElementById("rAgrVer").textContent=data.agreement_version||"v1.2";
+  document.getElementById("rSignedBy").textContent=data.contract_signed_by||data.manager_name||"--";
+  document.getElementById("rAgrDate").textContent=data.agreement_accepted_at?new Date(data.agreement_accepted_at).toLocaleString('ar-SD'):data.contract_date||"--";
+  document.getElementById("rOtp").textContent=data.otp_verified?"✓ تم التأكيد":"✕ لم يتم التأكيد - بانتظار";
+
+  document.getElementById("waBtn").href=`https://wa.me/249914391371?text=${encodeURIComponent("استفسار عن طلب "+data.request_no+" - "+data.org_name)}`;
+
+  document.getElementById("result").classList.remove("hidden");
+}
+
+document.getElementById("trackForm").addEventListener("submit",e=>{e.preventDefault(); const v=document.getElementById("reqInput").value; if(v) doTrack(v);});
+
+// لو جاي من join.html ?req=xxx
+const p=new URLSearchParams(location.search);
+if(p.get("req")){ document.getElementById("reqInput").value=p.get("req"); doTrack(p.get("req")); }
+</script>
+</body></html>
