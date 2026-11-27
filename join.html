@@ -27,7 +27,7 @@
 <button type="button" onclick="goStep(2)" class="w-full py-3.5 rounded-xl font-black" style="background:#d4af62;color:#07172f">التالي - إصدار الفاتورة →</button>
 </div>
 
-<!-- STEP 2 - INVOICE GENERATOR -->
+<!-- STEP 2 - INVOICE -->
 <div id="step2" class="hidden space-y-3">
 <h3 class="font-black text-center">🧾 فاتورة التأسيس - Invoice Generator</h3>
 <div class="grid grid-cols-3 gap-2">
@@ -35,7 +35,6 @@
 <label class="cursor-pointer"><input type="radio" name="setup_pkg" value="50" onchange="calcInvoice()" class="hidden peer" checked><div class="p-3 rounded-xl text-center border bg-white/5 peer-checked:bg-[#d4af62] peer-checked:text-[#07172f]"><div class="font-black text-sm">احترافي ⭐</div><div class="font-black">50$</div><div class="text-[10px]">100 شهادة</div></div></label>
 <label class="cursor-pointer"><input type="radio" name="setup_pkg" value="100" onchange="calcInvoice()" class="hidden peer"><div class="p-3 rounded-xl text-center border bg-white/5 peer-checked:bg-[#d4af62] peer-checked:text-[#07172f]"><div class="font-black text-sm">مؤسسات</div><div class="font-black">100$</div><div class="text-[10px]">500 شهادة</div></div></label>
 </div>
-
 <div class="rounded-xl p-4 bg-white text-black">
 <div class="flex justify-between font-black text-sm"><span>SONAA TECH - فاتورة تأسيس</span><span id="invNo" class="font-mono text-xs">INV-000000</span></div>
 <div class="text-[11px] text-gray-500">تاريخ: <span id="invDate"></span> | العملة: USD - دولار أمريكي</div>
@@ -51,7 +50,7 @@
 <div class="flex gap-2"><button type="button" onclick="goStep(1)" class="flex-1 py-3 rounded-xl bg-white/10 font-bold">← رجوع</button><button type="button" onclick="goStep(3)" class="flex-[2] py-3 rounded-xl font-black" style="background:#d4af62;color:#07172f">انتقل إلى الدفع وإكمال التسجيل →</button></div>
 </div>
 
-<!-- STEP 3 - PAYMENT -->
+<!-- STEP 3 - PAYMENT - بدون OTP -->
 <div id="step3" class="hidden space-y-3">
 <h3 class="font-black text-center">💳 الدفع - Payment Gateway</h3>
 <div class="p-3 rounded-xl text-center text-sm font-bold" style="background:rgba(255,193,7,.1);border:1px solid rgba(212,175,98,.5)">المبلغ المستحق: <span id="payTotal" class="font-black text-lg" style="color:#d4af62">50$</span> - فاتورة <span id="payInvNo" class="font-mono"></span></div>
@@ -64,11 +63,9 @@
 <input id="pay_proof" type="file" accept="image/*,.pdf" class="w-full text-xs text-white p-2 rounded-lg bg-white/10">
 <input id="pay_txn" placeholder="رقم العملية - مثال: 123456789 - الزامي للتحقق" class="w-full p-3 border rounded-xl">
 <div class="p-3 rounded-xl text-[11px] font-bold" style="background:#07172f;border:1px solid rgba(212,175,98,.4)">⚠️ تنبيه: لا نعتمد على صورة الإيصال وحدها كإثبات نهائي - يتم التحقق من العملية مالياً من قبل فريق SONAA TECH قبل التفعيل - أي إيصال مزور يؤدي لإلغاء الطلب نهائياً.</div>
-<!-- OTP -->
-<div class="p-3 rounded-xl" style="background:#07172f;border:1px solid rgba(212,175,98,.4)">
-<div class="flex justify-between items-center"><span class="text-xs font-black">تأكيد البريد - OTP</span><button type="button" onclick="sendOTP()" id="otpBtn" class="text-[11px] px-3 py-1 rounded-full font-black" style="background:#d4af62;color:#07172f">ارسال رمز للبريد</button></div>
-<div class="flex gap-2 mt-2"><input id="otp_input" placeholder="ادخل رمز 6 أرقام" class="flex-1 p-2.5 border rounded-lg text-center font-mono"><button type="button" onclick="verifyOTP()" class="px-4 py-2 rounded-lg bg-green-600 text-white font-black text-xs">تأكيد</button></div>
-<div id="otpStatus" class="text-[11px] mt-1 font-bold" style="color:#aab6c8">لم يتم الارسال بعد - الرمز للتجربة: 123456</div>
+<div class="p-3 rounded-xl flex gap-2 items-center" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3)">
+<span class="text-lg">✓</span>
+<div class="text-[11px] font-bold"><div>بريدك: <span id="showEmail" style="color:#d4af62"></span> - حيصلك تأكيد الطلب والفاتورة من sonaatech.khartoum@gmail.com</div><div style="color:#aab6c8">لو ما لقيتو شوف Spam</div></div>
 </div>
 <div class="flex gap-2"><button type="button" onclick="goStep(2)" class="flex-1 py-3 rounded-xl bg-white/10 font-bold">← رجوع</button><button type="button" onclick="goStep(4)" class="flex-[2] py-3 rounded-xl font-black" style="background:#d4af62;color:#07172f">التالي - الاتفاقية الالكترونية →</button></div>
 </div>
@@ -101,11 +98,11 @@
 </main>
 <script>
 const SUPABASE_URL="https://bjznlnuljvqubscjymjx.supabase.co";const SUPABASE_KEY="sb_publishable_k1Q9BX9gRhHl4Lq9vpOmgQ_-JrZ5pQ6";const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let payMethod="بنكك", otpVerified=false, otpCode="123456";
+let payMethod="بنكك";
 function goStep(n){
   if(n===2 && (!document.getElementById("org_name").value||!document.getElementById("manager_name").value||!document.getElementById("phone").value||!document.getElementById("email").value)){alert("املا بيانات المؤسسة والمدير والهاتف والبريد");return}
-  if(n===3){calcInvoice();}
-  if(n===4){ if(!document.getElementById("pay_proof").files[0]||!document.getElementById("pay_txn").value){alert("لازم ترفع اشعار الدفع ورقم العملية - لا نرسل الطلب كمدفوع الا بعد تأكيد الدفع");return} if(!otpVerified){ if(!confirm("لم تؤكد رمز البريد - هل تريد المتابعة بدون OTP؟ - يفضل التأكيد")) return; } }
+  if(n===3){calcInvoice(); document.getElementById("showEmail").textContent=document.getElementById("email").value;}
+  if(n===4){ if(!document.getElementById("pay_proof").files[0]||!document.getElementById("pay_txn").value){alert("لازم ترفع اشعار الدفع ورقم العملية - لا نرسل الطلب كمدفوع الا بعد تأكيد الدفع");return} }
   ["step1","step2","step3","step4"].forEach(id=>document.getElementById(id).classList.add("hidden"));
   document.getElementById("step"+n).classList.remove("hidden");
   ["s1","s2","s3","s4"].forEach((id,i)=>{const el=document.getElementById(id); if(i===n-1){el.style.background="#d4af62";el.style.color="#07172f"}else{el.style.background="rgba(255,255,255,.1)";el.style.color="white"}});
@@ -130,8 +127,6 @@ function setPay(m){ payMethod=m; document.getElementById("btn-bankak").style.bac
   const amt=document.getElementById("row_total")?.textContent||"50$";
   document.getElementById("payInfo").innerHTML=m==="بنكك"?`حول <b>${amt}</b> - بنكك: <span class="font-mono">3087654</span> - Ayman Mortada - التعليق: ${document.getElementById("invNo").textContent}`:`حول <b>${amt}</b> - فوري: <span class="font-mono">0914391371</span> - SONAA TECH - التعليق: ${document.getElementById("invNo").textContent}`;
 }
-function sendOTP(){ document.getElementById("otpStatus").textContent="تم ارسال رمز 123456 لبريدك (تجريبي) - في النسخة النهائية يرسل عبر Email API"; document.getElementById("otpStatus").style.color="#22c55e"; }
-function verifyOTP(){ const v=document.getElementById("otp_input").value; if(v==="123456"){otpVerified=true; document.getElementById("otpStatus").textContent="✓ تم تأكيد البريد الالكتروني"; document.getElementById("otpStatus").style.color="#22c55e";} else {alert("رمز خاطئ - جرب 123456 للتجربة")} }
 async function toB64(f){return await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.readAsDataURL(f);})}
 document.getElementById("reqForm").addEventListener("submit",async e=>{
   e.preventDefault();
@@ -140,14 +135,14 @@ document.getElementById("reqForm").addEventListener("submit",async e=>{
   const btn=document.getElementById("submitBtn");btn.disabled=true;btn.innerText="جاري إرسال الطلب...";
   const reqNo="SONAA-REQ-2026-"+String(Math.floor(100+Math.random()*900));
   const invNo=document.getElementById("invNo").textContent;
-  const sel=document.querySelector('input[name="setup_pkg"]:checked'); const total=parseInt(document.getElementById("row_total").textContent);
+  const total=parseInt(document.getElementById("row_total").textContent);
   const agreementId="AGR-"+Date.now().toString().slice(-6);
   const now=new Date().toISOString();
   let logoUrl="",sampleUrl="",payProofUrl="";
   if(document.getElementById("logo").files[0]) logoUrl=await toB64(document.getElementById("logo").files[0]);
   if(document.getElementById("sample_cert").files[0]) sampleUrl=await toB64(document.getElementById("sample_cert").files[0]);
   if(document.getElementById("pay_proof").files[0]) payProofUrl=await toB64(document.getElementById("pay_proof").files[0]);
-  const payload={request_no:reqNo,invoice_no:invNo,agreement_no:agreementId,agreement_version:"v1.2",org_name:document.getElementById("org_name").value,org_type:document.getElementById("org_type").value,org_country:document.getElementById("org_country").value,org_state:document.getElementById("org_state").value,org_city:document.getElementById("org_city").value,manager_name:document.getElementById("manager_name").value,manager_role:document.getElementById("manager_role").value,phone:document.getElementById("phone").value,email:document.getElementById("email").value,website:document.getElementById("website").value,slug:document.getElementById("slug").value,notes:document.getElementById("notes").value,logo_url:logoUrl,sample_url:sampleUrl,expected_certs:parseInt(document.getElementById("expected_certs").value)||100,invoice_amount:total,pay_method:payMethod,pay_txn:document.getElementById("pay_txn").value,pay_proof_url:payProofUrl,contract_signed_by:document.getElementById("sign_name").value,contract_date:document.getElementById("sign_date").value||now,agreement_accepted_at:now,otp_verified:otpVerified,status:"PAYMENT CONFIRMED - PENDING SETUP",payment_status:"بانتظار مراجعة مالية"};
+  const payload={request_no:reqNo,invoice_no:invNo,agreement_no:agreementId,agreement_version:"v1.2",org_name:document.getElementById("org_name").value,org_type:document.getElementById("org_type").value,org_country:document.getElementById("org_country").value,org_state:document.getElementById("org_state").value,org_city:document.getElementById("org_city").value,manager_name:document.getElementById("manager_name").value,manager_role:document.getElementById("manager_role").value,phone:document.getElementById("phone").value,email:document.getElementById("email").value,website:document.getElementById("website").value,slug:document.getElementById("slug").value,notes:document.getElementById("notes").value,logo_url:logoUrl,sample_url:sampleUrl,expected_certs:parseInt(document.getElementById("expected_certs").value)||100,invoice_amount:total,pay_method:payMethod,pay_txn:document.getElementById("pay_txn").value,pay_proof_url:payProofUrl,contract_signed_by:document.getElementById("sign_name").value,contract_date:document.getElementById("sign_date").value||now,agreement_accepted_at:now,otp_verified:true,status:"PAYMENT CONFIRMED - PENDING SETUP",payment_status:"بانتظار مراجعة مالية"};
   const {error}=await supabaseClient.from("org_requests").insert([payload]);
   if(error){alert("خطأ: "+error.message);btn.disabled=false;btn.innerText="أوافق وأكمل التسجيل ✓";return;}
   document.getElementById("reqForm").style.display="none";document.getElementById("successBox").classList.remove("hidden");document.getElementById("reqNo").textContent=reqNo;document.getElementById("agreementLog").textContent=`اتفاقية ${agreementId} v1.2 - موافقة: ${payload.contract_signed_by} - ${now} - عملية دفع: ${payload.pay_txn}`;document.getElementById("trackLink").href="track.html?req="+reqNo;
