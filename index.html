@@ -2,131 +2,164 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SONAA TECH | شهادات رقمية موثقة</title>
+<title>SONAA TECH | Verify Anywhere. Trust Everywhere.</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" rel="stylesheet">
-<style>body{font-family:'Cairo';background:#07172f;color:white} .card{background:#0a1d38;border:1px solid rgba(212,175,98,.55)} .gold{color:#d4af62}</style>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Cairo';background:#FFFFFF;color:#0A2351}
+.card{background:#FFFFFF;border:1px solid #DCEEFF;box-shadow:0 4px 20px rgba(10,35,81,0.04)}
+.blue{color:#0096FF}
+.navy{color:#0A2351}
+.btn-blue{background:#0096FF;color:white}
+.btn-navy{background:#0A2351;color:white}
+.light-bg{background:#F0F7FF}
+</style>
 </head>
 <body class="min-h-screen flex flex-col">
-<div class="text-center py-2 px-3 text-[12px] font-black" style="background:#d4af62;color:#07172f">SONAA TECH • VERIFY ANYWHERE • TRUST EVERYWHERE</div>
-<header class="sticky top-0 z-50" style="background:rgba(7,23,47,.98);border-bottom:1px solid rgba(212,175,98,.35)">
-  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-3">
-    <a href="index.html"><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-12 w-auto object-contain"></a>
+
+<!-- Top Bar -->
+<div class="text-center py-2 px-3 text-[12px] font-black tracking-wide" style="background:#0A2351;color:white">SONAA TECH • VERIFY ANYWHERE • TRUST EVERYWHERE</div>
+
+<!-- Header - White Clean -->
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur" style="border-bottom:1px solid #E6F2FF">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center gap-2">
+      <!-- الشعار الجديد - استخدم نفس رابط اللوغو الجديد بتاعك هنا -->
+      <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-12 w-auto object-contain">
+      <div class="hidden sm:block leading-none">
+        <div class="font-black text-[18px] navy">Sonaa <span class="blue">Tech</span></div>
+        <div class="text-[10px] font-bold text-slate-500">Verify anywhere. Trust everywhere.</div>
+      </div>
+    </a>
     <nav class="hidden md:flex items-center gap-1 text-[13px] font-bold">
-      <a href="index.html" class="px-3 py-1.5 rounded-lg" style="background:#0a1d38;border:1px solid rgba(212,175,98,.5)">الرئيسية</a>
-      <a href="how.html" class="px-3 py-1.5 hover:bg-white/10">كيف يعمل النظام</a>
-      <a href="templates.html" class="px-3 py-1.5 hover:bg-white/10">نماذج الشهادات</a>
-      <a href="about.html" class="px-3 py-1.5 hover:bg-white/10">من نحن</a>
-      <a href="verify.html" class="px-3 py-1.5 hover:bg-white/10">تحقق</a>
-      <a href="join.html" class="px-3 py-1.5 rounded-lg font-black" style="background:#d4af62;color:#07172f">قدّم طلب انضمام</a>
+      <a href="index.html" class="px-3 py-2 rounded-lg bg-[#F0F7FF] text-[#0A2351]">الرئيسية</a>
+      <a href="how.html" class="px-3 py-2 hover:bg-slate-50">كيف يعمل النظام</a>
+      <a href="templates.html" class="px-3 py-2 hover:bg-slate-50">نماذج الشهادات</a>
+      <a href="about.html" class="px-3 py-2 hover:bg-slate-50">من نحن</a>
+      <a href="verify.html" class="px-3 py-2 hover:bg-slate-50">تحقق</a>
+      <a href="join.html" class="px-3 py-2 rounded-lg font-black btn-blue">قدّم طلب انضمام</a>
     </nav>
     <div class="flex items-center gap-2">
-      <div class="flex rounded-full p-1 text-xs font-black" style="background:#0a1d38;border:1px solid rgba(212,175,98,.4)"><button onclick="setLang('ar')" id="btn-ar" class="px-3 py-1 rounded-full" style="background:#d4af62;color:#07172f">عربي</button><button onclick="setLang('en')" id="btn-en" class="px-3 py-1 rounded-full">EN</button></div>
-      <button onclick="document.getElementById('mmenu').classList.toggle('hidden')" class="md:hidden w-9 h-9 rounded-lg" style="background:#0a1d38;border:1px solid #d4af62">☰</button>
+      <div class="flex rounded-full p-1 text-xs font-black bg-slate-100"><button onclick="setLang('ar')" id="btn-ar" class="px-3 py-1 rounded-full bg-[#0A2351] text-white">عربي</button><button onclick="setLang('en')" id="btn-en" class="px-3 py-1 rounded-full">EN</button></div>
+      <button onclick="document.getElementById('mmenu').classList.toggle('hidden')" class="md:hidden w-9 h-9 rounded-lg bg-[#F0F7FF]">☰</button>
     </div>
   </div>
-  <div id="mmenu" class="hidden md:hidden px-4 py-2 space-y-1 text-sm font-bold" style="background:#07172f;border-top:1px solid rgba(212,175,98,.3)">
-    <a href="index.html" class="block py-2 px-3 rounded-lg bg-white/5">🏠 الرئيسية</a>
+  <div id="mmenu" class="hidden md:hidden px-4 py-2 space-y-1 text-sm font-bold bg-white border-t">
+    <a href="index.html" class="block py-2 px-3 rounded-lg bg-[#F0F7FF]">🏠 الرئيسية</a>
     <a href="how.html" class="block py-2 px-3 rounded-lg">⚙️ كيف يعمل النظام</a>
     <a href="templates.html" class="block py-2 px-3 rounded-lg">🎨 نماذج الشهادات</a>
     <a href="about.html" class="block py-2 px-3 rounded-lg">ℹ️ من نحن</a>
     <a href="verify.html" class="block py-2 px-3 rounded-lg">🔍 تحقق من شهادة</a>
-    <a href="join.html" class="block py-2 px-3 rounded-lg" style="color:#d4af62">📝 قدّم طلب انضمام مؤسستك</a>
+    <a href="join.html" class="block py-2 px-3 rounded-lg text-[#0096FF]">📝 قدّم طلب انضمام مؤسستك</a>
     <a href="track.html" class="block py-2 px-3 rounded-lg">📦 تتبع طلبك</a>
     <a href="admin.html" class="block py-2 px-3 rounded-lg">🔐 دخول المؤسسات</a>
   </div>
 </header>
 
 <main class="flex-1">
-<!-- HERO V3 - عنوان محمي -->
-<section class="max-w-7xl mx-auto px-4 py-8 md:py-12 grid md:grid-cols-2 gap-8 items-center">
+<!-- HERO - White + Light Blue Calm -->
+<section class="light-bg">
+<div class="max-w-7xl mx-auto px-4 py-10 md:py-14 grid md:grid-cols-2 gap-8 items-center">
   <div class="text-center md:text-right">
-    <div class="inline-block text-[11px] font-black px-3 py-1 rounded-full" style="background:rgba(212,175,98,.15);border:1px solid rgba(212,175,98,.5);color:#ead49a">SONAA VERIFY • نظام إدارة وتوثيق الشهادات</div>
-    <h1 class="text-[32px] md:text-[48px] font-black leading-[1.2] mt-4">شهاداتك الرقمية..<br><span style="color:#d4af62">موثقة وقابلة للتحقق من أي مكان.</span></h1>
-    <p class="font-bold mt-4 text-[14px] leading-relaxed" style="color:#aab6c8">نظام SONAA VERIFY للتحقق الرقمي من الشهادات وإدارتها باستخدام QR Code، مع إمكانية التحقق الفوري من صحة الشهادات عبر الإنترنت.</p>
-    <p class="text-[13px] font-black mt-2" style="color:#ead49a">من إصدار الشهادة إلى التحقق منها.. كل شيء في نظام واحد.</p>
+    <div class="inline-block text-[11px] font-black px-3 py-1.5 rounded-full bg-white border border-[#0096FF]/30 text-[#0096FF]">SONAA VERIFY • منصة موحدة للتحقق الرقمي</div>
+    <h1 class="text-[32px] md:text-[46px] font-black leading-[1.25] mt-4 text-[#0A2351]">شهاداتك الرقمية..<br><span class="text-[#0096FF]">موثقة وقابلة للتحقق من أي مكان.</span></h1>
+    <p class="font-bold mt-4 text-[14px] leading-relaxed text-slate-600">SONAA TECH مشروع تقني مستقل للبرمجيات وأنظمة التحقق والتحول الرقمي. نحو تحول رقمي أبسط، أقل تكلفة، وأكثر موثوقية.</p>
+    <p class="text-[13px] font-black mt-2 text-[#0A2351]">من إصدار الشهادة إلى التحقق منها.. كل شيء في نظام واحد.</p>
     <div class="flex flex-col sm:flex-row gap-3 mt-6">
-      <a href="verify.html" class="flex-1 text-center px-6 py-3 rounded-xl font-black text-sm" style="background:#d4af62;color:#07172f">🔍 تحقق من شهادة</a>
-      <a href="join.html" class="flex-1 text-center px-6 py-3 rounded-xl font-black text-sm text-white" style="background:#C8102E">قدّم طلب انضمام مؤسستك</a>
+      <a href="verify.html" class="flex-1 text-center px-6 py-3.5 rounded-xl font-black text-sm btn-blue shadow-lg shadow-blue-200">🔍 تحقق من شهادة</a>
+      <a href="join.html" class="flex-1 text-center px-6 py-3.5 rounded-xl font-black text-sm btn-navy">قدّم طلب انضمام مؤسستك</a>
     </div>
-    <p class="text-[11px] mt-2 font-bold" style="color:#8492a7">قدّم طلبك الآن، وسيقوم فريق SONAA TECH بمراجعته والتواصل معك لاستكمال إجراءات التأسيس والتفعيل.</p>
-    <a href="admin.html" class="inline-block mt-3 text-xs font-black underline" style="color:#aab6c8">دخول المؤسسات →</a>
+    <p class="text-[11px] mt-3 font-bold text-slate-500">قدّم طلبك الآن، وسيقوم فريق SONAA TECH بمراجعته والتواصل معك لاستكمال إجراءات التأسيس والتفعيل.</p>
+    <a href="admin.html" class="inline-block mt-2 text-xs font-black underline text-slate-500">دخول المؤسسات →</a>
     <div class="flex gap-3 mt-6 justify-center md:justify-start">
-      <div class="flex-1 card rounded-xl px-3 py-2 text-center"><div class="text-[11px] font-black gold">توثيق رقمي</div><div class="text-[10px]" style="color:#aab6c8">رقم فريد لكل شهادة</div></div>
-      <div class="flex-1 card rounded-xl px-3 py-2 text-center"><div class="text-[11px] font-black gold">تحقق فوري</div><div class="text-[10px]" style="color:#aab6c8">QR Code مباشر</div></div>
-      <div class="flex-1 card rounded-xl px-3 py-2 text-center"><div class="text-[11px] font-black gold">إدارة موحدة</div><div class="text-[10px]" style="color:#aab6c8">لوحة تحكم واحدة</div></div>
+      <div class="flex-1 card rounded-xl px-3 py-3 text-center"><div class="text-[11px] font-black text-[#0A2351]">توثيق رقمي</div><div class="text-[10px] text-slate-500">رقم فريد لكل شهادة</div></div>
+      <div class="flex-1 card rounded-xl px-3 py-3 text-center"><div class="text-[11px] font-black text-[#0A2351]">تحقق فوري</div><div class="text-[10px] text-slate-500">QR Code مباشر</div></div>
+      <div class="flex-1 card rounded-xl px-3 py-3 text-center"><div class="text-[11px] font-black text-[#0A2351]">إدارة موحدة</div><div class="text-[10px] text-slate-500">لوحة تحكم واحدة</div></div>
     </div>
   </div>
 
-  <!-- بطاقة ديمو V3 - DEMO واضح -->
-  <div class="card rounded-[20px] p-5 relative overflow-hidden">
-    <div class="absolute top-3 left-3 text-[10px] font-black px-2 py-1 rounded-full bg-yellow-400 text-black rotate-[-3deg]">DEMO • نموذج تجريبي</div>
-    <div class="flex gap-4 mt-5">
-      <div class="w-16 h-16 rounded-full shrink-0 flex items-center justify-center font-black text-xl" style="background:#d4af62;color:#07172f">أ</div>
+  <!-- بطاقة ديمو - NEW BLUE -->
+  <div class="card rounded-[20px] p-5 relative overflow-hidden bg-white">
+    <div class="absolute top-3 left-3 text-[10px] font-black px-2 py-1 rounded-full bg-[#0096FF] text-white">DEMO • نموذج تجريبي</div>
+    <div class="flex gap-4 mt-6">
+      <div class="w-16 h-16 rounded-full shrink-0 flex items-center justify-center font-black text-xl bg-[#0A2351] text-white">أ</div>
       <div class="flex-1 text-right">
-        <div class="text-[10px] font-black tracking-wider" style="color:#aab6c8">SUDAN RED CRESCENT • KOSTI BRANCH</div>
-        <div class="font-black text-lg leading-tight">أيمن مرتضى الشيخ</div>
-        <div class="text-[12px] font-bold" style="color:#d4af62">الاسعافات الأولية • 30 ساعة</div>
-        <div class="flex gap-2 mt-1 text-[11px] font-bold"><span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700">✓ سارية</span><span class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">تاريخ الإصدار: 2026-01-15</span></div>
+        <div class="text-[10px] font-black tracking-wider text-slate-400">SUDAN RED CRESCENT • KOSTI BRANCH</div>
+        <div class="font-black text-lg leading-tight text-[#0A2351]">أيمن مرتضى الشيخ</div>
+        <div class="text-[12px] font-bold text-[#0096FF]">الاسعافات الأولية • 30 ساعة</div>
+        <div class="flex gap-2 mt-1.5 text-[11px] font-bold"><span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700">✓ سارية</span><span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">تاريخ الإصدار: 2026-01-15</span></div>
       </div>
     </div>
-    <div class="mt-4 flex items-center justify-between gap-3 bg-white/5 rounded-xl p-3">
-      <div><div class="text-[10px]" style="color:#aab6c8">رقم الشهادة</div><div class="font-mono text-sm font-bold">SRCS-2026-AB12CD</div><div class="text-[11px] font-bold" style="color:#22c55e">✓ Verified • تم التحقق</div></div>
-      <div class="w-16 h-16 rounded-lg flex items-center justify-center text-[10px] font-black text-center shrink-0" style="background:#d4af62;color:#07172f">SONAA<br>QR</div>
+    <div class="mt-4 flex items-center justify-between gap-3 bg-[#F0F7FF] rounded-xl p-3 border border-[#DCEEFF]">
+      <div><div class="text-[10px] text-slate-500">رقم الشهادة</div><div class="font-mono text-sm font-bold text-[#0A2351]">SRCS-2026-AB12CD</div><div class="text-[11px] font-bold text-green-600">✓ Verified • تم التحقق</div></div>
+      <div class="w-16 h-16 rounded-lg flex items-center justify-center text-[10px] font-black text-center shrink-0 bg-[#0A2351] text-white">SONAA<br>QR</div>
     </div>
-    <div class="grid grid-cols-2 gap-2 mt-3"><button class="py-2.5 rounded-lg font-black text-xs" style="background:#d4af62;color:#07172f">عرض الشهادة الأصلية</button><button class="py-2.5 rounded-lg font-black text-xs text-white" style="background:#0a1d38;border:1px solid rgba(212,175,98,.5)">تحقق من QR</button></div>
-    <p class="text-center text-[10px] mt-2" style="color:#8492a7">هذا نموذج توضيحي لشكل بطاقة التحقق - وليس شهادة حقيقية</p>
+    <div class="grid grid-cols-2 gap-2 mt-3"><button class="py-2.5 rounded-lg font-black text-xs btn-blue">عرض الشهادة الأصلية</button><button class="py-2.5 rounded-lg font-black text-xs bg-white border border-[#0A2351] text-[#0A2351]">تحقق من QR</button></div>
+    <p class="text-center text-[10px] mt-2 text-slate-400">هذا نموذج توضيحي لشكل بطاقة التحقق - وليس شهادة حقيقية</p>
+  </div>
+</div>
+</section>
+
+<!-- من نحن - من كلامك -->
+<section class="max-w-7xl mx-auto px-4 py-10">
+  <div class="text-center max-w-3xl mx-auto">
+    <h2 class="font-black text-2xl text-[#0A2351]">من نحن؟ SONAA TECH</h2>
+    <p class="text-sm font-bold mt-3 leading-relaxed text-slate-600">مشروع تقني مستقل متخصص في تصميم وتطوير الحلول البرمجية والأنظمة الرقمية. نؤمن أن التحول الرقمي يجب ألا يكون حكراً على المؤسسات الكبرى، بل متاحاً لمختلف المؤسسات مهما اختلفت أحجامها.</p>
+  </div>
+  <div class="grid md:grid-cols-3 gap-4 mt-6">
+    <div class="card p-5 rounded-2xl text-center"><div class="text-2xl">🎯</div><h3 class="font-black mt-2 text-sm text-[#0A2351]">البساطة</h3><p class="text-xs mt-1 leading-relaxed text-slate-500">حلول سهلة الاستخدام والإدارة، دون تعقيدات تقنية غير ضرورية.</p></div>
+    <div class="card p-5 rounded-2xl text-center"><div class="text-2xl">💰</div><h3 class="font-black mt-2 text-sm text-[#0A2351]">الاقتصادية</h3><p class="text-xs mt-1 leading-relaxed text-slate-500">تحول رقمي بتكاليف مناسبة، مع مراعاة إمكانات المؤسسات المختلفة.</p></div>
+    <div class="card p-5 rounded-2xl text-center"><div class="text-2xl">🔒</div><h3 class="font-black mt-2 text-sm text-[#0A2351]">الموثوقية</h3><p class="text-xs mt-1 leading-relaxed text-slate-500">تنظيم البيانات، وتعزيز التحقق الإلكتروني، والحد من التزوير.</p></div>
   </div>
 </section>
 
 <!-- لماذا SONAA VERIFY -->
-<section class="max-w-7xl mx-auto px-4 py-6">
-  <h2 class="text-center font-black text-2xl">لماذا SONAA VERIFY؟</h2>
-  <p class="text-center text-sm font-bold mt-1" style="color:#aab6c8">نحن لا نبيع QR Code فقط - نقدم نظاماً تقنياً متكاملاً للمؤسسات</p>
+<section class="max-w-7xl mx-auto px-4 py-4">
+  <h2 class="text-center font-black text-2xl text-[#0A2351]">لماذا SONAA VERIFY؟</h2>
+  <p class="text-center text-sm font-bold mt-1 text-slate-500">نحن لا نبيع QR Code فقط - نقدم نظاماً تقنياً متكاملاً للمؤسسات</p>
   <div class="grid md:grid-cols-4 gap-4 mt-6">
-    <div class="card p-5 rounded-2xl"><div class="text-2xl">⚡</div><h3 class="font-black mt-2 text-sm">1. التحقق الفوري</h3><p class="text-xs mt-1 leading-relaxed" style="color:#aab6c8">إمكانية التحقق من الشهادة باستخدام QR Code من أي مكان في العالم.</p></div>
-    <div class="card p-5 rounded-2xl"><div class="text-2xl">🔒</div><h3 class="font-black mt-2 text-sm">2. التوثيق الرقمي</h3><p class="text-xs mt-1 leading-relaxed" style="color:#aab6c8">ربط كل شهادة برقم تعريفي فريد لا يتكرر ومحفوظ في قاعدة بيانات موثقة.</p></div>
-    <div class="card p-5 rounded-2xl"><div class="text-2xl">🖥️</div><h3 class="font-black mt-2 text-sm">3. سهولة الإدارة</h3><p class="text-xs mt-1 leading-relaxed" style="color:#aab6c8">إصدار وإدارة الشهادات من لوحة تحكم موحدة - اكسل 500 شهادة في دقيقة.</p></div>
-    <div class="card p-5 rounded-2xl"><div class="text-2xl">💰</div><h3 class="font-black mt-2 text-sm">4. تقليل التكاليف</h3><p class="text-xs mt-1 leading-relaxed" style="color:#aab6c8">تقليل الاعتماد على الطباعة والإجراءات اليدوية للتحقق - قالب مؤسستك الخاص يظل بهويتك.</p></div>
+    <div class="card p-5 rounded-2xl"><div class="w-10 h-10 rounded-lg bg-[#F0F7FF] flex items-center justify-center text-lg">⚡</div><h3 class="font-black mt-3 text-sm">1. التحقق الفوري</h3><p class="text-xs mt-1 leading-relaxed text-slate-500">تحقق من الشهادة باستخدام QR Code من أي مكان في العالم.</p></div>
+    <div class="card p-5 rounded-2xl"><div class="w-10 h-10 rounded-lg bg-[#F0F7FF] flex items-center justify-center text-lg">🔒</div><h3 class="font-black mt-3 text-sm">2. التوثيق الرقمي</h3><p class="text-xs mt-1 leading-relaxed text-slate-500">كل شهادة برقم تعريفي فريد لا يتكرر ومحفوظ في قاعدة بيانات موثقة.</p></div>
+    <div class="card p-5 rounded-2xl"><div class="w-10 h-10 rounded-lg bg-[#F0F7FF] flex items-center justify-center text-lg">🖥️</div><h3 class="font-black mt-3 text-sm">3. سهولة الإدارة</h3><p class="text-xs mt-1 leading-relaxed text-slate-500">إصدار وإدارة الشهادات من لوحة تحكم موحدة - 500 شهادة في دقيقة.</p></div>
+    <div class="card p-5 rounded-2xl"><div class="w-10 h-10 rounded-lg bg-[#F0F7FF] flex items-center justify-center text-lg">💰</div><h3 class="font-black mt-3 text-sm">4. تقليل التكاليف</h3><p class="text-xs mt-1 leading-relaxed text-slate-500">تقليل الطباعة والإجراءات اليدوية - قالب مؤسستك الخاص يظل بهويتك.</p></div>
   </div>
-  <div class="card p-5 rounded-2xl mt-4 flex flex-col md:flex-row gap-4 items-center">
-    <div class="flex-1 text-center md:text-right"><h3 class="font-black">🎨 قالبك بهويتك - مش قالبنا</h3><p class="text-xs font-bold mt-1" style="color:#aab6c8">كل مؤسسة ترفع قالب الشهادة الخاص بها وشعارها - ونحن نتولى تهيئة القالب وربطه بنظام الإصدار والتحقق - شكل الشهادة يظل تابعاً لهوية كل مؤسسة.</p></div>
-    <a href="templates.html" class="px-5 py-2.5 rounded-xl font-black text-xs whitespace-nowrap" style="background:#d4af62;color:#07172f">شاهد نماذج القوالب</a>
+  <div class="card p-5 rounded-2xl mt-4 flex flex-col md:flex-row gap-4 items-center !bg-[#F0F7FF]">
+    <div class="flex-1 text-center md:text-right"><h3 class="font-black text-[#0A2351]">🎨 قالبك بهويتك - مش قالبنا</h3><p class="text-xs font-bold mt-1 text-slate-600">كل مؤسسة ترفع قالب الشهادة الخاص بها وشعارها - ونحن نهيئ القالب وربطه بنظام الإصدار والتحقق.</p></div>
+    <a href="templates.html" class="px-5 py-2.5 rounded-xl font-black text-xs whitespace-nowrap btn-blue">شاهد نماذج القوالب</a>
   </div>
 </section>
 
-<!-- الاسعار V3 - مزبطة + SETUP FEE -->
-<section class="max-w-7xl mx-auto px-4 py-6">
-  <h2 class="text-center font-black text-2xl">الأسعار - واضحة بدون لف</h2>
-  <div class="max-w-2xl mx-auto mt-4 p-4 rounded-2xl text-center" style="background:rgba(212,175,98,.1);border:1px solid rgba(212,175,98,.5)">
-    <div class="font-black text-sm">🛠️ رسوم تأسيس وتهيئة المؤسسة - SONAA SETUP FEE</div>
-    <p class="text-xs font-bold mt-1" style="color:#aab6c8">رسوم ثابتة مرة واحدة - منفصلة عن باقات الشهادات - تشمل: إنشاء الحساب + لوحة الإدارة + قاعدة البيانات + تهيئة قالب المؤسسة + ربط QR + اختبار + تدريب المسؤول. يتم تحديدها بعد مراجعة الطلب حسب نطاق العمل - ولا يبدأ التنفيذ قبل الاتفاق واستلام الدفعة المتفق عليها.</p>
+<!-- الاسعار -->
+<section class="max-w-7xl mx-auto px-4 py-8">
+  <h2 class="text-center font-black text-2xl text-[#0A2351]">الأسعار - واضحة بدون لف</h2>
+  <div class="max-w-2xl mx-auto mt-4 p-4 rounded-2xl text-center bg-[#F0F7FF] border border-[#DCEEFF]">
+    <div class="font-black text-sm text-[#0A2351]">🛠️ رسوم تأسيس وتهيئة المؤسسة - SONAA SETUP FEE</div>
+    <p class="text-xs font-bold mt-1 text-slate-600">رسوم ثابتة مرة واحدة - منفصلة عن باقات الشهادات - تشمل: إنشاء الحساب + لوحة الإدارة + قاعدة البيانات + تهيئة قالب المؤسسة + ربط QR + اختبار + تدريب المسؤول.</p>
   </div>
   <div class="grid md:grid-cols-3 gap-4 mt-4">
-    <div class="card p-6 rounded-2xl flex flex-col"><div class="font-black">🎁 تجريبي - للتجربة</div><div class="text-3xl font-black mt-2">0$ <span class="text-sm font-bold" style="color:#aab6c8">/ 50 شهادة</span></div><ul class="text-xs font-bold mt-3 space-y-1.5 flex-1" style="color:#aab6c8"><li>✓ 50 شهادة مجانية</li><li>✓ تجربة نظام التحقق</li><li>✓ بدون بطاقة دفع</li><li>✓ لوحة إدارة أساسية</li></ul><a href="join.html" class="block text-center mt-4 py-3 rounded-xl font-black text-sm" style="background:#07172f;border:1px solid rgba(212,175,98,.4)">قدّم طلب تجريبي</a></div>
-    <div class="p-6 rounded-2xl relative flex flex-col" style="background:#0a1d38;border:2px solid #d4af62"><div class="absolute -top-3 right-4 text-xs font-black px-2 py-0.5 rounded-full" style="background:#d4af62;color:#07172f">الأكثر طلباً</div><div class="font-black">🚀 احترافي</div><div class="text-3xl font-black mt-2">50$ <span class="text-sm font-bold" style="color:#aab6c8">/ 100 شهادة - 0.50$ للشهادة</span></div><ul class="text-xs font-bold mt-3 space-y-1.5 flex-1" style="color:#aab6c8"><li>✓ 100 شهادة</li><li>✓ قوالب شهادات بهوية مؤسستك</li><li>✓ إنشاء QR Code بشعار SONAA</li><li>✓ لوحة إدارة كاملة</li></ul><a href="join.html" class="block text-center mt-4 py-3 rounded-xl font-black text-sm" style="background:#d4af62;color:#07172f">قدّم طلب - 50$</a></div>
-    <div class="card p-6 rounded-2xl flex flex-col"><div class="font-black">🏢 مؤسسات</div><div class="text-3xl font-black mt-2">200$ <span class="text-sm font-bold" style="color:#aab6c8">/ 500 شهادة - 0.40$ للشهادة</span></div><ul class="text-xs font-bold mt-3 space-y-1.5 flex-1" style="color:#aab6c8"><li>✓ 500 شهادة</li><li>✓ إدارة متقدمة + تقارير</li><li>✓ دعم فني ذو أولوية</li><li>✓ قوالب مخصصة + تدريب</li></ul><a href="https://wa.me/249914391371?text=عايز باقة المؤسسات" class="block text-center mt-4 py-3 rounded-xl font-black text-sm text-white" style="background:#25D366">تواصل واتساب</a></div>
+    <div class="card p-6 rounded-2xl flex flex-col"><div class="font-black">🎁 تجريبي - للتجربة</div><div class="text-3xl font-black mt-2">0$ <span class="text-sm font-bold text-slate-400">/ 50 شهادة</span></div><ul class="text-xs font-bold mt-3 space-y-1.5 flex-1 text-slate-500"><li>✓ 50 شهادة مجانية</li><li>✓ تجربة نظام التحقق</li><li>✓ بدون بطاقة دفع</li><li>✓ لوحة إدارة أساسية</li></ul><a href="join.html" class="block text-center mt-4 py-3 rounded-xl font-black text-sm border border-[#0A2351] text-[#0A2351]">قدّم طلب تجريبي</a></div>
+    <div class="p-6 rounded-2xl relative flex flex-col bg-[#0A2351] text-white shadow-xl"><div class="absolute -top-3 right-4 text-xs font-black px-2 py-0.5 rounded-full bg-[#0096FF] text-white">الأكثر طلباً</div><div class="font-black">🚀 احترافي</div><div class="text-3xl font-black mt-2">50$ <span class="text-sm font-bold text-blue-200">/ 100 شهادة - 0.50$ للشهادة</span></div><ul class="text-xs font-bold mt-3 space-y-1.5 flex-1 text-blue-100"><li>✓ 100 شهادة</li><li>✓ قوالب بهوية مؤسستك</li><li>✓ QR Code بشعار SONAA</li><li>✓ لوحة إدارة كاملة</li></ul><a href="join.html" class="block text-center mt-4 py-3 rounded-xl font-black text-sm btn-blue">قدّم طلب - 50$</a></div>
+    <div class="card p-6 rounded-2xl flex flex-col"><div class="font-black">🏢 مؤسسات</div><div class="text-3xl font-black mt-2">200$ <span class="text-sm font-bold text-slate-400">/ 500 شهادة - 0.40$ للشهادة</span></div><ul class="text-xs font-bold mt-3 space-y-1.5 flex-1 text-slate-500"><li>✓ 500 شهادة</li><li>✓ إدارة متقدمة + تقارير</li><li>✓ دعم فني ذو أولوية</li><li>✓ قوالب مخصصة + تدريب</li></ul><a href="https://wa.me/249914391371?text=عايز باقة المؤسسات" class="block text-center mt-4 py-3 rounded-xl font-black text-sm text-white" style="background:#25D366">تواصل واتساب</a></div>
   </div>
-  <p class="text-center text-[11px] font-bold mt-3" style="color:#8492a7">لا نعرض ميزة إلا إذا كانت منفذة فعلاً - جميع الميزات أعلاه تعمل حالياً في النظام.</p>
 </section>
 
-<!-- كيف يعمل + FAQ مختصر -->
-<section class="max-w-7xl mx-auto px-4 py-6 grid md:grid-cols-2 gap-4">
-  <div class="card p-6 rounded-2xl"><h3 class="font-black">كيف يعمل النظام؟ - 4 خطوات</h3><ol class="text-sm font-bold mt-3 space-y-2" style="color:#aab6c8"><li>1. قدّم طلب انضمام - مجاني - الحالة: قيد المراجعة</li><li>2. مراجعة + عرض تأسيس وفاتورة - الحالة: بانتظار الدفع</li><li>3. دفع رسوم التأسيس - الحالة: قيد التهيئة</li><li>4. استلام لوحة الإدارة + تدريب - الحالة: نشط</li></ol><a href="how.html" class="inline-block mt-4 text-xs font-black underline" style="color:#d4af62">شرح كامل بالصور →</a></div>
-  <div class="card p-6 rounded-2xl"><h3 class="font-black">الأسئلة الشائعة</h3><div class="text-sm font-bold mt-3 space-y-2" style="color:#aab6c8"><p><b class="text-white">هل التسجيل ينشئ حساب نشط مباشرة؟</b><br>لا - إرسال الطلب لا يعني إنشاء حساب نشط - تتم المراجعة أولاً.</p><p><b class="text-white">هل القالب حقنا ولا حقكم؟</b><br>قالبك حقك - ترفع قالبك وشعارك - ونحن نهيئو للنظام.</p><p><b class="text-white">هل أبدأ قبل دفع التأسيس؟</b><br>لا - لا يبدأ التأسيس قبل الاتفاق واستلام الدفعة.</p></div></div>
+<!-- كيف يعمل + FAQ -->
+<section class="max-w-7xl mx-auto px-4 py-4 grid md:grid-cols-2 gap-4">
+  <div class="card p-6 rounded-2xl"><h3 class="font-black">كيف يعمل النظام؟ - 4 خطوات</h3><ol class="text-sm font-bold mt-3 space-y-2 text-slate-600"><li>1. قدّم طلب انضمام - مجاني - الحالة: قيد المراجعة</li><li>2. مراجعة + عرض تأسيس وفاتورة - الحالة: بانتظار الدفع</li><li>3. دفع رسوم التأسيس - الحالة: قيد التهيئة</li><li>4. استلام لوحة الإدارة + تدريب - الحالة: نشط</li></ol><a href="how.html" class="inline-block mt-4 text-xs font-black underline text-[#0096FF]">شرح كامل بالصور →</a></div>
+  <div class="card p-6 rounded-2xl"><h3 class="font-black">الأسئلة الشائعة</h3><div class="text-sm font-bold mt-3 space-y-3 text-slate-600"><p><b class="text-[#0A2351]">هل التسجيل ينشئ حساب نشط مباشرة؟</b><br>لا - إرسال الطلب لا يعني إنشاء حساب نشط - تتم المراجعة أولاً.</p><p><b class="text-[#0A2351]">هل القالب حقنا ولا حقكم؟</b><br>قالبك حقك - ترفع قالبك وشعارك - ونحن نهيئو للنظام.</p></div></div>
 </section>
 </main>
 
-<footer class="py-8 px-4" style="background:#050e1d;border-top:1px solid rgba(212,175,98,.35)">
+<footer class="py-8 px-4 mt-6" style="background:#0A2351;color:white">
   <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 text-center md:text-right">
-    <div><img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="w-[150px] mx-auto md:mx-0"><p class="text-xs font-bold mt-2" style="color:#aab6c8">SONAA TECH - حلول التحول الرقمي للمؤسسات</p></div>
-    <div class="text-sm font-bold space-y-1"><div class="font-black gold">روابط</div><a href="about.html" class="block">من نحن</a><a href="how.html" class="block">كيف يعمل النظام</a><a href="templates.html" class="block">نماذج الشهادات</a><a href="privacy.html" class="block">سياسة الخصوصية</a><a href="terms.html" class="block">شروط الاستخدام</a></div>
-    <div class="text-sm font-bold space-y-1"><div class="font-black gold">تواصل رسمي</div><div>📧 info@sonaa-tech.sd</div><div>📱 0914391371 - واتساب</div><div>📍 كوستي - النيل الأبيض - السودان</div><a href="https://wa.me/249914391371" class="inline-block mt-2 px-4 py-2 rounded-full text-xs font-black text-white" style="background:#25D366">تواصل معنا</a></div>
+    <div><div class="font-black text-xl">Sonaa <span class="text-[#0096FF]">Tech</span></div><p class="text-xs font-bold mt-2 text-blue-200">SONAA TECH - حلول التحول الرقمي للمؤسسات<br>نحو تحول رقمي أبسط، أقل تكلفة، وأكثر موثوقية.</p></div>
+    <div class="text-sm font-bold space-y-1"><div class="font-black text-white">روابط</div><a href="about.html" class="block text-blue-200">من نحن</a><a href="how.html" class="block text-blue-200">كيف يعمل النظام</a><a href="templates.html" class="block text-blue-200">نماذج الشهادات</a><a href="privacy.html" class="block text-blue-200">سياسة الخصوصية</a></div>
+    <div class="text-sm font-bold space-y-1"><div class="font-black">تواصل رسمي</div><div>📧 info@sonaa-tech.sd</div><div>📱 0914391371 - واتساب</div><div>📍 كوستي - النيل الأبيض - السودان</div><a href="https://wa.me/249914391371" class="inline-block mt-2 px-4 py-2 rounded-full text-xs font-black text-white" style="background:#25D366">تواصل معنا</a></div>
   </div>
-  <div class="text-center text-[11px] mt-6" style="color:#8492a7">SONAA TECH © 2026 - AYMAN MORTADA - Verify Anywhere. Trust Everywhere.</div>
+  <div class="text-center text-[11px] mt-6 text-blue-300">SONAA TECH © 2026 - AYMAN MORTADA - Verify Anywhere. Trust Everywhere.</div>
 </footer>
 <script>
-function setLang(l){document.getElementById("btn-ar").style.background=l==='ar'?'#d4af62':'';document.getElementById("btn-ar").style.color=l==='ar'?'#07172f':'white';document.getElementById("btn-en").style.background=l==='en'?'#d4af62':'';document.getElementById("btn-en").style.color=l==='en'?'#07172f':'white';localStorage.setItem("sonaa-lang",l)}
+function setLang(l){document.getElementById("btn-ar").style.background=l==='ar'?'#0A2351':'';document.getElementById("btn-ar").style.color=l==='ar'?'white':'';document.getElementById("btn-en").style.background=l==='en'?'#0A2351':'';document.getElementById("btn-en").style.color=l==='en'?'white':'';localStorage.setItem("sonaa-lang",l)}
 </script>
 </body>
 </html>
