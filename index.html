@@ -13,6 +13,9 @@ body{font-family:'Cairo';background:#FFFFFF;color:#0A2351}
 .btn-blue{background:#0096FF;color:white}
 .btn-navy{background:#0A2351;color:white}
 .light-bg{background:#F0F7FF}
+/* القائمة الشمالية */
+#leftDrawer{transition:transform .32s ease}
+#leftDrawer.open{transform:translateX(0)!important}
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -20,18 +23,20 @@ body{font-family:'Cairo';background:#FFFFFF;color:#0A2351}
 <!-- Top Bar -->
 <div class="text-center py-2 px-3 text-[12px] font-black tracking-wide" style="background:#0A2351;color:white">SONAA TECH • VERIFY ANYWHERE • TRUST EVERYWHERE</div>
 
-<!-- Header - White Clean -->
+<!-- Header - الشعار يمين - القائمة شمال -->
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur" style="border-bottom:1px solid #E6F2FF">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-    <a href="index.html" class="flex items-center gap-2">
-      <!-- الشعار الجديد - استخدم نفس رابط اللوغو الجديد بتاعك هنا -->
-      <img src="https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000" class="h-12 w-auto object-contain">
-      <div class="hidden sm:block leading-none">
-        <div class="font-black text-[18px] navy">Sonaa <span class="blue">Tech</span></div>
+  <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-3">
+    <!-- يمين: الشعار الكبير -->
+    <a href="index.html" class="flex items-center gap-2 shrink-0">
+      <img src="logo.jpeg" onerror="this.src='https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000'" class="h-[58px] w-auto object-contain scale-[1.5] origin-right">
+      <div class="hidden sm:block leading-none pr-2">
+        <div class="font-black text-[19px] navy">Sonaa <span class="blue">Tech</span></div>
         <div class="text-[10px] font-bold text-slate-500">Verify anywhere. Trust everywhere.</div>
       </div>
     </a>
-    <nav class="hidden md:flex items-center gap-1 text-[13px] font-bold">
+
+    <!-- نص: روابط ديسكتوب -->
+    <nav class="hidden lg:flex items-center gap-1 text-[13px] font-bold">
       <a href="index.html" class="px-3 py-2 rounded-lg bg-[#F0F7FF] text-[#0A2351]">الرئيسية</a>
       <a href="how.html" class="px-3 py-2 hover:bg-slate-50">كيف يعمل النظام</a>
       <a href="templates.html" class="px-3 py-2 hover:bg-slate-50">نماذج الشهادات</a>
@@ -39,22 +44,45 @@ body{font-family:'Cairo';background:#FFFFFF;color:#0A2351}
       <a href="verify.html" class="px-3 py-2 hover:bg-slate-50">تحقق</a>
       <a href="join.html" class="px-3 py-2 rounded-lg font-black btn-blue">قدّم طلب انضمام</a>
     </nav>
-    <div class="flex items-center gap-2">
-      <div class="flex rounded-full p-1 text-xs font-black bg-slate-100"><button onclick="setLang('ar')" id="btn-ar" class="px-3 py-1 rounded-full bg-[#0A2351] text-white">عربي</button><button onclick="setLang('en')" id="btn-en" class="px-3 py-1 rounded-full">EN</button></div>
-      <button onclick="document.getElementById('mmenu').classList.toggle('hidden')" class="md:hidden w-9 h-9 rounded-lg bg-[#F0F7FF]">☰</button>
+
+    <!-- شمال: لغات + زر القائمة -->
+    <div class="flex items-center gap-2 shrink-0">
+      <div class="flex rounded-full p-1 text-xs font-black bg-slate-100"><button onclick="setLang('ar')" id="btn-ar" class="px-3 py-1.5 rounded-full bg-[#0A2351] text-white">عربي</button><button onclick="setLang('en')" id="btn-en" class="px-3 py-1.5 rounded-full">EN</button></div>
+      <button onclick="openDrawer()" class="lg:hidden w-10 h-10 rounded-xl bg-[#F0F7FF] border border-[#DCEEFF] flex items-center justify-center text-[20px] font-black">☰</button>
     </div>
   </div>
-  <div id="mmenu" class="hidden md:hidden px-4 py-2 space-y-1 text-sm font-bold bg-white border-t">
-    <a href="index.html" class="block py-2 px-3 rounded-lg bg-[#F0F7FF]">🏠 الرئيسية</a>
-    <a href="how.html" class="block py-2 px-3 rounded-lg">⚙️ كيف يعمل النظام</a>
-    <a href="templates.html" class="block py-2 px-3 rounded-lg">🎨 نماذج الشهادات</a>
-    <a href="about.html" class="block py-2 px-3 rounded-lg">ℹ️ من نحن</a>
-    <a href="verify.html" class="block py-2 px-3 rounded-lg">🔍 تحقق من شهادة</a>
-    <a href="join.html" class="block py-2 px-3 rounded-lg text-[#0096FF]">📝 قدّم طلب انضمام مؤسستك</a>
-    <a href="track.html" class="block py-2 px-3 rounded-lg">📦 تتبع طلبك</a>
-    <a href="admin.html" class="block py-2 px-3 rounded-lg">🔐 دخول المؤسسات</a>
-  </div>
 </header>
+
+<!-- Drawer شمال + Overlay -->
+<div id="drawerOverlay" onclick="closeDrawer()" class="hidden fixed inset-0 bg-black/50 z-[60]"></div>
+<aside id="leftDrawer" class="fixed top-0 left-0 h-full w-[300px] max-w-[85vw] bg-white z-[70] shadow-2xl flex flex-col" style="transform:translateX(-105%)" dir="rtl">
+  <div class="p-4 flex items-center justify-between border-b border-slate-100">
+    <div class="flex items-center gap-2">
+      <img src="logo.jpeg" onerror="this.src='https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000'" class="h-[48px] w-auto object-contain scale-[1.3]">
+      <div class="leading-none"><div class="font-black text-[16px]">Sonaa <span class="text-[#0096FF]">Tech</span></div><div class="text-[9px] font-bold text-slate-400">Verify Anywhere</div></div>
+    </div>
+    <button onclick="closeDrawer()" class="w-9 h-9 rounded-full bg-slate-100 text-lg font-black">×</button>
+  </div>
+  <nav class="p-3 space-y-1 text-[15px] font-bold flex-1 overflow-y-auto">
+    <a href="index.html" class="flex items-center justify-between py-3 px-3 rounded-xl bg-[#F0F7FF] text-[#0A2351]"><span>🏠 الرئيسية</span><span>‹</span></a>
+    <a href="how.html" class="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50"><span>⚙️ كيف يعمل النظام</span><span class="text-slate-300">‹</span></a>
+    <a href="templates.html" class="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50"><span>🎨 نماذج الشهادات</span><span class="text-slate-300">‹</span></a>
+    <a href="about.html" class="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50"><span>ℹ️ من نحن</span><span class="text-slate-300">‹</span></a>
+    <a href="verify.html" class="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50"><span>🔍 تحقق من شهادة</span><span class="text-slate-300">‹</span></a>
+    <a href="join.html" class="flex items-center justify-between py-3 px-3 rounded-xl text-[#0096FF] bg-blue-50/50"><span>📝 قدّم طلب انضمام مؤسستك</span><span>‹</span></a>
+    <a href="track.html" class="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50"><span>📦 تتبع طلبك</span><span class="text-slate-300">‹</span></a>
+    <a href="admin.html" class="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50"><span>🔐 دخول المؤسسات</span><span class="text-slate-300">‹</span></a>
+  </nav>
+  <div class="p-4 border-t">
+    <div class="text-center text-xs font-bold text-slate-500">نماذج الشهادات</div>
+    <div class="text-center text-xs font-bold text-slate-500 mt-1">سياسة الخصوصية</div>
+    <div class="text-center font-black mt-4 text-[15px]">تواصل رسمي</div>
+    <div class="text-center text-[13px] font-bold mt-1">📧 info@sonaa-tech.sd</div>
+    <div class="text-center text-[13px] font-bold">📱 0914391371 - واتساب</div>
+    <div class="text-center text-[13px] font-bold">📍 كوستي - النيل الأبيض - السودان</div>
+    <a href="https://wa.me/249914391371" class="block text-center mt-3 py-3 rounded-full font-black text-sm text-white" style="background:#25D366">تواصل معنا</a>
+  </div>
+</aside>
 
 <main class="flex-1">
 <!-- HERO - White + Light Blue Calm -->
@@ -100,7 +128,7 @@ body{font-family:'Cairo';background:#FFFFFF;color:#0A2351}
 </div>
 </section>
 
-<!-- من نحن - من كلامك -->
+<!-- من نحن -->
 <section class="max-w-7xl mx-auto px-4 py-10">
   <div class="text-center max-w-3xl mx-auto">
     <h2 class="font-black text-2xl text-[#0A2351]">من نحن؟ SONAA TECH</h2>
@@ -152,14 +180,30 @@ body{font-family:'Cairo';background:#FFFFFF;color:#0A2351}
 
 <footer class="py-8 px-4 mt-6" style="background:#0A2351;color:white">
   <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 text-center md:text-right">
-    <div><div class="font-black text-xl">Sonaa <span class="text-[#0096FF]">Tech</span></div><p class="text-xs font-bold mt-2 text-blue-200">SONAA TECH - حلول التحول الرقمي للمؤسسات<br>نحو تحول رقمي أبسط، أقل تكلفة، وأكثر موثوقية.</p></div>
+    <div><div class="flex items-center gap-2 justify-center md:justify-start"><img src="logo.jpeg" onerror="this.src='https://drive.google.com/thumbnail?id=1nNKF9IgPlwRIEB0XChnVppeCn7NJRiVS&sz=w1000'" class="h-10 w-auto object-contain"><div class="font-black text-xl">Sonaa <span class="text-[#0096FF]">Tech</span></div></div><p class="text-xs font-bold mt-2 text-blue-200">SONAA TECH - حلول التحول الرقمي للمؤسسات<br>نحو تحول رقمي أبسط، أقل تكلفة، وأكثر موثوقية.</p></div>
     <div class="text-sm font-bold space-y-1"><div class="font-black text-white">روابط</div><a href="about.html" class="block text-blue-200">من نحن</a><a href="how.html" class="block text-blue-200">كيف يعمل النظام</a><a href="templates.html" class="block text-blue-200">نماذج الشهادات</a><a href="privacy.html" class="block text-blue-200">سياسة الخصوصية</a></div>
     <div class="text-sm font-bold space-y-1"><div class="font-black">تواصل رسمي</div><div>📧 info@sonaa-tech.sd</div><div>📱 0914391371 - واتساب</div><div>📍 كوستي - النيل الأبيض - السودان</div><a href="https://wa.me/249914391371" class="inline-block mt-2 px-4 py-2 rounded-full text-xs font-black text-white" style="background:#25D366">تواصل معنا</a></div>
   </div>
   <div class="text-center text-[11px] mt-6 text-blue-300">SONAA TECH © 2026 - AYMAN MORTADA - Verify Anywhere. Trust Everywhere.</div>
 </footer>
 <script>
-function setLang(l){document.getElementById("btn-ar").style.background=l==='ar'?'#0A2351':'';document.getElementById("btn-ar").style.color=l==='ar'?'white':'';document.getElementById("btn-en").style.background=l==='en'?'#0A2351':'';document.getElementById("btn-en").style.color=l==='en'?'white':'';localStorage.setItem("sonaa-lang",l)}
+function setLang(l){
+  document.getElementById("btn-ar").style.background=l==='ar'?'#0A2351':'';
+  document.getElementById("btn-ar").style.color=l==='ar'?'white':'';
+  document.getElementById("btn-en").style.background=l==='en'?'#0A2351':'';
+  document.getElementById("btn-en").style.color=l==='en'?'white':'';
+  localStorage.setItem("sonaa-lang",l)
+}
+function openDrawer(){
+  document.getElementById('leftDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  document.getElementById('leftDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.add('hidden');
+  document.body.style.overflow='';
+}
 </script>
 </body>
 </html>
